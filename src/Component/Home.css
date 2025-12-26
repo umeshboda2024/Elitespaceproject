@@ -1,0 +1,140 @@
+
+/* Slider wrapper */
+
+.slick-slider,
+.slick-list,
+.slick-track {
+  height: 100%;
+}
+
+/* Each slide */
+.slide {
+  position: relative;
+  width: 100%;
+  height: 850px;
+  overflow: hidden; /* 🔥 CRITICAL */
+}
+
+/* Image zoom animation */
+.slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  transform-origin: center;
+  animation: zoomOut 8s linear forwards;
+}
+.hero-container {
+  position: relative;
+  /* padding-bottom: 15px; */
+  height: 95vh;
+  overflow: hidden; 
+  /* background-color: #ffffff; */
+}
+/* OVERLAY */
+.hero-overlay {
+  position: absolute;
+  /* transform: translate(-50%, -50%);  */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+}
+.hero-text {
+  max-width: 500px;
+}
+
+.hero-btn {
+  background: #c49b66 !important;
+  font-weight: bold !important;
+}
+.hero-btn:hover {
+  background: #d47d0af6 !important;
+}
+
+.hero-form {
+  width: 350px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6) !important;
+  /* background-color: #ffffff33 !important; */
+}
+.hero-form:hover{
+    background: #ffffff !important;
+}
+
+.form-btn {
+  background: #c49b66 !important;
+  font-weight: bold !important;
+}
+.form-btn:hover {
+  background: #e08208de !important ;
+}
+/* SEARCH BAR */
+.search-bar {
+  position: absolute;
+  left: 50%;
+  bottom: -5px;              /* overlaps hero like reference */
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 18px 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  width: auto;
+  z-index: 1000;
+}
+
+.search-bar .MuiTextField-root {
+  flex: 1;
+}
+
+.search-btn {
+  background: #0f766e !important;
+  padding: 12px 30px !important;
+}
+.Searchform {
+  width: 250px;
+}
+.Stats-Section {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 80px;
+  background:linear-gradient(90deg, #0F4C5C, #0d9ac5ff) !important;
+  padding: 25px 20px;
+}
+
+/* Zoom animation */
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.15);
+  }
+}
+
+/* 🔥 Prevent side-slide visibility */
+.slick-list {
+  overflow: hidden !important;
+}
+
+@media (max-width: 900px) {
+  .hero-overlay {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .hero-form {
+    display: none; /* hide form on mobile like Dubai site */
+  }
+}

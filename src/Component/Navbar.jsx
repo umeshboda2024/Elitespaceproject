@@ -14,12 +14,16 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
-import Elitespacelogo from "../images/Elitespacelogo.png";
+import Elitespacelogo from "../images/Elitespacelogo-removebg-preview.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-const pages = ["Buy", "Rent", "Sell Property", "More"];
+const pages = ["Home", "Buy", "Rent", "Sell Property", "More"];
 const megaMenuData = {
   Buy: ["Apartments", "Villas", "Plots", "Commercial"],
   Rent: ["Apartments", "Villas", "PG/Hostels", "Offices"],
@@ -89,11 +93,46 @@ export default function ResponsiveAppBar() {
   };
   const handleCloseSignup = () => setOpenSignup(false);
 
+  const [mode, setMode] = React.useState(
+    localStorage.getItem("theme") || "light"
+  );
+
+  const toggleTheme = () => {
+    const newMode = mode === "light" ? "dark" : "light";
+    setMode(newMode);
+    localStorage.setItem("theme", newMode);
+  };
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          primary: {
+            main: "#0F4C5C",
+          },
+          background: {
+            default: mode === "dark" ? "black" : "#f5f5f5",
+            paper: mode === "dark" ? "black" : "#ffffff",
+          },
+        },
+      }),
+    [mode]
+  );
+
   return (
     <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+      </ThemeProvider>
       <AppBar
         position="static"
-        sx={{ background: "linear-gradient(90deg, #0F4C5C, #0d9ac5ff)" }}
+        sx={{
+          background:
+            mode === "dark"
+              ? "black"
+              : "linear-gradient(90deg, #0F4C5C, #0d9ac5ff)",
+        }}
       >
         <Container maxWidth="xl">
           <Toolbar
@@ -106,7 +145,7 @@ export default function ResponsiveAppBar() {
                 component="img"
                 src={Elitespacelogo}
                 alt="Elitespace Logo"
-                sx={{ height: 40, width: "auto" }}
+                sx={{ height: 80, width: "auto" }}
               />
             </Box>
             <Typography
@@ -189,6 +228,9 @@ export default function ResponsiveAppBar() {
                 </Box>
               ))}
             </Box>
+            <IconButton color="inherit" onClick={toggleTheme}>
+              {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
 
             {/* Search and Login */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
