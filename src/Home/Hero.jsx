@@ -13,9 +13,9 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-import Luxury from "../images/Luxury Appartment.jpg";
-import Rowhouse from "../images/House.jpg";
-import House from "../images/House-Desktop.jpg";
+import Luxury from "../Assets/images/Luxury Appartment.jpg";
+import Rowhouse from "../Assets/images/House.jpg";
+import House from "../Assets/images/House-Desktop.jpg";
 
 /* Search Options */
 const Buy =["Buy","Rent"]

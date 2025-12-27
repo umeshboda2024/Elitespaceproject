@@ -18,7 +18,7 @@ import InputBase from "@mui/material/InputBase";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import Elitespacelogo from "../images/Elitespacelogo-removebg-preview.png";
+import Elitespacelogo from "../Assets/images/Elitespacelogo-removebg-preview.png";
 import "./Navbar.css";
 
 const pages = ["Home", "Buy", "Rent", "Sell","Agent","Blog","About"];
