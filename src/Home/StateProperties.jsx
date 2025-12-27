@@ -1,76 +1,96 @@
 import React from "react";
 import {
   Card,
-  CardMedia,
   CardContent,
+  CardMedia,
   Typography,
-  Button,
-  Box,
+  Container,
+  Grid,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ApartmentIcon from "@mui/icons-material/Apartment";
 
+import Surat from "../Assets/images/Surat.jpg";
 import Ahmedabad from "../Assets/images/Ahmedabad.jpg";
 import Mumbai from "../Assets/images/Mumbai.jpg";
-import Surat from "../Assets/images/Surat.jpg";
 import Delhi from "../Assets/images/Delhi.jpg";
+import { BorderTop } from "@mui/icons-material";
 
-import "./Stateproperties.css";
+const Cities = [
+  { state: "Gujarat", name: "Surat", Image: Surat },
+  { state: "Gujarat", name: "Ahmedabad", Image: Ahmedabad },
+  { state: "Maharashtra", name: "Mumbai", Image: Mumbai },
+  { state: "Delhi", name: "Delhi", Image: Delhi },
+];
 
 const StateProperties = () => {
-  const properties = [
-    { price: "45 Lakh", state: "Gujarat", location: "Ahmedabad", image: Ahmedabad },
-    { price: "60 Lakh", state: "Gujarat", location: "Surat", image: Surat },
-    { price: "75 Lakh", state: "Maharashtra", location: "Mumbai", image: Mumbai },
-    { price: "90 Lakh", state: "Delhi", location: "Delhi", image: Delhi },
-  ];
-
   return (
-    <>
-    <Box className="State-background">
-    <Box className="state-container">
-      <Typography variant="h4" className="state-heading">
+    <Container sx={{ py: 6 }} >
+      <Typography variant="h4" textAlign="center" mb={1} fontWeight="bold">
         Explore Properties by State
       </Typography>
-      <Typography variant="body1" className="state-subheading">
-        Discover premium properties across major Indian cities
+      <Typography variant="body1" mb={2}>
+        Feeting Way of our State-Specific Properties with different type of type heptay in india
       </Typography>
 
-      <Box className="state-grid">
-        {properties.map((item, index) => (
-          <Card className="state-card" key={index}>
-            <CardMedia component="img" image={item.image} />
+      {/* ONE GRID CONTAINER */}
+      <Grid container spacing={4} justifyContent="center">
+        {Cities.map((city, index) => (
+          <Grid item key={index} size={3} xs={12} sm={6} md={3}>
+            <Card
+              sx={{
+                borderRadius: "14px",
+                transition: "0.4s",
+                cursor: "pointer",
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                  boxShadow: 6,
+                },
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="180"
+                image={city.Image}
+                alt={city.name}
+              />
 
-            <CardContent>
-              <Box className="state-text">
-                <Typography variant="subtitle1" className="state-name">
-                  {item.state}
+              <CardContent>
+                <Typography variant="body1"   fontWeight="bold" display={"flex"} justifyContent={"flex-start"}  >
+                  {city.state}
                 </Typography>
-                <Typography className="location" variant="body2">
-                  <LocationOnIcon fontSize="small" /> {item.location}
+
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  <LocationOnIcon color="primary" />
+                  {city.name}
                 </Typography>
-              </Box>
 
-              <Box className="state-price">
-                <CurrencyRupeeIcon color="primary" />
-                <Typography variant="h6">{item.price}</Typography>
-              </Box>
-
-              <Button
-                variant="contained"
-                endIcon={<ArrowForwardIcon />}
-                className="state-button"
-              >
-                View Properties
-              </Button>
-            </CardContent>
-          </Card>
+                <Typography
+                  variant="body2"
+                  mb={2}
+                  sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+                >
+                  <ApartmentIcon color="action" />
+                  2,200,000 sq.ft Available
+                </Typography>
+                  <Typography
+                  variant="body2"
+                  
+                  sx={{ borderTop:"1px solid black",  }}
+                >
+                  <ApartmentIcon color="action" />
+                     
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </Box>
-    </Box>
-    </Box>
-    </>
+      </Grid>
+    </Container>
   );
 };
 
