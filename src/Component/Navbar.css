@@ -1,0 +1,98 @@
+/* Navbar */
+.navbar {
+   background:rgba(0, 0, 0, 0) !important;
+}
+
+.navbar.dark {
+  background: black  !important;
+}
+
+/* Toolbar */
+.navbar-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Logo */
+.navbar-logo-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-logo {
+  height: 70px;
+}
+
+.navbar-title {
+  font-weight: 700;
+  letter-spacing: 2px;
+ color: #FFFFFF !important;
+}
+
+/* Menu */
+.navbar-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-btn {
+  color: white !important;
+  font-size: 16px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+}
+
+/* Mega Menu */
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  width: 160px;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.mega-menu-btn {
+  justify-content: flex-start !important;
+  color: black !important;
+  text-transform: none !important;
+}
+
+/* Right section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Search */
+.search-box {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: white;
+}
+
+/* Login */
+.login-btn {
+  border: 1px solid white !important;
+  color: rgba(0,0,0,0.65) !important;
+}
+
+/* Dialog */
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

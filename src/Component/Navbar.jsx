@@ -2,97 +2,36 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
-import Elitespacelogo from "../images/Elitespacelogo-removebg-preview.png";
+import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import { styled, alpha } from "@mui/material/styles";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 import InputBase from "@mui/material/InputBase";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-const pages = ["Home", "Buy", "Rent", "Sell Property", "More"];
+import Elitespacelogo from "../images/Elitespacelogo-removebg-preview.png";
+import "./Navbar.css";
+
+const pages = ["Home", "Buy", "Rent", "Sell","Agent","Blog","About"];
 const megaMenuData = {
   Buy: ["Apartments", "Villas", "Plots", "Commercial"],
   Rent: ["Apartments", "Villas", "PG/Hostels", "Offices"],
   More: ["Sell Property", "Services", "Agents", "Blog"],
 };
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.25) },
-  marginLeft: theme.spacing(2),
-  width: "100%",
-  [theme.breakpoints.up("sm")]: { width: "auto" },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("sm")]: {
-      width: "20ch",
-      "&:focus": { width: "30ch" },
-    },
-  },
-}));
-
-export default function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+export default function Navbar() {
+  const [activeMenu, setActiveMenu] = React.useState("");
   const [openLogin, setOpenLogin] = React.useState(false);
   const [openSignup, setOpenSignup] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [activeMenu, setActiveMenu] = React.useState("");
-
-  const handleOpenMenu = (event, menu) => {
-    setAnchorEl(event.currentTarget);
-    setActiveMenu(menu);
-  };
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-    setActiveMenu("");
-  };
-
-  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
-  const handleCloseNavMenu = () => setAnchorElNav(null);
-
-  const handleOpenLogin = () => setOpenLogin(true);
-  const handleCloseLogin = () => setOpenLogin(false);
-
-  const handleOpenSignup = () => {
-    setOpenLogin(false);
-    setOpenSignup(true);
-  };
-  const handleCloseSignup = () => setOpenSignup(false);
-
   const [mode, setMode] = React.useState(
     localStorage.getItem("theme") || "light"
   );
@@ -108,13 +47,7 @@ export default function ResponsiveAppBar() {
       createTheme({
         palette: {
           mode,
-          primary: {
-            main: "#0F4C5C",
-          },
-          background: {
-            default: mode === "dark" ? "black" : "#f5f5f5",
-            paper: mode === "dark" ? "black" : "#ffffff",
-          },
+          primary: { main: "#0F4C5C" },
         },
       }),
     [mode]
@@ -125,101 +58,31 @@ export default function ResponsiveAppBar() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
       </ThemeProvider>
-      <AppBar
-        position="static"
-        sx={{
-          background:
-            mode === "dark"
-              ? "black"
-              : "linear-gradient(90deg, #0F4C5C, #0d9ac5ff)",
-        }}
-      >
-        <Container maxWidth="xl">
-          <Toolbar
-            disableGutters
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            {/* Logo */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box
-                component="img"
-                src={Elitespacelogo}
-                alt="Elitespace Logo"
-                sx={{ height: 80, width: "auto" }}
-              />
-            </Box>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Elite Space
-            </Typography>
 
-            {/* Centered Pages */}
-            {/* Centered Pages with Mega Menu */}
-            <Box
-              sx={{
-                display: "flex",
-                gap: 2,
-                flexGrow: 1,
-                justifyContent: "center",
-              }}
-            >
+      <AppBar className={`navbar ${mode}`}>
+        <Container maxWidth="xl">
+          <Toolbar className="navbar-toolbar">
+            {/* Logo */}
+            <Box className="navbar-logo-box">
+              <img src={Elitespacelogo} alt="logo" className="navbar-logo" />
+              <Typography className="navbar-title">Elite Space</Typography>
+            </Box>
+
+            {/* Menu */}
+            <Box className="navbar-menu">
               {pages.map((menu) => (
                 <Box
                   key={menu}
-                  sx={{ position: "relative" }}
+                  className="menu-item"
                   onMouseEnter={() => setActiveMenu(menu)}
                   onMouseLeave={() => setActiveMenu("")}
                 >
-                  <Button
-                    sx={{
-                      color: "white",
-                      fontWeight: 600,
-                      fontSize: "17px",
-                      textTransform: "none",
-                    }}
-                  >
-                    {menu}
-                  </Button>
+                  <Button className="menu-btn">{menu}</Button>
 
-                  {/* Mega Menu Dropdown */}
                   {activeMenu === menu && megaMenuData[menu] && (
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: "100%",
-                        left: 0,
-                        width: 150,
-                        bgcolor: "white",
-                        boxShadow: 3,
-                        p: 2,
-                        display: "grid",
-                        // gridTemplateColumns: "1fr 1fr",
-                        gap: 1,
-                        zIndex: 10,
-                      }}
-                    >
+                    <Box className="mega-menu">
                       {megaMenuData[menu].map((item) => (
-                        <Button
-                          key={item}
-                          sx={{
-                            justifyContent: "flex-start",
-                            color: "black",
-                            textTransform: "none",
-                          }}
-                        >
+                        <Button key={item} className="mega-menu-btn">
                           {item}
                         </Button>
                       ))}
@@ -228,27 +91,10 @@ export default function ResponsiveAppBar() {
                 </Box>
               ))}
             </Box>
-            <IconButton color="inherit" onClick={toggleTheme}>
-              {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
 
-            {/* Search and Login */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
-              <Button
-                variant="outlined"
-                color="inherit"
-                sx={{ borderColor: "white", color: "white" }}
-                onClick={handleOpenLogin}
-              >
+            {/* Right */}
+            <Box className="navbar-right">
+              <Button className="login-btn" onClick={() => setOpenLogin(true)}>
                 Login
               </Button>
             </Box>
@@ -257,36 +103,32 @@ export default function ResponsiveAppBar() {
       </AppBar>
 
       {/* Login Dialog */}
-      <Dialog open={openLogin} onClose={handleCloseLogin}>
+      <Dialog open={openLogin} onClose={() => setOpenLogin(false)}>
         <DialogTitle>Login</DialogTitle>
-        <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-        >
-          <TextField label="Email" type="email" fullWidth />
+        <DialogContent className="dialog-content">
+          <TextField label="Email" fullWidth />
           <TextField label="Password" type="password" fullWidth />
-          <Button onClick={handleOpenSignup} sx={{ mt: 1 }}>
+          <Button onClick={() => { setOpenLogin(false); setOpenSignup(true); }}>
             Don't have an account? Sign Up
           </Button>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseLogin}>Cancel</Button>
+          <Button onClick={() => setOpenLogin(false)}>Cancel</Button>
           <Button variant="contained">Login</Button>
         </DialogActions>
       </Dialog>
 
       {/* Signup Dialog */}
-      <Dialog open={openSignup} onClose={handleCloseSignup}>
+      <Dialog open={openSignup} onClose={() => setOpenSignup(false)}>
         <DialogTitle>Sign Up</DialogTitle>
-        <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-        >
+        <DialogContent className="dialog-content">
           <TextField label="Full Name" fullWidth />
-          <TextField label="Email" type="email" fullWidth />
+          <TextField label="Email" fullWidth />
           <TextField label="Password" type="password" fullWidth />
           <TextField label="Confirm Password" type="password" fullWidth />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseSignup}>Cancel</Button>
+          <Button onClick={() => setOpenSignup(false)}>Cancel</Button>
           <Button variant="contained">Sign Up</Button>
         </DialogActions>
       </Dialog>
