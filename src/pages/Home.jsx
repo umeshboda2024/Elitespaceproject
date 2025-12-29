@@ -1,21 +1,26 @@
-import React from 'react'
-import Navbar from '../Component/Navbar'
-import Hero from '../Home/Hero'
-import StateProperties from '../Home/StateProperties'
-import Buyproperties from '../Home/Buyproperties'
-import Propertycard from '../Component/Propertycard'
-import Stateporpertycard from "../Component/Stateporpertycard"
-
+import React from "react";
+import Navbar from "../Component/Navbar";
+import Hero from "../Home/Hero";
+import StateProperties from "../Home/StateProperties";
+import Buyproperties from "../Home/Buyproperties";
+import Propertycard from "../Component/Propertycard";
+import Stateporpertycard from "../Component/Stateporpertycard";
+import Propertytypes from "../Component/Propertytypes";
+import StatusSection from "../Home/StatusSection";
+import Saleproperty from "../Home/Saleproperties";
 const Home = () => {
   return (
     <div>
       <Navbar></Navbar>
       <Hero></Hero>
-      <Stateporpertycard/>       
-      <Propertycard/>
+      <Stateporpertycard />
+      <Propertycard />
+      <Propertytypes />
+      <StatusSection />
+      <Saleproperty />
       {/* <Buyproperties></Buyproperties>  */}
     </div>
-  )
-}
+  );
+};
 
 export default Home;

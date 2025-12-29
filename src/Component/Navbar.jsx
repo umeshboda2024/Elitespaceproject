@@ -11,21 +11,18 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import InputBase from "@mui/material/InputBase";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import Elitespacelogo from "../Assets/images/Elitespacelogo-removebg-preview.png";
-import "./Navbar.css";
 
-const pages = ["Home", "Buy", "Rent", "Sell","Agent","Blog","About"];
+const pages = ["Home", "Buy", "Rent", "Sell", "Agent", "Blog", "About"];
+
 const megaMenuData = {
   Buy: ["Apartments", "Villas", "Plots", "Commercial"],
   Rent: ["Apartments", "Villas", "PG/Hostels", "Offices"],
-  More: ["Sell Property", "Services", "Agents", "Blog"],
 };
 
 export default function Navbar() {
@@ -47,42 +44,69 @@ export default function Navbar() {
       createTheme({
         palette: {
           mode,
-          primary: { main: "#0F4C5C" },
+          primary: {
+            main: mode === "dark" ? "#121212" : "#0F4C5C",
+          },
+          secondary: {
+            main: "#FFB703",
+          },
         },
       }),
     [mode]
   );
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-      <AppBar className={`navbar ${mode}`}>
+      {/* NAVBAR */}
+      <AppBar position="sticky" elevation={0}>
         <Container maxWidth="xl">
-          <Toolbar className="navbar-toolbar">
-            {/* Logo */}
-            <Box className="navbar-logo-box">
-              <img src={Elitespacelogo} alt="logo" className="navbar-logo" />
-              <Typography className="navbar-title">Elite Space</Typography>
+          <Toolbar sx={{ justifyContent: "space-between" }}>
+            {/* LOGO */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <img src={Elitespacelogo} alt="logo" height={70} />
+              <Typography variant="h6" fontWeight="bold">
+                Elite Space
+              </Typography>
             </Box>
 
-            {/* Menu */}
-            <Box className="navbar-menu">
+            {/* MENU */}
+            <Box sx={{ display: "flex", gap: 3 }}>
               {pages.map((menu) => (
                 <Box
                   key={menu}
-                  className="menu-item"
                   onMouseEnter={() => setActiveMenu(menu)}
                   onMouseLeave={() => setActiveMenu("")}
+                  sx={{ position: "relative" }}
                 >
-                  <Button className="menu-btn">{menu}</Button>
+                  <Button sx={{ color: "#fff", textTransform: "none" }}>
+                    {menu}
+                  </Button>
 
                   {activeMenu === menu && megaMenuData[menu] && (
-                    <Box className="mega-menu">
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: "100%",
+                        left: 0,
+                        bgcolor: "background.paper",
+                        boxShadow: 4,
+                        borderRadius: 2,
+                        p: 1,
+                        minWidth: 180,
+                        zIndex: 10,
+                      }}
+                    >
                       {megaMenuData[menu].map((item) => (
-                        <Button key={item} className="mega-menu-btn">
+                        <Button
+                          key={item}
+                          fullWidth
+                          sx={{
+                            justifyContent: "flex-start",
+                            textTransform: "none",
+                          }}
+                        >
                           {item}
                         </Button>
                       ))}
@@ -92,9 +116,18 @@ export default function Navbar() {
               ))}
             </Box>
 
-            {/* Right */}
-            <Box className="navbar-right">
-              <Button className="login-btn" onClick={() => setOpenLogin(true)}>
+            {/* RIGHT */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <IconButton onClick={toggleTheme} color="inherit">
+                {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+              </IconButton>
+
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ borderRadius: "20px", textTransform: "none" }}
+                onClick={() => setOpenLogin(true)}
+              >
                 Login
               </Button>
             </Box>
@@ -102,36 +135,44 @@ export default function Navbar() {
         </Container>
       </AppBar>
 
-      {/* Login Dialog */}
+      {/* LOGIN DIALOG */}
       <Dialog open={openLogin} onClose={() => setOpenLogin(false)}>
         <DialogTitle>Login</DialogTitle>
-        <DialogContent className="dialog-content">
+        <DialogContent
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        >
           <TextField label="Email" fullWidth />
           <TextField label="Password" type="password" fullWidth />
-          <Button onClick={() => { setOpenLogin(false); setOpenSignup(true); }}>
-            Don't have an account? Sign Up
-          </Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenLogin(false)}>Cancel</Button>
           <Button variant="contained">Login</Button>
         </DialogActions>
+        <Button
+          onClick={() => {
+            setOpenLogin(false);
+            setOpenSignup(true);
+          }}
+        >
+          Don’t have an account? Sign Up
+        </Button>
       </Dialog>
 
-      {/* Signup Dialog */}
+      {/* SIGNUP DIALOG */}
       <Dialog open={openSignup} onClose={() => setOpenSignup(false)}>
         <DialogTitle>Sign Up</DialogTitle>
-        <DialogContent className="dialog-content">
-          <TextField label="Full Name" fullWidth />
+        <DialogContent
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        >
+          <TextField label="Name" fullWidth />
           <TextField label="Email" fullWidth />
           <TextField label="Password" type="password" fullWidth />
-          <TextField label="Confirm Password" type="password" fullWidth />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenSignup(false)}>Cancel</Button>
-          <Button variant="contained">Sign Up</Button>
+          <Button variant="contained">Create Account</Button>
         </DialogActions>
       </Dialog>
-    </>
+    </ThemeProvider>
   );
 }
