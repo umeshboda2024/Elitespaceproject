@@ -8,6 +8,7 @@ import Stateporpertycard from "../Component/Stateporpertycard";
 import Propertytypes from "../Component/Propertytypes";
 import StatusSection from "../Home/StatusSection";
 import Saleproperty from "../Home/Saleproperties";
+import { Agentcard } from "../Component/Agentcard";
 const Home = () => {
   return (
     <div>
@@ -18,6 +19,7 @@ const Home = () => {
       <Propertytypes />
       <StatusSection />
       <Saleproperty />
+      <Agentcard />
       {/* <Buyproperties></Buyproperties>  */}
     </div>
   );

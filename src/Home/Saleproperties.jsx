@@ -1,20 +1,22 @@
 import {
   Box,
-  Button,
   Container,
   Typography,
-  Grid,
   IconButton,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActionArea,
 } from "@mui/material";
-import React, { useState } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import CardActionArea from "@mui/material/CardActionArea";
+import React, { useRef } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import Salepropertyimage from "../Assets/images/Salepropertyimage1.jpg";
+import Salepropertyimage1 from "../Assets/images/Salepropertyimage1.jpg";
+import Salepropertyimage2 from "../Assets/images/Salepropertyimage2.jpg";
+import Salepropertyimage3 from "../Assets/images/Salepropertyimage3.jpg";
+import Salepropertyimage4 from "../Assets/images/Salepropertyimage4.jpg";
+
 import Villa from "../Assets/images/Villaimgae.jpg";
 import Rowhouseimage from "../Assets/images/Rowhouseimage.jpg";
 import Farmhouseimage from "../Assets/images/Farmhouseimage.jpg";
@@ -22,71 +24,80 @@ import Farmhouseimage from "../Assets/images/Farmhouseimage.jpg";
 const Saleproperty = () => {
   const Properties = [
     {
-      image: Salepropertyimage,
+      image: Salepropertyimage1,
       name: "Flat & Appartment",
-      Flate: "2 BHK /1350 sq.ft",
+      flat: "2 BHK /1350 sq.ft",
       location: "Vesu, Surat",
     },
     {
-      image: Villa,
+      image: Salepropertyimage2,
       name: "Luxury Villa",
-      Flate: "4 BHK /4000 sq.ft",
+      flat: "4 BHK /4000 sq.ft",
       location: "Pal, Surat",
     },
     {
-      image: Rowhouseimage,
+      image: Salepropertyimage3,
       name: "Row House",
-      Flate: "3 BHK /2000 sq.ft",
+      flat: "3 BHK /2000 sq.ft",
       location: "Adajan, Surat",
     },
     {
       image: Farmhouseimage,
       name: "Farm House",
-      Flate: "5 BHK /5000 sq.ft",
+      flat: "5 BHK /5000 sq.ft",
       location: "Katargam, Surat",
     },
     {
-      image: Salepropertyimage,
+      image: Salepropertyimage4,
       name: "Flat & Appartment",
-      Flate: "2 BHK /1350 sq.ft",
+      flat: "2 BHK /1350 sq.ft",
       location: "Vesu, Surat",
     },
     {
       image: Villa,
       name: "Luxury Villa",
-      Flate: "4 BHK /4000 sq.ft",
+      flat: "4 BHK /4000 sq.ft",
       location: "Pal, Surat",
     },
     {
       image: Rowhouseimage,
       name: "Row House",
-      Flate: "3 BHK /2000 sq.ft",
+      flat: "3 BHK /2000 sq.ft",
       location: "Adajan, Surat",
     },
     {
       image: Farmhouseimage,
       name: "Farm House",
-      Flate: "5 BHK /5000 sq.ft",
+      flat: "5 BHK /5000 sq.ft",
       location: "Katargam, Surat",
     },
   ];
 
-  const [page, setPage] = useState(0);
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(Properties.length / itemsPerPage);
+  const scrollRef = useRef();
+  const RentRef = useRef();
+  const scroll = (direction) => {
+    if (!scrollRef.current) return;
 
-  const handleNext = () => {
-    if (page < totalPages - 1) setPage(page + 1);
+    scrollRef.current.scrollBy({
+      left:
+        direction === "left"
+          ? -scrollRef.current.offsetWidth
+          : scrollRef.current.offsetWidth,
+      behavior: "smooth",
+    });
   };
 
-  const handlePrev = () => {
-    if (page > 0) setPage(page - 1);
-  };
+  const Rentscroll = (direction) => {
+    if (!RentRef.current) return;
 
-  const visibleProperties = Properties.slice(
-    page * itemsPerPage,
-    (page + 1) * itemsPerPage
-  );
+    RentRef.current.scrollBy({
+      left:
+        direction === "left"
+          ? -RentRef.current.offsetWidth
+          : RentRef.current.offsetWidth,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <Box py={4} mt={5}>
@@ -94,14 +105,43 @@ const Saleproperty = () => {
         Latest Sale Properties / Rent Properties
       </Typography>
       <Container maxWidth="xl">
-        <Typography variant="body1" textAlign={"left"} mb={2}>
+        <Typography variant="body1" mb={2} fontWeight={700}>
           Sale Properties
         </Typography>
+        <Box position="relative">
+          {/* Left Arrow */}
+          <IconButton
+            onClick={() => scroll("left")}
+            sx={{
+              position: "absolute",
+              left: 0,
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 10,
+              bgcolor: "white",
+              "&:hover": { bgcolor: "grey.200" },
+            }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
 
-        <Grid container spacing={3}>
-          {visibleProperties.map((property, index) => (
-            <Grid item size={3} xs={12} sm={6} md={3} key={index}>
-              <Card sx={{ maxWidth: "100%", overflow: "hidden" }}>
+          {/* Cards Container */}
+          <Box
+            ref={scrollRef}
+            display="flex"
+            gap={2}
+            overflow="auto"
+            sx={{
+              overflowX: "auto",
+              overflowY: "hidden",
+              scrollBehavior: "smooth",
+              py: 1,
+              "&::-webkit-scrollbar": { display: "none" }, // hide scrollbar in Chrome/Safari
+              scrollbarWidth: "none",
+            }}
+          >
+            {Properties.map((property, index) => (
+              <Card key={index} sx={{ minWidth: 350, flexShrink: 0 }}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -114,24 +154,107 @@ const Saleproperty = () => {
                       {property.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {property.Flate} - {property.location}
+                      {property.flat} - {property.location}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>
-            </Grid>
-          ))}
-        </Grid>
+            ))}
+          </Box>
 
-        <Box textAlign="center" mt={2}>
-          <IconButton onClick={handlePrev} disabled={page === 0}>
-            <ArrowBackIcon />
-          </IconButton>
-          <IconButton onClick={handleNext} disabled={page === totalPages - 1}>
+          {/* Right Arrow */}
+          <IconButton
+            onClick={() => scroll("right")}
+            sx={{
+              position: "absolute",
+              right: 0,
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 10,
+              bgcolor: "white",
+              "&:hover": { bgcolor: "grey.200" },
+            }}
+          >
             <ArrowForwardIcon />
           </IconButton>
         </Box>
       </Container>
+      <Box py={4} mt={5}>
+        <Container maxWidth="xl">
+          <Typography variant="body1" mb={2} fontWeight={700}>
+            Rent Properties
+          </Typography>
+          <Box position="relative">
+            {/* Left Arrow */}
+            <IconButton
+              onClick={() => Rentscroll("left")}
+              sx={{
+                position: "absolute",
+                left: 0,
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 10,
+                bgcolor: "white",
+                "&:hover": { bgcolor: "grey.200" },
+              }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+
+            {/* Cards Container */}
+            <Box
+              ref={RentRef}
+              display="flex"
+              gap={2}
+              sx={{
+                overflowX: "auto",
+                overflowY: "hidden",
+                scrollBehavior: "smooth",
+                py: 1,
+                "&::-webkit-scrollbar": { display: "none" }, // hide scrollbar in Chrome/Safari
+                scrollbarWidth: "none",
+              }}
+            >
+              {Properties.map((property, index) => (
+                <Card key={index} sx={{ minWidth: 300, flexShrink: 0 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      src={property.image}
+                      alt={property.name}
+                    />
+                    <CardContent>
+                      <Typography variant="body1" fontWeight={700}>
+                        {property.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {property.flat} - {property.location}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              ))}
+            </Box>
+
+            {/* Right Arrow */}
+            <IconButton
+              onClick={() => Rentscroll("right")}
+              sx={{
+                position: "absolute",
+                right: 0,
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 10,
+                bgcolor: "white",
+                "&:hover": { bgcolor: "grey.200" },
+              }}
+            >
+              <ArrowForwardIcon />
+            </IconButton>
+          </Box>
+        </Container>
+      </Box>
     </Box>
   );
 };
