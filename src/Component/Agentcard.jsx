@@ -32,25 +32,25 @@ export const Agentcard = () => {
     {
       image: Agentimage,
       name: "Rahul",
-      saleCount: "39",
+      saleCount: "18",
       saleText: "Properties for sale",
-      rentCount: "16",
+      rentCount: "54",
       rentText: "Properties for rent",
     },
     {
       image: Agentimage,
       name: "Kamal Bhattar",
-      saleCount: "39",
+      saleCount: "37",
       saleText: "Properties for sale",
-      rentCount: "16",
+      rentCount: "34",
       rentText: "Properties for rent",
     },
     {
       image: Agentimage,
       name: "Amit Chaudhary ",
-      saleCount: "39",
+      saleCount: "32",
       saleText: "Properties for sale",
-      rentCount: "16",
+      rentCount: "18",
       rentText: "Properties for rent",
     },
     {
@@ -58,14 +58,14 @@ export const Agentcard = () => {
       name: "Desai Rakesh",
       saleCount: "39",
       saleText: "Properties for sale",
-      rentCount: "16",
+      rentCount: "14",
       rentText: "Properties for rent",
     },
   ];
 
   return (
-    <Container sx={{ py: 5, mt:5}}>
-       <Typography variant="h4" align="center" fontWeight={700} mb={5}>
+    <Container sx={{ py: 5, mt: 5 }}>
+      <Typography variant="h4" align="center" fontWeight={700} mb={5}>
         Top Real Estate Agents List
       </Typography>
       <Grid container spacing={4}>

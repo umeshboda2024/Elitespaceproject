@@ -10,6 +10,9 @@ import StatusSection from "../Home/StatusSection";
 import Saleproperty from "../Home/Saleproperties";
 import { Agentcard } from "../Component/Agentcard";
 import WhyChooseUs from "../Component/Whychoose";
+import ReviewSection from "../Component/Reviewsection";
+import Footer from "../Component/Footer";
+import GetInTouchSection from "../Component/Getintouch";
 const Home = () => {
   return (
     <div>
@@ -21,7 +24,10 @@ const Home = () => {
       <StatusSection />
       <Saleproperty />
       <Agentcard />
-      <WhyChooseUs/>
+      <WhyChooseUs />
+      <ReviewSection />
+      <GetInTouchSection />
+      <Footer />
       {/* <Buyproperties></Buyproperties>  */}
     </div>
   );

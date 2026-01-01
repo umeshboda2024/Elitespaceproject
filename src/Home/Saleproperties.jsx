@@ -104,6 +104,7 @@ const Saleproperty = () => {
       <Typography variant="h4" mb={2}>
         Latest Sale Properties / Rent Properties
       </Typography>
+      {/* sale properties  */}
       <Container maxWidth="xl">
         <Typography variant="body1" mb={2} fontWeight={700}>
           Sale Properties
@@ -179,6 +180,8 @@ const Saleproperty = () => {
           </IconButton>
         </Box>
       </Container>
+
+      {/* Rent properties  */}
       <Box py={4} mt={5}>
         <Container maxWidth="xl">
           <Typography variant="body1" mb={2} fontWeight={700}>
@@ -216,7 +219,7 @@ const Saleproperty = () => {
               }}
             >
               {Properties.map((property, index) => (
-                <Card key={index} sx={{ minWidth: 300, flexShrink: 0 }}>
+                <Card key={index} sx={{ minWidth: 350, flexShrink: 0 }}>
                   <CardActionArea>
                     <CardMedia
                       component="img"

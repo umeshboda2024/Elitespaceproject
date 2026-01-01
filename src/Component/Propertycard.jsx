@@ -127,8 +127,8 @@ const Propertycard = () => {
             Explore Buy Properties
           </Typography>
           <Typography variant="body1" mb={2}>
-            Feeting Way of our State-Specific Properties with different type of
-            type heptay in india
+            Explore state-specific properties with multiple property types
+            across India
           </Typography>
 
           {/* ONE GRID CONTAINER */}
@@ -264,8 +264,8 @@ const Propertycard = () => {
             Explore Rent Properties
           </Typography>
           <Typography variant="body1" mb={2}>
-            Feeting Way of our State-Specific Properties with different type of
-            type heptay in india
+            Explore state-specific properties with multiple property types
+            across India
           </Typography>
 
           {/* ONE GRID CONTAINER */}
