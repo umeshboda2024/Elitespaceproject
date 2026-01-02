@@ -121,285 +121,336 @@ const Rent = [
 const Propertycard = () => {
   return (
     <>
-      <Box sx={{ position: "relative" }}>
-        <Container sx={{ py: 6 }}>
-          <Typography variant="h4" textAlign="center" mb={1} fontWeight="bold">
-            Explore Buy Properties
-          </Typography>
-          <Typography variant="body1" mb={2}>
-            Explore state-specific properties with multiple property types
-            across India
-          </Typography>
+      <Box mt={15}>
+        <Container>
+          <Box sx={{ position: "relative" }}>
+            {/* <Container sx={{ py: 6 }}> */}
+            <Typography
+              variant="h4"
+              textAlign="center"
+              mb={1}
+              fontWeight={600}
+              fontFamily="Poppins"
+            >
+              Explore Buy Properties
+            </Typography>
+            <Typography variant="body1" mb={2} fontFamily="Inter">
+              Explore state-specific properties with multiple property types
+              across India
+            </Typography>
 
-          {/* ONE GRID CONTAINER */}
-          <Grid container spacing={4} justifyContent="center">
-            {Cities.map((city, index) => (
-              <Grid item key={index} size={4} xs={12} sm={6} md={3}>
-                <Card
-                  sx={{
-                    borderRadius: "14px",
-                    transition: "0.4s",
-                    cursor: "pointer",
-                    position: "relative",
-                    "&:hover": {
-                      transform: "translateY(-6px)",
-                      boxShadow: 6,
+            {/* ONE GRID CONTAINER */}
+            <Grid container spacing={4} justifyContent="center">
+              {Cities.map((city, index) => (
+                <Grid item key={index} size={4} xs={12} sm={6} md={3}>
+                  <Card
+                    sx={{
+                      borderRadius: "14px",
+                      transition: "0.4s",
+                      cursor: "pointer",
+                      position: "relative",
+                      "&:hover": {
+                        transform: "translateY(-6px)",
+                        boxShadow: 6,
 
-                      "& .hover-btn": {
-                        opacity: 1,
-                        transform: "translateY(0)",
-                      },
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="180"
-                    image={city.Image}
-                    alt={city.name}
-                  />
-
-                  <CardContent>
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      display={"flex"}
-                      justifyContent={"flex-start"}
-                    >
-                      {city.state}
-                    </Typography>
-
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                    >
-                      <LocationOnIcon color="primary" />
-                      {city.name}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                    >
-                      {/* <LocationOnIcon color="primary" /> */}
-                      {city.flate}
-                    </Typography>
-
-                    <Typography
-                      variant="body1"
-                      mb={2}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        mt: 1,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <ApartmentIcon color="action" />
-                      <CurrencyRupeeIcon />
-                      {city.Price}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ borderTop: "1px solid black" }}
-                    >
-                      {/* <ApartmentIcon color="action" /> */}
-                    </Typography>
-                    {/* Hover Button */}
-                    <Box
-                      mt={2}
-                      className="hover-btn"
-                      sx={{
-                        mt: 2,
-                        display: "flex",
-                        justifyContent: "center",
-                        opacity: 0,
-                        transform: "translateY(10px)",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        sx={{
-                          width: "180px",
-                          borderRadius: "30px",
-                          backgroundColor: "red",
-                          px: 3,
-                          fontSize: "18px",
-                          textTransform: "none",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              marginTop: 5,
-              px: 4,
-              borderRadius: "15px",
-              textTransform: "none",
-              fontWeight: "bold",
-              backgroundColor: "#0F4C5C",
-              gap: 1,
-            }}
-          >
-            View All Buy Properties <ArrowForwardIcon />
-          </Button>
-        </Container>
-      </Box>
-      {/* Rent properties  */}
-      <Box sx={{ position: "relative" }}>
-        <Container sx={{ py: 6 }}>
-          <Typography variant="h4" textAlign="center" mb={1} fontWeight="bold">
-            Explore Rent Properties
-          </Typography>
-          <Typography variant="body1" mb={2}>
-            Explore state-specific properties with multiple property types
-            across India
-          </Typography>
-
-          {/* ONE GRID CONTAINER */}
-          <Grid container spacing={4} justifyContent="center">
-            {Rent.map((Rent, index) => (
-              <Grid item key={index} size={4} xs={12} sm={6} md={3}>
-                <Card
-                  sx={{
-                    borderRadius: "14px",
-                    transition: "0.4s",
-                    cursor: "pointer",
-                    position: "relative",
-                    overflow: "hidden",
-                    "&:hover": {
-                      transform: "translateY(-6px)",
-                      boxShadow: 6,
-
-                      "& .hover-btn": {
-                        opacity: 1,
-                        transform: "translateY(0)",
-                        "& .Imagehover": {
-                          transform: "scale(1.1)",
+                        "& .hover-btn": {
+                          opacity: 1,
+                          transform: "translateY(0)",
                         },
                       },
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="180"
-                    image={Rent.Image}
-                    alt={Rent.name}
-                    className="Imagehover"
-                    sx={{
-                      transition: "transform 0.4s ease",
                     }}
-                  />
+                  >
+                    <CardMedia
+                      component="img"
+                      height="180"
+                      image={city.Image}
+                      alt={city.name}
+                    />
 
-                  <CardContent>
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      display={"flex"}
-                      justifyContent={"flex-start"}
-                    >
-                      {Rent.state}
-                    </Typography>
+                    <CardContent>
+                      <Typography
+                        variant="body1"
+                        fontWeight="bold"
+                        display={"flex"}
+                        justifyContent={"flex-start"}
+                        sx={{ fontFamily: "Poppins", fontWeight: "700" }}
+                      >
+                        {city.state}
+                      </Typography>
 
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                    >
-                      <LocationOnIcon color="primary" />
-                      {Rent.name}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                    >
-                      {/* <LocationOnIcon color="primary" /> */}
-                      {Rent.flate}
-                    </Typography>
-
-                    <Typography
-                      variant="body1"
-                      mb={2}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        mt: 1,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <ApartmentIcon color="action" />
-                      <CurrencyRupeeIcon />
-                      {Rent.Price}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ borderTop: "1px solid black" }}
-                    >
-                      {/* <ApartmentIcon color="action" /> */}
-                    </Typography>
-                    {/* Hover Button */}
-                    <Box
-                      mt={2}
-                      className="hover-btn"
-                      sx={{
-                        mt: 2,
-                        display: "flex",
-                        justifyContent: "center",
-                        opacity: 0,
-                        transform: "translateY(10px)",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      <Button
-                        variant="contained"
+                      <Typography
+                        variant="h6"
+                        fontWeight="bold"
                         sx={{
-                          width: "180px",
-                          borderRadius: "30px",
-                          backgroundColor: "red",
-                          px: 3,
-                          fontSize: "18px",
-                          textTransform: "none",
-                          fontWeight: "bold",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          fontFamily: "Poppins",
+                          fontWeight: "500",
                         }}
                       >
-                        View Details
-                      </Button>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              marginTop: 5,
-              px: 4,
-              borderRadius: "10px",
-              textTransform: "none",
-              fontWeight: "bold",
-              backgroundColor: "#0F4C5C",
-              gap: 1,
-            }}
-          >
-            View All Rent Properties <ArrowForwardIcon />
-          </Button>
+                        <LocationOnIcon color="primary" />
+                        {city.name}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        fontWeight="bold"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          fontFamily: "Poppins",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {/* <LocationOnIcon color="primary" /> */}
+                        {city.flate}
+                      </Typography>
+
+                      <Typography
+                        variant="body1"
+                        mb={2}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          mt: 1,
+                          fontWeight: "bold",
+                          fontFamily: "Inter",
+                        }}
+                      >
+                        <ApartmentIcon color="action" />
+                        <CurrencyRupeeIcon />
+
+                        {city.Price}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ borderTop: "1px solid black" }}
+                      >
+                        {/* <ApartmentIcon color="action" /> */}
+                      </Typography>
+                      {/* Hover Button */}
+                      <Box
+                        // mt={2}
+                        className="hover-btn"
+                        sx={{
+                          mt: 2,
+                          display: "flex",
+                          justifyContent: "center",
+                          opacity: 0,
+                          transform: "translateY(10px)",
+                          transition: "all 0.3s ease",
+                        }}
+                      >
+                        {/* <Button
+                          variant="contained"
+                          sx={{
+                            width: "180px",
+                            borderRadius: "30px",
+                            backgroundColor: "red",
+                            px: 3,
+                            fontSize: "18px",
+                            textTransform: "none",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          View Details
+                        </Button> */}
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                marginTop: 5,
+                px: 4,
+                borderRadius: "15px",
+                textTransform: "none",
+                fontWeight: "bold",
+                fontFamily: "Poppins (500)",
+                backgroundColor: "#0F4C5C",
+                gap: 1,
+              }}
+            >
+              View All Buy Properties <ArrowForwardIcon />
+            </Button>
+            {/* </Container> */}
+          </Box>
+          {/* Rent properties  */}
+          <Box sx={{ position: "relative", py: 6 }}>
+            {/* <Container sx={{ py: 6 }}> */}
+            <Typography
+              variant="h4"
+              textAlign="center"
+              mb={1}
+              fontWeight="bold"
+              sx={{
+                fontWeight: "600",
+                fontFamily: "Poppins",
+              }}
+            >
+              Explore Rent Properties
+            </Typography>
+            <Typography variant="body1" mb={2}>
+              Explore state-specific properties with multiple property types
+              across India
+            </Typography>
+
+            {/* ONE GRID CONTAINER */}
+            <Grid container spacing={4} justifyContent="center">
+              {Rent.map((Rent, index) => (
+                <Grid item key={index} size={4} xs={12} sm={6} md={3}>
+                  <Card
+                    sx={{
+                      borderRadius: "14px",
+                      transition: "0.4s",
+                      cursor: "pointer",
+                      position: "relative",
+                      overflow: "hidden",
+                      "&:hover": {
+                        transform: "translateY(-6px)",
+                        boxShadow: 6,
+
+                        "& .hover-btn": {
+                          opacity: 1,
+                          transform: "translateY(0)",
+                          "& .Imagehover": {
+                            transform: "scale(1.1)",
+                          },
+                        },
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="180"
+                      image={Rent.Image}
+                      alt={Rent.name}
+                      className="Imagehover"
+                      sx={{
+                        transition: "transform 0.4s ease",
+                      }}
+                    />
+
+                    <CardContent>
+                      <Typography
+                        variant="body1"
+                        fontWeight="bold"
+                        display={"flex"}
+                        justifyContent={"flex-start"}
+                        sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+                      >
+                        {Rent.state}
+                      </Typography>
+
+                      <Typography
+                        variant="h6"
+                        fontWeight="bold"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          fontFamily: "Poppins",
+                          fontWeight: "500",
+                        }}
+                      >
+                        <LocationOnIcon color="primary" />
+                        {Rent.name}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        fontWeight="bold"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          fontFamily: "Poppins",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {/* <LocationOnIcon color="primary" /> */}
+                        {Rent.flate}
+                      </Typography>
+
+                      <Typography
+                        variant="body1"
+                        mb={2}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          mt: 1,
+                          fontWeight: "bold",
+                          fontFamily: "Inter",
+                          fontFamily: "Poppins",
+                          fontWeight: "500",
+                        }}
+                      >
+                        <ApartmentIcon color="action" />
+                        <CurrencyRupeeIcon />
+                        {Rent.Price}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ borderTop: "1px solid black" }}
+                      >
+                        {/* <ApartmentIcon color="action" /> */}
+                      </Typography>
+                      {/* Hover Button */}
+                      <Box
+                        mt={2}
+                        className="hover-btn"
+                        sx={{
+                          mt: 2,
+                          display: "flex",
+                          justifyContent: "center",
+                          opacity: 0,
+                          transform: "translateY(10px)",
+                          transition: "all 0.3s ease",
+                        }}
+                      >
+                        <Button
+                          variant="contained"
+                          sx={{
+                            width: "180px",
+                            borderRadius: "30px",
+                            backgroundColor: "red",
+                            px: 3,
+                            fontSize: "18px",
+                            textTransform: "none",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                marginTop: 5,
+                px: 4,
+                borderRadius: "10px",
+                textTransform: "none",
+                fontWeight: "bold",
+                backgroundColor: "#0F4C5C",
+                gap: 1,
+              }}
+            >
+              View All Rent Properties <ArrowForwardIcon />
+            </Button>
+            {/* </Container> */}
+          </Box>
         </Container>
       </Box>
     </>

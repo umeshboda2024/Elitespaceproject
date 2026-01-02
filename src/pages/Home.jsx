@@ -13,6 +13,7 @@ import WhyChooseUs from "../Component/Whychoose";
 import ReviewSection from "../Component/Reviewsection";
 import Footer from "../Component/Footer";
 import GetInTouchSection from "../Component/Getintouch";
+import PropertyDetails from "../Home/BuyViewdetail";
 const Home = () => {
   return (
     <div>
@@ -28,7 +29,7 @@ const Home = () => {
       <ReviewSection />
       <GetInTouchSection />
       <Footer />
-      {/* <Buyproperties></Buyproperties>  */}
+      {/* <Buyproperties /> */}
     </div>
   );
 };

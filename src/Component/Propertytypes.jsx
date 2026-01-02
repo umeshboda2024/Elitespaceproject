@@ -24,7 +24,8 @@ const Propertytypes = () => {
 
   return (
     <Box py={4} mt={5}>
-      <Container maxWidth="xl">
+      <Container>
+        {/* <Container maxWidth="xl"> */}
         <Grid container spacing={3} justifyContent={"center"}>
           {Properties.map((property, index) => {
             return (
@@ -78,6 +79,7 @@ const Propertytypes = () => {
             View All Properties <ArrowForwardIcon />
           </Button>
         </Grid>
+        {/* </Container> */}
       </Container>
     </Box>
   );

@@ -100,12 +100,13 @@ const Saleproperty = () => {
   };
 
   return (
-    <Box py={4} mt={5}>
-      <Typography variant="h4" mb={2}>
-        Latest Sale Properties / Rent Properties
-      </Typography>
-      {/* sale properties  */}
-      <Container maxWidth="xl">
+    <Container>
+      <Box py={4} mt={5}>
+        <Typography variant="h4" mb={2}>
+          Latest Sale Properties / Rent Properties
+        </Typography>
+        {/* sale properties  */}
+        {/* <Container maxWidth="xl"> */}
         <Typography variant="body1" mb={2} fontWeight={700}>
           Sale Properties
         </Typography>
@@ -179,11 +180,11 @@ const Saleproperty = () => {
             <ArrowForwardIcon />
           </IconButton>
         </Box>
-      </Container>
+        {/* </Container> */}
 
-      {/* Rent properties  */}
-      <Box py={4} mt={5}>
-        <Container maxWidth="xl">
+        {/* Rent properties  */}
+        <Box py={4} mt={5}>
+          {/* <Container maxWidth="xl"> */}
           <Typography variant="body1" mb={2} fontWeight={700}>
             Rent Properties
           </Typography>
@@ -256,9 +257,10 @@ const Saleproperty = () => {
               <ArrowForwardIcon />
             </IconButton>
           </Box>
-        </Container>
+          {/* </Container> */}
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
