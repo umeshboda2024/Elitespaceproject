@@ -13,12 +13,13 @@ import WhyChooseUs from "../Component/Whychoose";
 import ReviewSection from "../Component/Reviewsection";
 import Footer from "../Component/Footer";
 import GetInTouchSection from "../Component/Getintouch";
-import PropertyDetails from "../Home/BuyViewdetail";
+import BuyProperties from "../Home/Buyproperties";
+import LoginPage from "../Home/Loginpage";
 const Home = () => {
   return (
     <div>
-      <Navbar></Navbar>
-      <Hero></Hero>
+      {/* <Navbar></Navbar> */}
+      {/* <Hero></Hero>
       <Stateporpertycard />
       <Propertycard />
       <Propertytypes />
@@ -27,9 +28,10 @@ const Home = () => {
       <Agentcard />
       <WhyChooseUs />
       <ReviewSection />
-      <GetInTouchSection />
-      <Footer />
-      {/* <Buyproperties /> */}
+      <GetInTouchSection /> */}
+      {/* <Footer /> */}
+      {/* <LoginPage /> */}
+      <BuyProperties />
     </div>
   );
 };

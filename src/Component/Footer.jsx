@@ -15,9 +15,9 @@ export default function Footer() {
   return (
     <Box sx={{ backgroundColor: "#0b5c6b", color: "#fff", mt: 8 }}>
       <Container sx={{ py: 6 }}>
-        <Grid container spacing={10}>
+        <Grid container spacing={{ xs: 4, md: 10 }}>
           {/* Brand */}
-          <Grid item size={4} xs={12} md={3}>
+          <Grid item size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="h6" fontWeight="bold">
               Elite Space
             </Typography>
@@ -28,7 +28,7 @@ export default function Footer() {
           </Grid>
 
           {/* Quick Links */}
-          <Grid item xs={12} md={3}>
+          <Grid item size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="h6" fontWeight="bold" mb={2}>
               Quick Links
             </Typography>
@@ -42,7 +42,7 @@ export default function Footer() {
           </Grid>
 
           {/* Cities */}
-          <Grid item xs={12} md={3}>
+          <Grid item size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="h6" fontWeight="bold" mb={2}>
               Popular Cities
             </Typography>
@@ -58,7 +58,7 @@ export default function Footer() {
           </Grid>
 
           {/* Contact */}
-          <Grid item xs={12} md={3}>
+          <Grid item size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="h6" fontWeight="bold" mb={2}>
               Contact Us
             </Typography>

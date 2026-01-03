@@ -8,11 +8,10 @@ import {
   Grid,
   Button,
   Box,
-  Divider,
+  Chip,
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ApartmentIcon from "@mui/icons-material/Apartment";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 
 import Buyimage1 from "../Assets/images/BuyImage1,jpg.jpg";
@@ -21,6 +20,12 @@ import Buyimage3 from "../Assets/images/BuyImage3.jpg";
 import Buyimage4 from "../Assets/images/BuyImage4.jpg";
 import Buyimage5 from "../Assets/images/BuyImage5.jpg";
 import Buyimage6 from "../Assets/images/BuyImage6.jpg";
+import Buyimage7 from "../Assets/images/BuyImage7.jpg";
+import Buyimage8 from "../Assets/images/BuyImage8.jpg";
+import Buyimage9 from "../Assets/images/BuyImage9.jpg";
+import Buyimage10 from "../Assets/images/BuyImage10.jpg";
+import Buyimage11 from "../Assets/images/BuyImage11.jpg";
+import Buyimage12 from "../Assets/images/BuyImage12.jpg";
 
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
@@ -62,7 +67,6 @@ const Cities = [
     perSqft: "₹5,263 per sqft",
     owner: "Ramesh",
   },
-
   {
     state: "Gujarat",
     name: "Surat",
@@ -87,11 +91,82 @@ const Cities = [
     perSqft: "₹5,263 per sqft",
     owner: "Ramesh",
   },
-
   {
     state: "Gujarat",
     name: "Surat",
     Image: Buyimage6,
+    flate: "2 BHK Flat",
+    status: "Ready to Move",
+    carpetArea: "1330 sqft",
+    floor: "13 out of 13",
+    price: "₹70 Lac",
+    perSqft: "₹5,263 per sqft",
+    owner: "Ramesh",
+  },
+  {
+    state: "Gujarat",
+    name: "Surat",
+    Image: Buyimage7,
+    flate: "2 BHK Flat",
+    status: "Ready to Move",
+    carpetArea: "1330 sqft",
+    floor: "13 out of 13",
+    price: "₹70 Lac",
+    perSqft: "₹5,263 per sqft",
+    owner: "Ramesh",
+  },
+  {
+    state: "Gujarat",
+    name: "Surat",
+    Image: Buyimage8,
+    flate: "2 BHK Flat",
+    status: "Ready to Move",
+    carpetArea: "1330 sqft",
+    floor: "13 out of 13",
+    price: "₹70 Lac",
+    perSqft: "₹5,263 per sqft",
+    owner: "Ramesh",
+  },
+  {
+    state: "Gujarat",
+    name: "Surat",
+    Image: Buyimage9,
+    flate: "2 BHK Flat",
+    status: "Ready to Move",
+    carpetArea: "1330 sqft",
+    floor: "13 out of 13",
+    price: "₹70 Lac",
+    perSqft: "₹5,263 per sqft",
+    owner: "Ramesh",
+  },
+  {
+    state: "Gujarat",
+    name: "Surat",
+    Image: Buyimage10,
+    flate: "2 BHK Flat",
+    status: "Ready to Move",
+    carpetArea: "1330 sqft",
+    floor: "13 out of 13",
+    price: "₹70 Lac",
+    perSqft: "₹5,263 per sqft",
+    owner: "Ramesh",
+  },
+  {
+    state: "Gujarat",
+    name: "Surat",
+    Image: Buyimage11,
+    flate: "2 BHK Flat",
+    status: "Ready to Move",
+    carpetArea: "1330 sqft",
+    floor: "13 out of 13",
+    price: "₹70 Lac",
+    perSqft: "₹5,263 per sqft",
+    owner: "Ramesh",
+  },
+  {
+    state: "Gujarat",
+    name: "Surat",
+    Image: Buyimage12,
     flate: "2 BHK Flat",
     status: "Ready to Move",
     carpetArea: "1330 sqft",
@@ -105,126 +180,169 @@ const Cities = [
 const BuyProperties = () => {
   return (
     <>
-      <Navbar />
-      <Box mt={12} mb={4}>
+      <Box mt={12} mb={6} sx={{ backgroundColor: "#f9f9f9", py: 6 }}>
         <Container>
           <Typography
             variant="h4"
+            fontWeight={800}
             textAlign="center"
-            fontWeight={600}
-            fontFamily="Poppins"
-            mb={1}
+            gutterBottom
+            sx={{ color: "#222" }}
           >
             Explore Buy Properties
           </Typography>
 
           <Typography
-            variant="body1"
             textAlign="center"
-            mb={4}
-            fontFamily="Inter"
+            color="text.secondary"
+            mb={6}
+            mt={1}
+            sx={{ maxWidth: 600, mx: "auto" }}
           >
             Explore state-specific properties with multiple property types
             across India
           </Typography>
 
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             {Cities.map((city, index) => (
-              <Grid item size={12} xs={12} key={index}>
+              <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={index}>
                 <Card
-                  sx={{ display: "flex", bgcolor: "#f7f9fc", borderRadius: 2 }}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    borderRadius: 3,
+                    overflow: "hidden",
+                    boxShadow: "0 12px 35px rgba(0,0,0,0.08)",
+                    transition: "0.5s",
+                    "&:hover": {
+                      transform: "translateY(-8px)",
+                      boxShadow: "0 25px 60px rgba(0,0,0,0.15)",
+                    },
+                  }}
                 >
-                  <CardMedia
-                    component="img"
-                    image={city.Image}
-                    alt={city.name}
-                    sx={{ width: 200, objectFit: "cover" }}
-                  />
+                  {/* IMAGE */}
+                  <Box sx={{ position: "relative", overflow: "hidden" }}>
+                    <CardMedia
+                      component="img"
+                      image={city.Image}
+                      alt={city.name}
+                      sx={{
+                        width: "100%",
+                        height: 220,
+                        transition: "0.5s",
+                        "&:hover": { transform: "scale(1.1)" },
+                      }}
+                    />
 
+                    <Chip
+                      label={city.status}
+                      size="small"
+                      color="success"
+                      sx={{
+                        position: "absolute",
+                        top: 12,
+                        left: 12,
+                        fontWeight: 600,
+                      }}
+                    />
+                  </Box>
+
+                  {/* CONTENT */}
                   <CardContent
                     sx={{
                       flex: 1,
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "space-between",
+                      p: 3,
                     }}
                   >
                     <Box>
-                      <Typography
-                        fontFamily="Poppins"
-                        fontWeight={700}
-                        variant="subtitle2"
-                        color="textSecondary"
-                      >
+                      <Typography fontSize={13} color="text.secondary">
                         Owner: {city.owner}
                       </Typography>
 
                       <Typography
-                        fontFamily="Poppins"
-                        fontWeight={600}
                         variant="h6"
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                          mt: 0.5,
-                        }}
+                        fontWeight={700}
+                        display="flex"
+                        alignItems="center"
+                        gap={0.5}
+                        mt={0.5}
                       >
-                        <LocationOnIcon color="primary" fontSize="small" />
+                        <LocationOnIcon color="error" fontSize="small" />
                         {city.name}, {city.state}
                       </Typography>
 
-                      <Typography
-                        fontFamily="Poppins"
-                        variant="body2"
-                        color="textSecondary"
-                      >
+                      <Typography color="text.secondary" mt={0.5}>
                         {city.flate}
                       </Typography>
 
-                      {/* Property Details */}
-                      <Box display="flex" gap={2} mt={1} flexWrap="wrap">
-                        <Box
-                          bgcolor="#e0f2f1"
-                          px={1}
-                          py={0.5}
-                          borderRadius={1}
-                          display="flex"
-                          alignItems="center"
-                          gap={0.5}
-                        >
-                          <SquareFootIcon fontSize="small" />
-                          {city.carpetArea}
-                        </Box>
-                        <Box bgcolor="#e3f2fd" px={1} py={0.5} borderRadius={1}>
-                          {city.status}
-                        </Box>
-                        <Box bgcolor="#fff3e0" px={1} py={0.5} borderRadius={1}>
-                          Floor: {city.floor}
-                        </Box>
+                      <Box display="flex" gap={1.5} mt={2} flexWrap="wrap">
+                        <Chip
+                          icon={<SquareFootIcon />}
+                          label={city.carpetArea}
+                          size="small"
+                        />
+                        <Chip
+                          label={`Floor: ${city.floor}`}
+                          size="small"
+                          variant="outlined"
+                        />
                       </Box>
                     </Box>
 
-                    {/* Price & Buttons */}
+                    {/* PRICE + ACTION */}
                     <Box
+                      mt={3}
                       display="flex"
-                      flexDirection="column"
-                      alignItems="flex-end"
-                      mt={2}
+                      flexDirection={{ xs: "column", sm: "row" }}
+                      justifyContent="space-between"
+                      alignItems={{ xs: "flex-start", sm: "center" }}
+                      gap={2}
                     >
-                      <Typography fontWeight={700} variant="h6">
-                        {city.price}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {city.perSqft}
-                      </Typography>
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          fontWeight={900}
+                          sx={{
+                            background:
+                              "linear-gradient(45deg,#d32f2f,#ff5252)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            transition: "0.3s",
+                            "&:hover": { transform: "scale(1.05)" },
+                          }}
+                        >
+                          {city.price}
+                        </Typography>
+                        <Typography fontSize={13} color="text.secondary">
+                          {city.perSqft}
+                        </Typography>
+                      </Box>
 
-                      <Box mt={1} display="flex" gap={1}>
-                        <Button variant="contained" size="small" color="error">
+                      <Box display="flex" gap={1} flexWrap="wrap">
+                        <Button
+                          variant="contained"
+                          color="error"
+                          size="small"
+                          sx={{
+                            transition: "0.3s",
+                            "&:hover": { transform: "scale(1.05)" },
+                          }}
+                        >
                           Contact Owner
                         </Button>
-                        <Button variant="outlined" size="small" color="error">
-                          Check Availability
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          size="small"
+                          sx={{
+                            transition: "0.3s",
+                            "&:hover": { transform: "scale(1.05)" },
+                          }}
+                        >
+                          Availability
                         </Button>
                       </Box>
                     </Box>
@@ -235,7 +353,6 @@ const BuyProperties = () => {
           </Grid>
         </Container>
       </Box>
-      <Footer />
     </>
   );
 };

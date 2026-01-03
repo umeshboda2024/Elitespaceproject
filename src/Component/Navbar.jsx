@@ -13,10 +13,18 @@ import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import Elitespacelogo from "../Assets/images/Elitespacelogo-removebg-preview.png";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Home", "Buy", "Rent", "Sell", "Agent", "Blog", "About"];
 
@@ -26,9 +34,11 @@ const megaMenuData = {
 };
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = React.useState("");
   const [openLogin, setOpenLogin] = React.useState(false);
   const [openSignup, setOpenSignup] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mode, setMode] = React.useState(
     localStorage.getItem("theme") || "light"
   );
@@ -44,35 +54,33 @@ export default function Navbar() {
       createTheme({
         palette: {
           mode,
-          primary: {
-            main: mode === "dark" ? "#121212" : "#0F4C5C",
-          },
-          secondary: {
-            main: "#FFB703",
-          },
+          primary: { main: mode === "dark" ? "#121212" : "#0F4C5C" },
+          secondary: { main: "#FFB703" },
         },
       }),
     [mode]
   );
 
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
-      {/* NAVBAR */}
       <AppBar position="sticky" elevation={0}>
         <Container maxWidth="xl">
           <Toolbar sx={{ justifyContent: "space-between" }}>
             {/* LOGO */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <img src={Elitespacelogo} alt="logo" height={70} />
+              <img src={Elitespacelogo} alt="logo" height={50} />
               <Typography variant="h6" fontWeight="bold">
                 Elite Space
               </Typography>
             </Box>
 
-            {/* MENU */}
-            <Box sx={{ display: "flex", gap: 3 }}>
+            {/* DESKTOP MENU */}
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
               {pages.map((menu) => (
                 <Box
                   key={menu}
@@ -83,7 +91,6 @@ export default function Navbar() {
                   <Button sx={{ color: "#fff", textTransform: "none" }}>
                     {menu}
                   </Button>
-
                   {activeMenu === menu && megaMenuData[menu] && (
                     <Box
                       sx={{
@@ -116,63 +123,83 @@ export default function Navbar() {
               ))}
             </Box>
 
-            {/* RIGHT */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            {/* RIGHT SIDE */}
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
               <IconButton onClick={toggleTheme} color="inherit">
                 {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
               </IconButton>
-
               <Button
                 variant="contained"
                 color="secondary"
                 sx={{ borderRadius: "20px", textTransform: "none" }}
-                onClick={() => setOpenLogin(true)}
+                onClick={() => navigate("/loginpage")}
               >
                 Login
               </Button>
             </Box>
+
+            {/* MOBILE MENU ICON */}
+            <IconButton
+              color="inherit"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ display: { xs: "flex", md: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
 
-      {/* LOGIN DIALOG */}
-      <Dialog open={openLogin} onClose={() => setOpenLogin(false)}>
-        <DialogTitle>Login</DialogTitle>
-        <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-        >
-          <TextField label="Email" fullWidth />
-          <TextField label="Password" type="password" fullWidth />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenLogin(false)}>Cancel</Button>
-          <Button variant="contained">Login</Button>
-        </DialogActions>
-        <Button
-          onClick={() => {
-            setOpenLogin(false);
-            setOpenSignup(true);
-          }}
-        >
-          Don’t have an account? Sign Up
-        </Button>
-      </Dialog>
-
-      {/* SIGNUP DIALOG */}
-      <Dialog open={openSignup} onClose={() => setOpenSignup(false)}>
-        <DialogTitle>Sign Up</DialogTitle>
-        <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-        >
-          <TextField label="Name" fullWidth />
-          <TextField label="Email" fullWidth />
-          <TextField label="Password" type="password" fullWidth />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenSignup(false)}>Cancel</Button>
-          <Button variant="contained">Create Account</Button>
-        </DialogActions>
-      </Dialog>
+      {/* MOBILE DRAWER */}
+      <Drawer
+        anchor="right"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        sx={{ "& .MuiDrawer-paper": { width: 250 } }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
+          <IconButton onClick={handleDrawerToggle}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <List>
+          {pages.map((text) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  handleDrawerToggle();
+                  if (text === "Login") setOpenLogin(true);
+                }}
+              >
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+          <ListItem>
+            <Button
+              onClick={() => navigate("/loginpage")}
+              variant="contained"
+              color="secondary"
+              fullWidth
+            >
+              Login
+            </Button>
+          </ListItem>
+          <ListItem>
+            <IconButton onClick={toggleTheme} color="inherit">
+              {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+            <Typography sx={{ ml: 1 }}>Toggle Theme</Typography>
+          </ListItem>
+        </List>
+      </Drawer>
     </ThemeProvider>
   );
 }

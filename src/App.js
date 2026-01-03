@@ -1,12 +1,18 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Home from "./pages/Home";
+// src/App.jsx
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "../src/Router/Routerpages";
+
+// Common Components
+import Navbar from "./Component/Navbar";
+import Footer from "./Component/Footer";
 
 function App() {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <AppRoutes />
+      <Footer />
+    </BrowserRouter>
   );
 }
 
