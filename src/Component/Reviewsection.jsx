@@ -6,8 +6,10 @@ import {
   CardContent,
   Avatar,
   Rating,
-  Grid,
+  IconButton,
 } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const reviews = [
   {
@@ -35,44 +37,131 @@ const reviews = [
 
 export default function ReviewSection() {
   return (
-    <Box sx={{ py: 8, backgroundColor: "#f9f9f9" }}>
-      <Container>
-        <Typography variant="h4" align="center" fontWeight="bold" mb={1}>
-          What Our Clients Say
+    <Box sx={{ py: 10, backgroundColor: "#fff" }}>
+      <Container maxWidth="lg">
+        {/* Title */}
+        <Typography
+          align="center"
+          fontWeight={700}
+          letterSpacing={2}
+          mb={8}
+          sx={{ fontSize: 26 }}
+        >
+          ALUMNI SPEAK
         </Typography>
 
-        <Typography align="center" color="text.secondary" mb={5}>
-          Real experiences from people who found their dream property with Elite
-          Space
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          {/* Left Arrow */}
+          <IconButton sx={{ position: "absolute", left: -40 }}>
+            <ArrowBackIosNewIcon />
+          </IconButton>
 
-        <Grid container spacing={4}>
-          {reviews.map((item, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Card sx={{ height: "100%", borderRadius: 3 }}>
-                <CardContent>
-                  <Box display="flex" alignItems="center" mb={2}>
-                    <Avatar sx={{ bgcolor: "#0b5c6b", mr: 2 }}>
-                      {item.name[0]}
-                    </Avatar>
-                    <Box>
-                      <Typography fontWeight="bold">{item.name}</Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.city}
-                      </Typography>
+          {/* Cards */}
+          <Box sx={{ display: "flex", gap: 5 }}>
+            {reviews.map((item, index) => {
+              const active = index === 1;
+
+              return (
+                <Card
+                  key={index}
+                  sx={{
+                    width: 360,
+                    height: 360,
+                    borderRadius: 4,
+                    textAlign: "center",
+                    position: "relative",
+                    opacity: active ? 1 : 0.25,
+                    transform: active ? "scale(1)" : "scale(0.88)",
+                    transition: "all 0.4s ease",
+                    boxShadow: active
+                      ? "0px 30px 60px rgba(0,0,0,0.15)"
+                      : "none",
+                  }}
+                >
+                  {/* Avatar */}
+                  <Avatar
+                    sx={{
+                      width: 80,
+                      height: 80,
+                      bgcolor: "#fbc02d",
+                      fontSize: 32,
+                      fontWeight: 700,
+                      position: "absolute",
+                      top: -40,
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    {item.name[0]}
+                  </Avatar>
+
+                  <CardContent sx={{ pt: 7 }}>
+                    {/* Name */}
+                    <Box
+                      sx={{
+                        display: "inline-block",
+                        px: 3,
+                        py: 0.7,
+                        mb: 2,
+                        borderRadius: 20,
+                        backgroundColor: "#fbc02d",
+                        fontWeight: 600,
+                        fontSize: 14,
+                      }}
+                    >
+                      {item.name}
                     </Box>
-                  </Box>
 
-                  <Rating value={item.rating} readOnly />
+                    {/* City */}
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        color: "#777",
+                        mb: 2,
+                      }}
+                    >
+                      {item.city}
+                    </Typography>
 
-                  <Typography mt={2} color="text.secondary">
-                    “{item.review}”
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                    {/* Review */}
+                    <Typography
+                      sx={{
+                        fontSize: 15,
+                        lineHeight: 1.7,
+                        color: "#555",
+                        px: 2,
+                        mb: 3,
+                      }}
+                    >
+                      {item.review}
+                    </Typography>
+
+                    {/* Rating */}
+                    <Rating
+                      value={item.rating}
+                      readOnly
+                      sx={{
+                        color: "#fbc02d",
+                      }}
+                    />
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </Box>
+
+          {/* Right Arrow */}
+          <IconButton sx={{ position: "absolute", right: -40 }}>
+            <ArrowForwardIosIcon />
+          </IconButton>
+        </Box>
       </Container>
     </Box>
   );
