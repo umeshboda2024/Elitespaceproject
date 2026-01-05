@@ -61,38 +61,8 @@ export const Agentcard = () => {
       rentCount: "14",
       rentText: "Properties for rent",
     },
-    {
-      image: Agentimage,
-      name: "Desai Rakesh",
-      saleCount: "39",
-      saleText: "Properties for sale",
-      rentCount: "14",
-      rentText: "Properties for rent",
-    },
-    {
-      image: Agentimage,
-      name: "Desai Rakesh",
-      saleCount: "39",
-      saleText: "Properties for sale",
-      rentCount: "14",
-      rentText: "Properties for rent",
-    },
-    {
-      image: Agentimage,
-      name: "Desai Rakesh",
-      saleCount: "39",
-      saleText: "Properties for sale",
-      rentCount: "14",
-      rentText: "Properties for rent",
-    },
-    {
-      image: Agentimage,
-      name: "Desai Rakesh",
-      saleCount: "39",
-      saleText: "Properties for sale",
-      rentCount: "14",
-      rentText: "Properties for rent",
-    },
+ 
+
   ];
 
   return (

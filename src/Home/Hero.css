@@ -112,7 +112,7 @@
     flex-direction: column;
     padding: 20px;
     text-align: center;
-    background-image: url("");
+    /* background-image: url(""); */
   }
 
   .hero-form {
