@@ -1,4 +1,6 @@
-/* Slider wrapper */
+/* ============================= */
+/* ===== SLICK SLIDER FIX ===== */
+/* ============================= */
 
 .slick-slider,
 .slick-list,
@@ -6,90 +8,27 @@
   height: 100%;
 }
 
-/* Each slide */
+/* Prevent side-slide visibility */
+.slick-list {
+  overflow: hidden !important;
+}
+
+/* ============================= */
+/* ===== SLIDE STYLES ===== */
+/* ============================= */
+
 .slide {
   position: relative;
   width: 100%;
   height: 850px;
-  overflow: hidden; /* 🔥 CRITICAL */
+  overflow: hidden;
 }
 
-/* Image zoom animation */
 .slide-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1);
   animation: zoomIn 8s ease-in-out;
-}
-.hero-container {
-  position: relative;
-  /* padding-bottom: 15px; */
-  height: 95vh;
-  overflow: hidden;
-  /* background-color: #ffffff; */
-}
-/* OVERLAY */
-.hero-overlay {
-  position: absolute;
-  /* transform: translate(-50%, -50%);  */
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  /* justify-content: space-between; */
-  /* padding: 0 80px; */
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  color: #d8d80fd3;
-}
-.hero-text {
-  max-width: 500px;
-}
-
-.hero-btn {
-  background: #c49b66 !important;
-  font-weight: bold !important;
-}
-.hero-btn:hover {
-  background: #d47d0af6 !important;
-}
-
-/* SEARCH BAR */
-.search-bar {
-  position: absolute;
-  left: 50%;
-  bottom: 100px; /* overlaps hero like reference */
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 10px;
-  width: auto;
-  z-index: 1000;
-}
-
-.search-bar .MuiTextField-root {
-  flex: 1;
-}
-
-.search-btn {
-  background: #0f766e !important;
-  padding: 12px 30px !important;
-}
-.Searchform {
-  width: 250px;
-}
-.Stats-Section {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 80px;
-  background: linear-gradient(90deg, #0f4c5c, #0d9ac5ff) !important;
-  padding: 25px 20px;
 }
 
 /* Zoom animation */
@@ -102,20 +41,178 @@
   }
 }
 
-/* 🔥 Prevent side-slide visibility */
-.slick-list {
-  overflow: hidden !important;
+/* ============================= */
+/* ===== HERO CONTAINER ===== */
+/* ============================= */
+
+.hero-container {
+  position: relative;
+  height: 95vh;
+  overflow: hidden;
 }
 
-@media (max-width: 900px) {
-  .hero-overlay {
-    flex-direction: column;
-    padding: 20px;
-    text-align: center;
-    /* background-image: url(""); */
+/* ============================= */
+/* ===== HERO OVERLAY ===== */
+/* ============================= */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  color: #d8d80fd3;
+}
+
+.hero-text {
+  max-width: 500px;
+  text-align: center;
+}
+
+/* ============================= */
+/* ===== HERO BUTTON ===== */
+/* ============================= */
+
+.hero-btn {
+  background: #c49b66 !important;
+  font-weight: bold !important;
+}
+
+.hero-btn:hover {
+  background: #d47d0af6 !important;
+}
+
+/* ============================= */
+/* ===== SEARCH BAR ===== */
+/* ============================= */
+
+.search-bar {
+  position: absolute;
+  left: 50%;
+  bottom: 100px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap; /* 🔥 responsive fix */
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.Searchform {
+  width: 250px;
+}
+
+.search-bar .MuiTextField-root {
+  flex: 1;
+}
+
+.search-btn {
+  background: #0f766e !important;
+  padding: 12px 30px !important;
+}
+
+/* ============================= */
+/* ===== STATS SECTION ===== */
+/* ============================= */
+
+.Stats-Section {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 80px;
+  background: linear-gradient(90deg, #0f4c5c, #0d9ac5ff) !important;
+  padding: 25px 20px;
+}
+
+/* ============================= */
+/* ===== RESPONSIVE ===== */
+/* ============================= */
+
+/* -------- Tablets -------- */
+@media (max-width: 1024px) {
+  .hero-container,
+  .slide {
+    height: 80vh;
   }
 
-  .hero-form {
-    display: none; /* hide form on mobile like Dubai site */
+  .hero-text h2 {
+    font-size: 2.4rem;
+  }
+
+  .hero-text h3 {
+    font-size: 2rem;
+  }
+
+  .Searchform {
+    width: 220px;
+  }
+
+  .search-bar {
+    bottom: 80px;
+    justify-content: center;
+  }
+}
+
+/* -------- Mobile -------- */
+@media (max-width: 768px) {
+  .hero-container,
+  .slide {
+    height: 70vh;
+  }
+
+  .hero-text {
+    max-width: 90%;
+  }
+
+  .hero-text h2 {
+    font-size: 2rem;
+  }
+
+  .hero-text h3 {
+    font-size: 1.6rem;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+  }
+
+  .search-bar {
+    position: static;
+    transform: none;
+    margin: 20px auto 0;
+    width: 95%;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .Searchform {
+    width: 100%;
+  }
+
+  .search-btn {
+    width: 100%;
+  }
+}
+
+/* -------- Small Phones -------- */
+@media (max-width: 480px) {
+  .hero-container,
+  .slide {
+    height: 65vh;
+  }
+
+  .hero-text h2 {
+    font-size: 1.7rem;
+  }
+
+  .hero-text h3 {
+    font-size: 1.4rem;
+  }
+
+  .search-bar {
+    padding: 14px;
   }
 }

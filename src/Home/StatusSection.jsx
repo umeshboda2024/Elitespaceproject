@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Typography, Grid } from "@mui/material";
 import React from "react";
 
 const StatusSection = () => {
@@ -10,24 +10,46 @@ const StatusSection = () => {
   ];
 
   return (
-    <Box py={6} bgcolor="#f7f9fcff" mt={10} alignItems={"center"}>
+    <Box
+      py={{ xs: 4, md: 6 }}
+      bgcolor="#f7f9fcff"
+      mt={{ xs: 6, md: 10 }}
+    >
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
           {stats.map((item, index) => (
-            <Grid item size={3} xs={12} sm={6} md={3} key={index}>
+            <Grid
+              item
+              key={index}
+              xs={12}  // full width on extra-small screens
+              sm={6}   // 2 per row on small screens
+              md={3}   // 4 per row on medium and larger screens
+            >
               <Box
                 textAlign="center"
                 sx={{
-                  p: 3,
+                  p: { xs: 2.5, md: 3 },
                   borderRadius: 3,
                   backgroundColor: "#fff",
                   boxShadow: 1,
+                  height: "100%",
                 }}
               >
-                <Typography variant="h4" fontWeight={700} color="primary">
+                <Typography
+                  variant="h4"
+                  fontWeight={700}
+                  color="primary"
+                  sx={{ fontSize: { xs: 24, sm: 28, md: 34 } }}
+                >
                   {item.value}
                 </Typography>
-                <Typography color="text.secondary">{item.label}</Typography>
+
+                <Typography
+                  color="text.secondary"
+                  sx={{ fontSize: { xs: 14, md: 16 } }}
+                >
+                  {item.label}
+                </Typography>
               </Box>
             </Grid>
           ))}

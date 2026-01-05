@@ -14,28 +14,60 @@ const Stateporpertycard = () => {
   ];
 
   return (
-    <Box py={4} mt={5}>
-      <Container>
-        <Typography variant="h4">Featured Properties By State</Typography>
-        <Grid container spacing={5} mt={3}>
+    <Box py={{ xs: 3, md: 4 }} mt={{ xs: 3, md: 5 }}>
+      <Container maxWidth="lg">
+        <Typography
+          variant="h4"
+          sx={{ fontSize: { xs: 22, sm: 26, md: 32 } }}
+        >
+          Featured Properties By State
+        </Typography>
+
+        <Grid
+          container
+          spacing={{ xs: 3, sm: 4, md: 5 }}
+          mt={3}
+          justifyContent="center"
+        >
           {Stateproperty.map((state, index) => (
-            <Grid item size={3} xs={12} sm={6} md={4} key={index}>
+            <Grid
+              item
+              key={index}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              textAlign="center"
+            >
               <Box
                 component="img"
                 src={state.image}
                 alt={state.name}
                 sx={{
                   width: "100%",
-                  height: 250,
+                  maxWidth: 260,
+                  height: { xs: 220, sm: 240, md: 250 },
                   objectFit: "cover",
                   borderRadius: "50%",
+                  mx: "auto",
                 }}
               />
 
-              <Typography variant="h6" align="center" mt={1} fontWeight={600}>
+              <Typography
+                variant="h6"
+                mt={1}
+                fontWeight={600}
+                sx={{ fontSize: { xs: 16, md: 18 } }}
+              >
                 {state.name}
               </Typography>
-              <Typography variant="h6" align="center" mt={1} fontWeight={300}>
+
+              <Typography
+                variant="body1"
+                mt={0.5}
+                fontWeight={300}
+                sx={{ fontSize: { xs: 14, md: 16 } }}
+              >
                 {state.Project} Projects
               </Typography>
             </Grid>

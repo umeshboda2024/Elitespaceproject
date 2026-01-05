@@ -47,7 +47,7 @@ export const Agentcard = () => {
     },
     {
       image: Agentimage,
-      name: "Amit Chaudhary ",
+      name: "Amit Chaudhary",
       saleCount: "32",
       saleText: "Properties for sale",
       rentCount: "18",
@@ -61,62 +61,120 @@ export const Agentcard = () => {
       rentCount: "14",
       rentText: "Properties for rent",
     },
- 
-
   ];
 
   return (
-    <Container sx={{ py: 5, mt: 5 }}>
-      <Typography variant="h4" align="center" fontWeight={700} mb={5}>
+    <Container sx={{ py: { xs: 4, md: 5 }, mt: { xs: 4, md: 5 } }}>
+      <Typography
+        variant="h4"
+        align="center"
+        fontWeight={700}
+        mb={{ xs: 3, md: 5 }}
+        sx={{ fontSize: { xs: 22, sm: 26, md: 32 } }}
+      >
         Top Real Estate Agents List
       </Typography>
-      <Grid container spacing={4}>
+
+      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
         {agent.map((item, index) => (
-          <Grid item key={index} size={4} xs={12} sm={6} md={4} lg={3}>
-            <Card sx={{ p: 2 }}>
+          <Grid
+            item
+            key={index}
+            size={{xs:12,   
+            sm:6,    
+            md:4,   
+            lg:3 }}
+               
+          >
+            <Card
+              sx={{
+                p: { xs: 2, md: 2 },
+                height: "100%",
+              }}
+            >
               {/* Agent Info */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                }}
+              >
                 <CardMedia
                   component="img"
                   image={item.image}
                   alt={item.name}
                   sx={{
-                    width: 80,
-                    height: 80,
+                    width: { xs: 70, md: 80 },
+                    height: { xs: 70, md: 80 },
                     borderRadius: "50%",
                     objectFit: "cover",
                   }}
                 />
 
                 <Box>
-                  <Typography variant="caption" color="success.main">
+                  <Typography
+                    variant="caption"
+                    color="success.main"
+                    sx={{ fontSize: { xs: 11, md: 12 } }}
+                  >
                     MB Preferred
                   </Typography>
-                  <Typography variant="h6">{item.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="h6"
+                    sx={{ fontSize: { xs: 16, md: 18 } }}
+                  >
+                    {item.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: { xs: 13, md: 14 } }}
+                  >
                     Real Estate Agent
                   </Typography>
                 </Box>
               </Box>
 
-              <Divider sx={{ my: 2 }} />
+              <Divider sx={{ my: { xs: 1.5, md: 2 } }} />
 
               {/* Property Stats */}
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Box textAlign="center">
-                  <Typography variant="h6" fontWeight={700}>
+                  <Typography
+                    variant="h6"
+                    fontWeight={700}
+                    sx={{ fontSize: { xs: 16, md: 18 } }}
+                  >
                     {item.saleCount}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: { xs: 12, md: 13 } }}
+                  >
                     {item.saleText}
                   </Typography>
                 </Box>
 
                 <Box textAlign="center">
-                  <Typography variant="h6" fontWeight={700}>
+                  <Typography
+                    variant="h6"
+                    fontWeight={700}
+                    sx={{ fontSize: { xs: 16, md: 18 } }}
+                  >
                     {item.rentCount}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: { xs: 12, md: 13 } }}
+                  >
                     {item.rentText}
                   </Typography>
                 </Box>

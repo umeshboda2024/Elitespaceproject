@@ -37,15 +37,15 @@ const reviews = [
 
 export default function ReviewSection() {
   return (
-    <Box sx={{ py: 10, backgroundColor: "#fff" }}>
+    <Box sx={{ py: { xs: 6, md: 10 }, backgroundColor: "#fff" }}>
       <Container maxWidth="lg">
         {/* Title */}
         <Typography
           align="center"
           fontWeight={700}
           letterSpacing={2}
-          mb={8}
-          sx={{ fontSize: 26 }}
+          mb={{ xs: 5, md: 8 }}
+          sx={{ fontSize: { xs: 20, md: 26 } }}
         >
           ALUMNI SPEAK
         </Typography>
@@ -58,13 +58,28 @@ export default function ReviewSection() {
             position: "relative",
           }}
         >
-          {/* Left Arrow */}
-          <IconButton sx={{ position: "absolute", left: -40 }}>
+          {/* Left Arrow (hide on mobile) */}
+          <IconButton
+            sx={{
+              position: "absolute",
+              left: -40,
+              display: { xs: "none", md: "flex" },
+            }}
+          >
             <ArrowBackIosNewIcon />
           </IconButton>
 
           {/* Cards */}
-          <Box sx={{ display: "flex", gap: 5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: { xs: 3, md: 5 },
+              overflowX: { xs: "auto", md: "visible" },
+              scrollSnapType: { xs: "x mandatory", md: "none" },
+              px: { xs: 1, md: 0 },
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
             {reviews.map((item, index) => {
               const active = index === 1;
 
@@ -72,17 +87,24 @@ export default function ReviewSection() {
                 <Card
                   key={index}
                   sx={{
-                    width: 360,
-                    height: 360,
+                    minWidth: { xs: 280, sm: 320, md: 360 },
+                    height: { xs: "auto", md: 360 },
                     borderRadius: 4,
                     textAlign: "center",
                     position: "relative",
-                    opacity: active ? 1 : 0.25,
-                    transform: active ? "scale(1)" : "scale(0.88)",
+                    opacity: { xs: 1, md: active ? 1 : 0.25 },
+                    transform: {
+                      xs: "none",
+                      md: active ? "scale(1)" : "scale(0.88)",
+                    },
                     transition: "all 0.4s ease",
-                    boxShadow: active
-                      ? "0px 30px 60px rgba(0,0,0,0.15)"
-                      : "none",
+                    boxShadow: {
+                      xs: "0px 20px 40px rgba(0,0,0,0.12)",
+                      md: active
+                        ? "0px 30px 60px rgba(0,0,0,0.15)"
+                        : "none",
+                    },
+                    scrollSnapAlign: { xs: "center", md: "none" },
                   }}
                 >
                   {/* Avatar */}
@@ -144,21 +166,21 @@ export default function ReviewSection() {
                     </Typography>
 
                     {/* Rating */}
-                    <Rating
-                      value={item.rating}
-                      readOnly
-                      sx={{
-                        color: "#fbc02d",
-                      }}
-                    />
+                    <Rating value={item.rating} readOnly sx={{ color: "#fbc02d" }} />
                   </CardContent>
                 </Card>
               );
             })}
           </Box>
 
-          {/* Right Arrow */}
-          <IconButton sx={{ position: "absolute", right: -40 }}>
+          {/* Right Arrow (hide on mobile) */}
+          <IconButton
+            sx={{
+              position: "absolute",
+              right: -40,
+              display: { xs: "none", md: "flex" },
+            }}
+          >
             <ArrowForwardIosIcon />
           </IconButton>
         </Box>
