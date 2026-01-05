@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 
 import BuyProperties from "../Home/Buyproperties";
 import Propertycard from "../Component/Propertycard";
+import PropertyDetails from "../Home/BuyViewdetail";
 import LoginPage from "../Home/Loginpage";
 
 const AppRoutes = () => {
@@ -15,6 +16,8 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/buy" element={<BuyProperties />} />
+      <Route path="/buyview" element={<PropertyDetails />} />
+
       <Route path="/Property" element={<Propertycard />} />
       <Route path="/loginpage" element={<LoginPage />} />
     </Routes>

@@ -40,8 +40,6 @@ const PropertyDetails = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
-
       <Container maxWidth="lg" sx={{ mt: 4, mb: 6 }}>
         <Grid container spacing={4}>
           {/* ================= LEFT SIDE ================= */}
@@ -196,8 +194,6 @@ const PropertyDetails = () => {
           </Grid>
         </Grid>
       </Container>
-
-      <Footer />
     </ThemeProvider>
   );
 };
