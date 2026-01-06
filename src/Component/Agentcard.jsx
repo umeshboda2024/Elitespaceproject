@@ -10,6 +10,11 @@ import {
   Divider,
 } from "@mui/material";
 import Agentimage from "../Assets/images/Agentimage.jpg";
+import Agentimage1 from "../Assets/images/Agentimage1.jpg";
+import Agentimage2 from "../Assets/images/Agentimage2.jpg";
+import Agentimage3 from "../Assets/images/Agentimage3.jpg";
+import Agentimage4 from "../Assets/images/Agentimage4.jpg";
+import Agentimage5 from "../Assets/images/Agentimage5.jpg";
 
 export const Agentcard = () => {
   const agent = [
@@ -22,7 +27,7 @@ export const Agentcard = () => {
       rentText: "Properties for rent",
     },
     {
-      image: Agentimage,
+      image: Agentimage1,
       name: "Ashok Yadav",
       saleCount: "6",
       saleText: "Properties for sale",
@@ -30,7 +35,7 @@ export const Agentcard = () => {
       rentText: "Properties for rent",
     },
     {
-      image: Agentimage,
+      image: Agentimage2,
       name: "Rahul",
       saleCount: "18",
       saleText: "Properties for sale",
@@ -38,7 +43,7 @@ export const Agentcard = () => {
       rentText: "Properties for rent",
     },
     {
-      image: Agentimage,
+      image: Agentimage3,
       name: "Kamal Bhattar",
       saleCount: "37",
       saleText: "Properties for sale",
@@ -46,7 +51,7 @@ export const Agentcard = () => {
       rentText: "Properties for rent",
     },
     {
-      image: Agentimage,
+      image: Agentimage4,
       name: "Amit Chaudhary",
       saleCount: "32",
       saleText: "Properties for sale",
@@ -54,7 +59,7 @@ export const Agentcard = () => {
       rentText: "Properties for rent",
     },
     {
-      image: Agentimage,
+      image: Agentimage5,
       name: "Desai Rakesh",
       saleCount: "39",
       saleText: "Properties for sale",
@@ -77,15 +82,7 @@ export const Agentcard = () => {
 
       <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
         {agent.map((item, index) => (
-          <Grid
-            item
-            key={index}
-            size={{xs:12,   
-            sm:6,    
-            md:4,   
-            lg:3 }}
-               
-          >
+          <Grid item key={index} size={{ xs: 12, sm: 6, md: 4 }}>
             <Card
               sx={{
                 p: { xs: 2, md: 2 },

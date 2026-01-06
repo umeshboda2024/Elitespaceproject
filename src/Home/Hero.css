@@ -89,11 +89,13 @@
 
 .search-bar {
   position: absolute;
+  width: 100%;
   left: 50%;
   bottom: 100px;
   transform: translateX(-50%);
   display: flex;
-  flex-wrap: wrap; /* 🔥 responsive fix */
+  flex-wrap: nowrap; /* 🔥 responsive fix */
+  flex-direction: row;
   align-items: center;
   gap: 16px;
   padding: 18px 20px;
@@ -103,7 +105,7 @@
 }
 
 .Searchform {
-  width: 250px;
+  width: 100%;
 }
 
 .search-bar .MuiTextField-root {

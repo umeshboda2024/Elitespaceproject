@@ -10,21 +10,11 @@ const StatusSection = () => {
   ];
 
   return (
-    <Box
-      py={{ xs: 4, md: 6 }}
-      bgcolor="#f7f9fcff"
-      mt={{ xs: 6, md: 10 }}
-    >
+    <Box py={{ xs: 4, md: 6 }} bgcolor="#f7f9fcff" mt={{ xs: 6, md: 10 }}>
       <Container maxWidth="lg">
         <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
           {stats.map((item, index) => (
-            <Grid
-              item
-              key={index}
-              xs={12}  // full width on extra-small screens
-              sm={6}   // 2 per row on small screens
-              md={3}   // 4 per row on medium and larger screens
-            >
+            <Grid item key={index} size={{ xs: 12, sm: 6, md: 3 }}>
               <Box
                 textAlign="center"
                 sx={{
