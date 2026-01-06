@@ -49,7 +49,7 @@ const whyChooseData = [
 const WhyChooseUs = () => {
   return (
     <Box sx={{ bgcolor: "#f9fafb", py: 8, mt:15}}>
-      <Container>
+      <Container maxWidth="xl">
         <Typography variant="h4" align="center" fontWeight={700} mb={2}>
           Why Choose Us
         </Typography>

@@ -15,11 +15,14 @@ import Footer from "../Component/Footer";
 import GetInTouchSection from "../Component/Getintouch";
 import BuyProperties from "../Home/Buyproperties";
 import LoginPage from "../Home/Loginpage";
+import Sidebar from "../Admin/component/sidebar";
+import Topbar from "../Admin/component/Topbar";
+import Dashboard from "../Admin/component/pages/Dashboard";
 const Home = () => {
   return (
     <div>
       {/* <Navbar></Navbar> */}
-      <Hero></Hero>
+      {/* <Hero></Hero>
       <Stateporpertycard />
       <Propertycard />
       <Propertytypes />
@@ -28,10 +31,13 @@ const Home = () => {
       <Agentcard />
       <WhyChooseUs />
       <ReviewSection />
-      <GetInTouchSection />
+      <GetInTouchSection /> */}
       {/* <Footer /> */}
       {/* <LoginPage /> */}
       {/* <BuyProperties /> */}
+      <Sidebar/>
+      <Topbar/>
+      <Dashboard/>
     </div>
   );
 };

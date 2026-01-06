@@ -69,7 +69,7 @@ export const Agentcard = () => {
   ];
 
   return (
-    <Container sx={{ py: { xs: 4, md: 5 }, mt: { xs: 4, md: 5 } }}>
+    <Container maxWidth="xl" sx={{ py: { xs: 4, md: 5 }, mt: { xs: 4, md: 5 } }}>
       <Typography
         variant="h4"
         align="center"
@@ -113,7 +113,7 @@ export const Agentcard = () => {
                   <Typography
                     variant="caption"
                     color="success.main"
-                    sx={{ fontSize: { xs: 11, md: 12 } }}
+                    sx={{ fontSize: { xs: 14, md: 16 } }}
                   >
                     MB Preferred
                   </Typography>
@@ -126,7 +126,7 @@ export const Agentcard = () => {
                   <Typography
                     variant="body2"
                     color="text.secondary"
-                    sx={{ fontSize: { xs: 13, md: 14 } }}
+                    sx={{ fontSize: { xs: 14, md: 16 } }}
                   >
                     Real Estate Agent
                   </Typography>
@@ -153,7 +153,7 @@ export const Agentcard = () => {
                   <Typography
                     variant="body2"
                     color="text.secondary"
-                    sx={{ fontSize: { xs: 12, md: 13 } }}
+                    sx={{ fontSize: { xs: 14, md: 16 } }}
                   >
                     {item.saleText}
                   </Typography>
@@ -170,7 +170,7 @@ export const Agentcard = () => {
                   <Typography
                     variant="body2"
                     color="text.secondary"
-                    sx={{ fontSize: { xs: 12, md: 13 } }}
+                    sx={{ fontSize: { xs: 14, md: 16 } }}
                   >
                     {item.rentText}
                   </Typography>

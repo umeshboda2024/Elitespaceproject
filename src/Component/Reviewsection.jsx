@@ -63,7 +63,7 @@ export default function ReviewSection() {
 
   return (
     <Box sx={{ py: { xs: 6, md: 10 } }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         {/* TITLE */}
         <Typography
           align="center"

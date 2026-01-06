@@ -100,7 +100,7 @@ const Saleproperty = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth="xl">
       <Box py={4} mt={5}>
         <Typography variant="h4" mb={2}>
           Latest Sale Properties / Rent Properties

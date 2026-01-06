@@ -15,14 +15,14 @@ const Stateporpertycard = () => {
 
   return (
     <Box py={{ xs: 3, md: 4 }} mt={{ xs: 3, md: 5 }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Typography variant="h4" sx={{ fontSize: { xs: 22, sm: 26, md: 32 } }}>
           Featured Properties By State
         </Typography>
 
         <Grid
           container
-          spacing={{ xs: 3, sm: 4, md: 5 }}
+          spacing={{ xs: 3, sm: 4, md: 5  }}
           mt={3}
           justifyContent="center"
         >
@@ -30,7 +30,7 @@ const Stateporpertycard = () => {
             <Grid
               item
               key={index}
-              size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+              size={{ xs: 12, sm: 6, md: 3 }}
               textAlign="center"
             >
               <Box

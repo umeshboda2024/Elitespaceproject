@@ -21,7 +21,7 @@ const Propertytypes = () => {
 
   return (
     <Box py={{ xs: 3, md: 4 }} mt={{ xs: 3, md: 5 }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Grid
           container
           spacing={{ xs: 2, sm: 3 }}
@@ -33,8 +33,7 @@ const Propertytypes = () => {
               key={index}
               size={{xs:12,
               sm:6,
-              md:4,
-              lg:3}}
+              md:3,}}
               
             >
               <Card

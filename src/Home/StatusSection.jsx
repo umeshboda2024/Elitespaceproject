@@ -11,7 +11,7 @@ const StatusSection = () => {
 
   return (
     <Box py={{ xs: 4, md: 6 }} bgcolor="#f7f9fcff" mt={{ xs: 6, md: 10 }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
           {stats.map((item, index) => (
             <Grid item key={index} size={{ xs: 12, sm: 6, md: 3 }}>
