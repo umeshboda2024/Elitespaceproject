@@ -18,6 +18,7 @@ import LoginPage from "../Home/Loginpage";
 import Sidebar from "../Admin/component/sidebar";
 import Topbar from "../Admin/component/Topbar";
 import Dashboard from "../Admin/component/pages/Dashboard";
+import Signup from "../Home/Signuppage";
 const Home = () => {
   return (
     <div>
@@ -35,9 +36,10 @@ const Home = () => {
       {/* <Footer /> */}
       {/* <LoginPage /> */}
       {/* <BuyProperties /> */}
-      {/* <Sidebar/>
-      <Topbar/>
-      <Dashboard/> */}
+      {/* <Sidebar />
+      <Topbar />
+      <Dashboard /> */}
+      {/* <Signup /> */}
     </div>
   );
 };

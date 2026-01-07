@@ -1,6 +1,11 @@
 import {
-  AppBar, Toolbar, Typography, Box,
-  IconButton, Avatar, TextField
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  IconButton,
+  Avatar,
+  TextField,
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
@@ -10,7 +15,7 @@ export default function Topbar() {
       position="fixed"
       sx={{
         ml: "250px",
-        width: "calc(100% - 250px)",
+        width: "calc(100% - 60px)",
         bgcolor: "#fff",
         color: "#000",
         boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
