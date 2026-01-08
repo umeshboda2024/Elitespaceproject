@@ -15,15 +15,17 @@ import Footer from "../Component/Footer";
 import GetInTouchSection from "../Component/Getintouch";
 import BuyProperties from "../Home/Buyproperties";
 import LoginPage from "../Home/Loginpage";
-import Sidebar from "../Admin/component/sidebar";
-import Topbar from "../Admin/component/Topbar";
+import Sidebar from "../Admin/component/Componets/sidebar";
+import Topbar from "../Admin/component/Componets/Topbar";
 import Dashboard from "../Admin/component/pages/Dashboard";
 import Signup from "../Home/Signuppage";
+import AddProperty from "../Admin/component/pages/Addproperty";
+import AddAgent from "../Admin/component/pages/Addagent";
 const Home = () => {
   return (
     <div>
       {/* <Navbar></Navbar> */}
-      <Hero></Hero>
+      {/* <Hero></Hero>
       <Stateporpertycard />
       <Propertycard />
       <Propertytypes />
@@ -32,13 +34,16 @@ const Home = () => {
       <Agentcard />
       <WhyChooseUs />
       <ReviewSection />
-      <GetInTouchSection />
+      <GetInTouchSection /> */}
       {/* <Footer /> */}
       {/* <LoginPage /> */}
       {/* <BuyProperties /> */}
-      {/* <Sidebar />
+      <Sidebar />
       <Topbar />
-      <Dashboard /> */}
+      <Dashboard />
+      {/* <Properties /> */}
+      {/* <AddProperty /> */}
+      {/* <AddAgent /> */}
       {/* <Signup /> */}
     </div>
   );

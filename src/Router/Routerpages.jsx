@@ -12,6 +12,14 @@ import PropertyDetails from "../Home/BuyViewdetail";
 import LoginPage from "../Home/Loginpage";
 import Signup from "../Home/Signuppage";
 import Adminhome from "../Admin/component/Home/Adminhome";
+import Properties from "../Admin/component/pages/Properties";
+import AddProperty from "../Admin/component/pages/Addproperty";
+import Agents from "../Admin/component/pages/Agent";
+import AddAgent from "../Admin/component/pages/Addagent";
+import Users from "../Admin/component/pages/User";
+import Inquiries from "../Admin/component/pages/Inquiries";
+import Reviews from "../Admin/component/pages/Reviews";
+import Locations from "../Admin/component/pages/Location";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +32,14 @@ const AppRoutes = () => {
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/Signpage" element={<Signup />} />
       <Route path="/Adminhome" element={<Adminhome />} />
+      <Route path="/admin/properties" element={<Properties />} />
+      <Route path="/admin/add-property" element={<AddProperty />} />
+      <Route path="/admin/agents" element={<Agents />} />
+      <Route path="/admin/add-agent" element={<AddAgent />} />
+      <Route path="/admin/users" element={<Users />} />
+      <Route path="/admin/inquiries" element={<Inquiries />} />
+      <Route path="/admin/reviews" element={<Reviews />} />
+      <Route path="/admin/locations" element={<Locations />} />
     </Routes>
   );
 };

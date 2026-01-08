@@ -21,10 +21,13 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+import { useNavigate } from "react-router-dom";
+
 const drawerWidth = 240;
 const collapsedWidth = 70;
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true);
 
   return (
@@ -32,8 +35,6 @@ export default function Sidebar() {
       variant="permanent"
       sx={{
         width: open ? drawerWidth : collapsedWidth,
-        flexShrink: 0,
-        whiteSpace: "nowrap",
         "& .MuiDrawer-paper": {
           width: open ? drawerWidth : collapsedWidth,
           transition: "width 0.3s",
@@ -43,7 +44,7 @@ export default function Sidebar() {
         },
       }}
     >
-      {/* 🔹 HEADER */}
+      {/* HEADER */}
       <Box
         sx={{
           display: "flex",
@@ -66,31 +67,52 @@ export default function Sidebar() {
         </IconButton>
       </Box>
 
-      {/* 🔹 MENU */}
+      {/* MENU */}
       <List>
-        {menuItem("Dashboard", <DashboardIcon />, open)}
-        {menuItem("Properties", <HomeWorkIcon />, open)}
-        {menuItem("Agents", <PersonIcon />, open)}
-        {menuItem("Users", <PeopleIcon />, open)}
-        {menuItem("Inquiries", <MailIcon />, open)}
-        {menuItem("Reviews", <StarIcon />, open)}
-        {menuItem("Cities", <LocationCityIcon />, open)}
-        {menuItem("Settings", <SettingsIcon />, open)}
-        {menuItem("Logout", <LogoutIcon />, open)}
+        {menuItem("Dashboard", <DashboardIcon />, open, () =>
+          navigate("/admin/dashboard")
+        )}
+        {menuItem("Properties", <HomeWorkIcon />, open, () =>
+          navigate("/admin/properties")
+        )}
+        {menuItem("Agents", <PersonIcon />, open, () =>
+          navigate("/admin/agents")
+        )}
+        {menuItem("Users", <PeopleIcon />, open, () =>
+          navigate("/admin/users")
+        )}
+        {menuItem("Inquiries", <MailIcon />, open, () =>
+          navigate("/admin/inquiries")
+        )}
+        {menuItem("Reviews", <StarIcon />, open, () =>
+          navigate("/admin/reviews")
+        )}
+        {menuItem("Locaton", <LocationCityIcon />, open, () =>
+          navigate("/admin/locations")
+        )}
+        {menuItem("Cities", <LocationCityIcon />, open, () =>
+          navigate("/admin/cities")
+        )}
+        {menuItem("Settings", <SettingsIcon />, open, () =>
+          navigate("/admin/settings")
+        )}
+        {menuItem("Logout", <LogoutIcon />, open, () => {
+          localStorage.clear();
+          navigate("/login");
+        })}
       </List>
     </Drawer>
   );
 }
 
-function menuItem(text, icon, open) {
+function menuItem(text, icon, open, onClick) {
   return (
     <ListItemButton
+      onClick={onClick}
       sx={{
         justifyContent: open ? "initial" : "center",
         px: 2.5,
-        "&:hover": {
-          backgroundColor: "rgba(255,255,255,0.1)",
-        },
+        "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
       }}
     >
       <ListItemIcon

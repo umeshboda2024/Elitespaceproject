@@ -11,11 +11,11 @@ import {
   Chip,
   Box,
 } from "@mui/material";
-import Apparment from "../../Assets/images/BuyImage12.jpg";
-import Villa from "../../Assets/images/Villaimgae.jpg";
-import Appartment1 from "../../Assets/images/House-Desktop.jpg";
-import Appartment2 from "../../Assets/images/BuyImage3.jpg";
-import Appartment3 from "../../Assets/images/Pune.jpg";
+import Apparment from "../../../Assets/images/BuyImage12.jpg";
+import Villa from "../../../Assets/images/Villaimgae.jpg";
+import Appartment1 from "../../../Assets/images/House-Desktop.jpg";
+import Appartment2 from "../../../Assets/images/BuyImage3.jpg";
+import Appartment3 from "../../../Assets/images/Pune.jpg";
 
 const properties = [
   {

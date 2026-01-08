@@ -18,8 +18,8 @@ import {
   Cell,
 } from "recharts";
 
-import StatCard from "../StateCard";
-import RecentProperties from "../Recentpropertis";
+import StatCard from "../Componets/StateCard";
+import RecentProperties from "../Componets/Recentpropertis";
 
 /* ================= DATA ================= */
 
@@ -171,7 +171,7 @@ export default function Dashboard() {
 
         {/* ================= RECENT PROPERTIES ================= */}
         <Grid container spacing={3} mt={12}>
-          <Grid item xs={12}>
+          <Grid item size={{ xs: 12 }}>
             <RecentProperties />
           </Grid>
         </Grid>
