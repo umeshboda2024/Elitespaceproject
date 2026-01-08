@@ -20,6 +20,8 @@ import Users from "../Admin/component/pages/User";
 import Inquiries from "../Admin/component/pages/Inquiries";
 import Reviews from "../Admin/component/pages/Reviews";
 import Locations from "../Admin/component/pages/Location";
+import Content from "../Admin/component/pages/Content";
+
 
 const AppRoutes = () => {
   return (
@@ -40,6 +42,7 @@ const AppRoutes = () => {
       <Route path="/admin/inquiries" element={<Inquiries />} />
       <Route path="/admin/reviews" element={<Reviews />} />
       <Route path="/admin/locations" element={<Locations />} />
+      <Route path="/admin/content" element={<Content />} />
     </Routes>
   );
 };

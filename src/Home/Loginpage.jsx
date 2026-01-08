@@ -33,7 +33,7 @@ const LoginPage = () => {
 
     if (email === correctEmail && password === correctPassword) {
       setError("");
-      navigate("//Adminhome"); // ✅ Open Home Page
+      navigate("/Adminhome"); // ✅ Open Home Page
     } else {
       setError("Invalid email or password");
     }

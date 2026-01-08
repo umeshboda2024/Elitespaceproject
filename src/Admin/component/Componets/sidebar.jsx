@@ -20,7 +20,6 @@ import StarIcon from "@mui/icons-material/Star";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
-
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -98,7 +97,7 @@ export default function Sidebar() {
         )}
         {menuItem("Logout", <LogoutIcon />, open, () => {
           localStorage.clear();
-          navigate("/login");
+          navigate("/");
         })}
       </List>
     </Drawer>
