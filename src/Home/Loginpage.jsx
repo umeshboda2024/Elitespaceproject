@@ -22,12 +22,25 @@ const Loginpage = () => {
   const Handelsumbit = (values) => {
     const storedUser = JSON.parse(localStorage.getItem("/Username"));
 
+<<<<<<< HEAD
     if (
       storedUser &&
       values.email === storedUser.email &&
       values.password === storedUser.password
     ) {
       navigate("/Adminhome");
+=======
+  // ✅ Correct credentials (temporary)
+  const correctEmail = "admin@gmail.com";
+  const correctPassword = "123456";
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (email === correctEmail && password === correctPassword) {
+      setError("");
+      navigate("/Adminhome"); // ✅ Open Home Page
+>>>>>>> 092c1463dd4cb30d59ec4f3a77a1f4db59b25aca
     } else {
       alert("Invalid email or password");
     }

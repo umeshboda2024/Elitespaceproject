@@ -34,8 +34,13 @@ const Home = () => {
       <Agentcard />
       <WhyChooseUs />
       <ReviewSection />
+<<<<<<< HEAD
       <GetInTouchSection />
       {/* <Footer /> */}
+=======
+      <GetInTouchSection /> 
+      {/* <Footer /> 
+>>>>>>> 092c1463dd4cb30d59ec4f3a77a1f4db59b25aca
       {/* <LoginPage /> */}
       {/* <BuyProperties /> */}
       {/* <Sidebar />
