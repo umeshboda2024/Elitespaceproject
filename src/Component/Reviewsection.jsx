@@ -81,7 +81,7 @@ export default function ReviewSection() {
             onClick={() => scroll("left")}
             sx={{
               position: "absolute",
-              left: -30,
+              left: -20,
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 2,
@@ -181,7 +181,7 @@ export default function ReviewSection() {
             onClick={() => scroll("right")}
             sx={{
               position: "absolute",
-              right: -30,
+              right: -20,
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 2,

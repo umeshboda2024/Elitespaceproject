@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <div>
       {/* <Navbar></Navbar> */}
-      {/* <Hero></Hero>
+      <Hero></Hero>
       <Stateporpertycard />
       <Propertycard />
       <Propertytypes />
@@ -34,13 +34,13 @@ const Home = () => {
       <Agentcard />
       <WhyChooseUs />
       <ReviewSection />
-      <GetInTouchSection /> */}
+      <GetInTouchSection />
       {/* <Footer /> */}
       {/* <LoginPage /> */}
       {/* <BuyProperties /> */}
-      <Sidebar />
+      {/* <Sidebar />
       <Topbar />
-      <Dashboard />
+      <Dashboard /> */}
       {/* <Properties /> */}
       {/* <AddProperty /> */}
       {/* <AddAgent /> */}

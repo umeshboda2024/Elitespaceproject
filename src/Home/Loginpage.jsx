@@ -1,128 +1,131 @@
-// src/components/LoginPage.jsx
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-  Paper,
-  InputAdornment,
-  IconButton,
-  Alert,
-} from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import HomeIcon from "@mui/icons-material/Home";
+import { Formik, Form, Field } from "formik";
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+import {
+  Box,
+  Paper,
+  Typography,
+  Button,
+  TextField,
+  Stack,
+  Divider,
+} from "@mui/material";
+
+const Loginpage = () => {
   const navigate = useNavigate();
+  const [ini, setini] = useState({
+    email: "",
+    password: "",
+  });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const Handelsumbit = (values) => {
+    const storedUser = JSON.parse(localStorage.getItem("/Username"));
 
-  // ✅ Correct credentials (temporary)
-  const correctEmail = "admin@gmail.com";
-  const correctPassword = "123456";
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (email === correctEmail && password === correctPassword) {
-      setError("");
-      navigate("//Adminhome"); // ✅ Open Home Page
+    if (
+      storedUser &&
+      values.email === storedUser.email &&
+      values.password === storedUser.password
+    ) {
+      navigate("/Adminhome");
     } else {
-      setError("Invalid email or password");
+      alert("Invalid email or password");
     }
   };
 
   return (
-    <Container
-      maxWidth="sm"
+    <Box
       sx={{
-        display: "flex",
         minHeight: "100vh",
+        background: "linear-gradient(135deg, #0E4B5A, #146C7C)",
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
       <Paper
-        elevation={6}
+        elevation={10}
         sx={{
+          width: 380,
           p: 4,
-          width: "100%",
-          borderRadius: 3,
-          textAlign: "center",
+          borderRadius: 4,
         }}
       >
-        <HomeIcon sx={{ fontSize: 60, color: "primary.main", mb: 1 }} />
-
-        <Typography variant="h4" gutterBottom>
-          Elite Space Login
-        </Typography>
-
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          Enter your details to access your account
-        </Typography>
-
-        {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          textAlign="center"
+          gutterBottom
         >
-          <TextField
-            label="Email"
-            type="email"
-            value={email}
-            required
-            fullWidth
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          Welcome Back 👋
+        </Typography>
 
-          <TextField
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            value={password}
-            required
-            fullWidth
-            onChange={(e) => setPassword(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+        <Typography
+          variant="body2"
+          textAlign="center"
+          color="text.secondary"
+          mb={3}
+        >
+          Login to continue
+        </Typography>
 
-          <Button type="submit" variant="contained" fullWidth>
-            Login
-          </Button>
+        <Formik enableReinitialize initialValues={ini} onSubmit={Handelsumbit}>
+          {({ handleChange }) => (
+            <Form>
+              <Stack spacing={2}>
+                <Field
+                  as={TextField}
+                  name="email"
+                  label="Email"
+                  type="email"
+                  fullWidth
+                  onChange={handleChange}
+                />
 
-          <Typography variant="body2" color="text.secondary">
-            Don’t have an account?{" "}
-            <span
-              style={{ color: "#1976d2", cursor: "pointer" }}
-              onClick={() => navigate("/Signpage")}
-            >
-              Sign Up
-            </span>
-          </Typography>
-        </Box>
+                <Field
+                  as={TextField}
+                  name="password"
+                  label="Password"
+                  type="password"
+                  fullWidth
+                  onChange={handleChange}
+                />
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    borderRadius: 2,
+                    py: 1.2,
+                    textTransform: "none",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Login
+                </Button>
+
+                <Divider>OR</Divider>
+
+                <Button
+                  variant="outlined"
+                  size="large"
+                  sx={{
+                    borderRadius: 2,
+                    textTransform: "none",
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => navigate("/Signpage")}
+                >
+                  Create Account
+                </Button>
+              </Stack>
+            </Form>
+          )}
+        </Formik>
       </Paper>
-    </Container>
+    </Box>
   );
 };
 
-export default LoginPage;
+export default Loginpage;

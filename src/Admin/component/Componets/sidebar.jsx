@@ -28,7 +28,7 @@ const collapsedWidth = 70;
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <Drawer
@@ -98,7 +98,7 @@ export default function Sidebar() {
         )}
         {menuItem("Logout", <LogoutIcon />, open, () => {
           localStorage.clear();
-          navigate("/login");
+          navigate("/");
         })}
       </List>
     </Drawer>
