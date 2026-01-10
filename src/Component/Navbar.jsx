@@ -138,7 +138,7 @@ export default function Navbar() {
                 variant="contained"
                 color="secondary"
                 sx={{ borderRadius: "20px", textTransform: "none" }}
-                onClick={() => navigate("/loginpage")}
+                onClick={() => navigate("/login")}
               >
                 Login
               </Button>
@@ -184,7 +184,7 @@ export default function Navbar() {
           ))}
           <ListItem>
             <Button
-              onClick={() => navigate("/loginpage")}
+              onClick={() => navigate("/login")}
               variant="contained"
               color="secondary"
               fullWidth

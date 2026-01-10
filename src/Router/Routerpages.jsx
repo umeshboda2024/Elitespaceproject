@@ -1,17 +1,16 @@
 // src/routes/AppRoutes.jsx
 import { Routes, Route } from "react-router-dom";
 
-// Pages
+// Public Pages
 import Home from "../pages/Home";
-// import StateProperties from "../pages/StateProperties";
-// import PropertyDetails from "../pages/PropertyDetails";
-
 import BuyProperties from "../Home/Buyproperties";
 import Propertycard from "../Component/Propertycard";
 import PropertyDetails from "../Home/BuyViewdetail";
 import LoginPage from "../Home/Loginpage";
 import Signup from "../Home/Signuppage";
-import Adminhome from "../Admin/component/Home/Adminhome";
+
+// Admin Pages
+import AdminHome from "../Admin/component/Home/Adminhome";
 import Properties from "../Admin/component/pages/Properties";
 import AddProperty from "../Admin/component/pages/Addproperty";
 import Agents from "../Admin/component/pages/Agent";
@@ -22,27 +21,38 @@ import Reviews from "../Admin/component/pages/Reviews";
 import Locations from "../Admin/component/pages/Location";
 import Content from "../Admin/component/pages/Content";
 
+// Layouts
+import AdminLayout from "../Layout/Adminlayout";
+import PublicLayout from "../Layout/Publiclayout";
 
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* 🌍 Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/buy" element={<BuyProperties />} />
       <Route path="/buyview" element={<PropertyDetails />} />
+      <Route path="/property" element={<Propertycard />} />
 
-      <Route path="/Property" element={<Propertycard />} />
-      <Route path="/loginpage" element={<LoginPage />} />
-      <Route path="/Signpage" element={<Signup />} />
-      <Route path="/Adminhome" element={<Adminhome />} />
-      <Route path="/admin/properties" element={<Properties />} />
-      <Route path="/admin/add-property" element={<AddProperty />} />
-      <Route path="/admin/agents" element={<Agents />} />
-      <Route path="/admin/add-agent" element={<AddAgent />} />
-      <Route path="/admin/users" element={<Users />} />
-      <Route path="/admin/inquiries" element={<Inquiries />} />
-      <Route path="/admin/reviews" element={<Reviews />} />
-      <Route path="/admin/locations" element={<Locations />} />
-      <Route path="/admin/content" element={<Content />} />
+      {/* 🔓 Auth Routes */}
+      <Route element={<PublicLayout />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<Signup />} />
+      </Route>
+
+      {/* 🔐 Admin Routes */}
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminHome />} />
+        <Route path="/admin/properties" element={<Properties />} />
+        <Route path="/admin/add-property" element={<AddProperty />} />
+        <Route path="agents" element={<Agents />} />
+        <Route path="add-agent" element={<AddAgent />} />
+        <Route path="users" element={<Users />} />
+        <Route path="inquiries" element={<Inquiries />} />
+        <Route path="reviews" element={<Reviews />} />
+        <Route path="locations" element={<Locations />} />
+        <Route path="content" element={<Content />} />
+      </Route>
     </Routes>
   );
 };

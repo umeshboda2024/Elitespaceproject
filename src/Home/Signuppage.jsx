@@ -30,7 +30,7 @@ const Signup = () => {
     emailid: "",
     mobilenumber: "",
     password: "",
-    confirmpassword: "",
+    confirompassword: "",
   };
   const token = "XI9aLT2keHbs64RP";
   useEffect(() => {
@@ -64,7 +64,7 @@ const Signup = () => {
       .post("https://generateapi.techsnack.online/api/signup", values, {
         headers: { Authorization: token },
       })
-      .then(() => navigate("/loginpage"))
+      .then(() => Mydata(), navigate("/loginpage"))
       .catch((err) => console.log("Signup Error", err));
 
     resetForm();
@@ -77,14 +77,14 @@ const Signup = () => {
     if (!values.emailid) errors.emailid = "Email is required";
     if (!values.mobilenumber) errors.mobilenumber = "Mobile number is required";
     if (!values.password) errors.password = "Password is required";
-    if (!values.confirmpassword)
-      errors.confirmpassword = "Confirm password is required";
+    if (!values.confirompassword)
+      errors.confirompassword = "Confirm password is required";
     if (
       values.password &&
-      values.confirmpassword &&
-      values.password !== values.confirmpassword
+      values.confirompassword &&
+      values.password !== values.confirompassword
     ) {
-      errors.confirmpassword = "Passwords do not match";
+      errors.confirompassword = "Passwords do not match";
     }
 
     return errors;
@@ -205,13 +205,15 @@ const Signup = () => {
                   fullWidth
                   label="Confirm Password"
                   // type="password"
-                  name="confirmpassword"
-                  value={values.confirmpassword}
+                  name="confirompassword"
+                  value={values.confirompassword}
                   onChange={handleChange}
                   error={
-                    touched.confirmpassword && Boolean(errors.confirmpassword)
+                    touched.confirompassword && Boolean(errors.confirompassword)
                   }
-                  helperText={touched.confirmpassword && errors.confirmpassword}
+                  helperText={
+                    touched.confirompassword && errors.confirompassword
+                  }
                   margin="normal"
                 />
 

@@ -14,33 +14,22 @@ import {
 
 const Loginpage = () => {
   const navigate = useNavigate();
-  const [ini, setini] = useState({
+
+  const initialValues = {
     email: "",
     password: "",
-  });
+  };
 
-  const Handelsumbit = (values) => {
-    const storedUser = JSON.parse(localStorage.getItem("/Username"));
+  const handleSubmit = (values) => {
+    const storedUsers = JSON.parse(localStorage.getItem("Username")) || [];
 
-<<<<<<< HEAD
-    if (
-      storedUser &&
-      values.email === storedUser.email &&
-      values.password === storedUser.password
-    ) {
-      navigate("/Adminhome");
-=======
-  // ✅ Correct credentials (temporary)
-  const correctEmail = "admin@gmail.com";
-  const correctPassword = "123456";
+    const matchedUser = storedUsers.find(
+      (user) =>
+        user.emailid === values.email && user.password === values.password
+    );
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (email === correctEmail && password === correctPassword) {
-      setError("");
-      navigate("/Adminhome"); // ✅ Open Home Page
->>>>>>> 092c1463dd4cb30d59ec4f3a77a1f4db59b25aca
+    if (matchedUser) {
+      navigate("/admin");
     } else {
       alert("Invalid email or password");
     }
@@ -82,7 +71,7 @@ const Loginpage = () => {
           Login to continue
         </Typography>
 
-        <Formik enableReinitialize initialValues={ini} onSubmit={Handelsumbit}>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ handleChange }) => (
             <Form>
               <Stack spacing={2}>
@@ -128,7 +117,7 @@ const Loginpage = () => {
                     textTransform: "none",
                     fontWeight: "bold",
                   }}
-                  onClick={() => navigate("/Signpage")}
+                  onClick={() => navigate("/signup")}
                 >
                   Create Account
                 </Button>

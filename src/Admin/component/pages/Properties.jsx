@@ -11,6 +11,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
+// import { getProperties, deleteProperty } from "../Service/Propertyservice";
 import { getProperties, deleteProperty } from "../Service/Propertyservice";
 import { useNavigate } from "react-router-dom";
 
@@ -19,21 +20,48 @@ export default function Properties() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getProperties().then(setData);
+    fetchProperties();
   }, []);
 
-  const handleDelete = (id) => {
-    deleteProperty(id);
-    setData(data.filter((p) => p.id !== id));
+  const fetchProperties = async () => {
+    try {
+      const res = await getProperties();
+      console.log(res);
+      setData(res.data?.data || []);
+    } catch (error) {
+      console.error(error);
+      setData([]); // safety
+    }
+  };
+
+  const handleDelete = async (_id) => {
+    if (!window.confirm("Delete this property?")) return;
+
+    try {
+      await deleteProperty(_id);
+      setData((prev) => prev.filter((p) => p._id !== _id));
+    } catch (error) {
+      console.error("Delete failed", error);
+    }
+  };
+
+  const statusColor = (status) => {
+    if (status === "Sold") return "error";
+    if (status === "Available") return "success";
+    return "warning";
   };
 
   return (
-    <Paper sx={{ p: 3, borderRadius: 3 }}>
+    <Paper sx={{ p: 3 }}>
       <Box display="flex" justifyContent="space-between" mb={2}>
         <Typography fontWeight="bold">Properties</Typography>
+
         <Button
           variant="contained"
-          onClick={() => navigate("/admin/add-property")}
+          onClick={() => {
+            console.log("Add Property button clicked");
+            navigate("/admin/add-property");
+          }}
         >
           Add Property
         </Button>
@@ -42,37 +70,58 @@ export default function Properties() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Location</TableCell>
-            <TableCell>Type</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>State</TableCell>
+            <TableCell>Floor</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Price</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
           {data.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell>{item.title}</TableCell>
-              <TableCell>{item.location}</TableCell>
-              <TableCell>{item.type}</TableCell>
+            <TableRow key={item._id}>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>{item.state}</TableCell>
+              <TableCell>{item.floor}</TableCell>
+
               <TableCell>
-                <Chip label={item.status} color="success" size="small" />
+                <Chip
+                  label={item.status}
+                  size="small"
+                  color={statusColor(item.status)}
+                />
               </TableCell>
+
               <TableCell>{item.price}</TableCell>
-              <TableCell>
-                <Button size="small">Edit</Button>
+
+              <TableCell align="center">
+                <Button
+                  size="small"
+                  // onClick={() => navigate(`/edit-property/${item._id}`)}
+                >
+                  Edit
+                </Button>
+
                 <Button
                   size="small"
                   color="error"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item._id)}
                 >
                   Delete
                 </Button>
               </TableCell>
             </TableRow>
           ))}
+
+          {data.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={6} align="center">
+                No properties found
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </Paper>

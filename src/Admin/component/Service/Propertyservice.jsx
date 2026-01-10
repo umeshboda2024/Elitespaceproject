@@ -1,32 +1,51 @@
-// This will later connect to backend
-const properties = [
-  {
-    id: 1,
-    title: "Luxury 3 BHK Apartment",
-    location: "Ahmedabad",
-    type: "Flat",
-    status: "Available",
-    price: "1.5 Cr",
-  },
-  {
-    id: 2,
-    title: "Modern 4 BHK Villa",
-    location: "Surat",
-    type: "Villa",
-    status: "Sold",
-    price: "3.2 Cr",
-  },
-];
+import axios from "axios";
 
-export const getProperties = () => {
-  return Promise.resolve(properties);
+const API_URL = "https://generateapi.techsnack.online/api/properties";
+const PROJECT_KEY = "eQTHfzOnseFMw1Mk";
+
+// 🔹 Axios instance
+const api = axios.create({
+  baseURL: "https://generateapi.techsnack.online/api/properties",
+  headers: {
+    projectkey: PROJECT_KEY, // ✅ CORRECT HEADER
+  },
+});
+
+// ✅ GET
+export const getProperties = async () => {
+  const res = await api.get(
+    "https://generateapi.techsnack.online/api/properties"
+  );
+  return res.data;
 };
 
-export const addProperty = (property) => {
-  properties.push({ ...property, id: Date.now() });
-  return Promise.resolve(property);
+// ✅ POST (IMAGE UPLOAD)
+export const addProperty = async (propertyData) => {
+  const res = await api.post(
+    "https://generateapi.techsnack.online/api/properties",
+    propertyData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return res.data;
 };
 
-export const deleteProperty = (id) => {
-  return Promise.resolve(id);
+// ✅ UPDATE
+export const updateProperty = async (id, updatedData) => {
+  const res = await api.patch(
+    `https://generateapi.techsnack.online/api/properties/${id}`,
+    updatedData
+  );
+  return res.data;
+};
+
+// ✅ DELETE
+export const deleteProperty = async (id) => {
+  const res = await api.delete(
+    `https://generateapi.techsnack.online/api/properties/${id}`
+  );
+  return res.data;
 };
