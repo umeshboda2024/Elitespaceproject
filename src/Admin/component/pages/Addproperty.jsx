@@ -45,11 +45,19 @@ export default function AddProperty() {
     formData.append("image", form.image);
 
     try {
-      await addProperty(formData);
+    const res = await addProperty(formData);
+    console.log("Add Property Success:", res);
+
+    // ✅ CORRECT SUCCESS CHECK
+    if (res?.Status === "Success") {
       navigate("/admin/properties");
-    } catch (error) {
-      console.error("Failed to add property", error);
+    } else {
+      alert("Property not saved!");
     }
+  } catch (error) {
+    console.error("Failed to add property", error);
+    alert("API Error");
+  }
   };
 
   return (

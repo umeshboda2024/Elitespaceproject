@@ -16,7 +16,7 @@ const Loginpage = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    email: "",
+    emailid: "",
     password: "",
   };
 
@@ -25,7 +25,7 @@ const Loginpage = () => {
 
     const matchedUser = storedUsers.find(
       (user) =>
-        user.emailid === values.email && user.password === values.password
+        user.emailid === values.emailid && user.password === values.password
     );
 
     if (matchedUser) {
@@ -77,7 +77,7 @@ const Loginpage = () => {
               <Stack spacing={2}>
                 <Field
                   as={TextField}
-                  name="email"
+                  name="emailid"
                   label="Email"
                   type="email"
                   fullWidth

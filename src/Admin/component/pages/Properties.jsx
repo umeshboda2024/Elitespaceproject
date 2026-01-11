@@ -25,13 +25,15 @@ export default function Properties() {
 
   const fetchProperties = async () => {
     try {
-      const res = await getProperties();
-      console.log(res);
-      setData(res.data?.data || []);
-    } catch (error) {
-      console.error(error);
-      setData([]); // safety
-    }
+    const res = await getProperties();
+    console.log("GET PROPERTIES:", res);
+
+    // ✅ CORRECT KEY
+    setData(res.Data || []);
+  } catch (error) {
+    console.error(error);
+    setData([]);
+  }
   };
 
   const handleDelete = async (_id) => {
@@ -52,7 +54,7 @@ export default function Properties() {
   };
 
   return (
-    <Paper sx={{ p: 3 }}>
+    <Paper  sx={{ p: 3 ,mt:5 }}>
       <Box display="flex" justifyContent="space-between" mb={2}>
         <Typography fontWeight="bold">Properties</Typography>
 

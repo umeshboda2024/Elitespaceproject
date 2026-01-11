@@ -3,49 +3,38 @@ import axios from "axios";
 const API_URL = "https://generateapi.techsnack.online/api/properties";
 const PROJECT_KEY = "eQTHfzOnseFMw1Mk";
 
-// 🔹 Axios instance
+// ✅ Axios instance
 const api = axios.create({
-  baseURL: "https://generateapi.techsnack.online/api/properties",
+  baseURL: API_URL,
   headers: {
-    projectkey: PROJECT_KEY, // ✅ CORRECT HEADER
+    Authorization: PROJECT_KEY,
   },
 });
 
-// ✅ GET
+// ✅ GET all properties
 export const getProperties = async () => {
-  const res = await api.get(
-    "https://generateapi.techsnack.online/api/properties"
-  );
+  const res = await api.get("/");
   return res.data;
 };
 
-// ✅ POST (IMAGE UPLOAD)
+// ✅ POST add property (image upload)
 export const addProperty = async (propertyData) => {
-  const res = await api.post(
-    "https://generateapi.techsnack.online/api/properties",
-    propertyData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  const res = await api.post("/", propertyData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 
-// ✅ UPDATE
+// ✅ UPDATE property
 export const updateProperty = async (id, updatedData) => {
-  const res = await api.patch(
-    `https://generateapi.techsnack.online/api/properties/${id}`,
-    updatedData
-  );
+  const res = await api.patch(`/${id}`, updatedData);
   return res.data;
 };
 
-// ✅ DELETE
+// ✅ DELETE property
 export const deleteProperty = async (id) => {
-  const res = await api.delete(
-    `https://generateapi.techsnack.online/api/properties/${id}`
-  );
+  const res = await api.delete(`/${id}`);
   return res.data;
 };

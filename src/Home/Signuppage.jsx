@@ -64,7 +64,7 @@ const Signup = () => {
       .post("https://generateapi.techsnack.online/api/signup", values, {
         headers: { Authorization: token },
       })
-      .then(() => Mydata(), navigate("/loginpage"))
+      .then(() => Mydata(), navigate("/login"))
       .catch((err) => console.log("Signup Error", err));
 
     resetForm();
