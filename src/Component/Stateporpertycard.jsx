@@ -1,17 +1,25 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import Ahemdabadimage from "../Assets/images/Ahemdabadstate.jpg";
 import Gurugram from "../Assets/images/Gurgamstate.jpg";
 import Mumbai from "../Assets/images/Mumbaistate.jpg";
 import Pune from "../Assets/images/Punestate.jpg";
 
 const Stateporpertycard = () => {
+  const navigate = useNavigate();
+
   const Stateproperty = [
     { image: Ahemdabadimage, name: "Ahmedabad", Project: "15" },
-    { image: Gurugram, name: "Gururgram", Project: "10" },
+    { image: Gurugram, name: "Gurugram", Project: "10" },
     { image: Mumbai, name: "Mumbai", Project: "8" },
     { image: Pune, name: "Pune", Project: "2" },
   ];
+
+  const handleClick = (stateName) => {
+    navigate(`/buyproperty/${stateName}`);
+  };
 
   return (
     <Box py={{ xs: 3, md: 4 }} mt={{ xs: 3, md: 5 }}>
@@ -22,7 +30,7 @@ const Stateporpertycard = () => {
 
         <Grid
           container
-          spacing={{ xs: 3, sm: 4, md: 5  }}
+          spacing={{ xs: 3, sm: 4, md: 5 }}
           mt={3}
           justifyContent="center"
         >
@@ -30,8 +38,12 @@ const Stateporpertycard = () => {
             <Grid
               item
               key={index}
-              size={{ xs: 12, sm: 6, md: 3 }}
+              xs={12}
+              sm={6}
+              md={3}
               textAlign="center"
+              sx={{ cursor: "pointer" }}
+              onClick={() => handleClick(state.name)}
             >
               <Box
                 component="img"
@@ -44,6 +56,10 @@ const Stateporpertycard = () => {
                   objectFit: "cover",
                   borderRadius: "50%",
                   mx: "auto",
+                  transition: "0.3s",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                  },
                 }}
               />
 

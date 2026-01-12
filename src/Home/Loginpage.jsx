@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useNavigate } from "react-router-dom";
-
 import {
   Box,
   Paper,
@@ -21,14 +20,25 @@ const Loginpage = () => {
   };
 
   const handleSubmit = (values) => {
-    const storedUsers = JSON.parse(localStorage.getItem("Username")) || [];
+    // 🔹 Safely get old users
+    let storedUsers = localStorage.getItem("Username");
+    storedUsers = storedUsers ? JSON.parse(storedUsers) : [];
 
+    if (!Array.isArray(storedUsers)) {
+      storedUsers = [];
+    }
+
+    // 🔹 Match user
     const matchedUser = storedUsers.find(
       (user) =>
-        user.emailid === values.emailid && user.password === values.password
+        user.emailid === values.emailid &&
+        user.password === values.password
     );
 
     if (matchedUser) {
+      // Optional: store logged-in user
+      localStorage.setItem("loggedUser", JSON.stringify(matchedUser));
+
       navigate("/admin");
     } else {
       alert("Invalid email or password");

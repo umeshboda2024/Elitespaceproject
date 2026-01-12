@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Footer from "../Component/Footer";
+
 import {
   Box,
   Container,
@@ -26,64 +28,92 @@ import img3 from "../Assets/images/View3 (7).jpg";
 import img4 from "../Assets/images/View3 (8).jpg";
 import img5 from "../Assets/images/View5.jpg";
 
-// ================= THEME =================
+/* ================= THEME ================= */
 const theme = createTheme({
   typography: {
     fontFamily: "'Poppins', 'Inter', 'Roboto', sans-serif",
   },
 });
 
-const images = [img1, img2, img3, img4, img5];
+/* ================= DUMMY PROPERTY DATA ================= */
+/* Later you can replace this with API */
+const PROPERTY_DATA = [
+  {
+    id: "gujarat",
+    price: "₹ 65 Lac",
+    emi: "₹23k",
+    title: "3 BHK Flat For Sale in Galaxy Enclave",
+    location: "Pal, Surat",
+    images: [img1, img2, img3, img4, img5],
+    features: [
+      { icon: <BedIcon />, label: "3 Beds" },
+      { icon: <BathtubIcon />, label: "3 Baths" },
+      { icon: <BalconyIcon />, label: "1 Balcony" },
+      { icon: <ChairIcon />, label: "Furnished" },
+    ],
+    details: [
+      ["Super Built-up Area", "1405 sqft"],
+      ["Project", "Galaxy Enclave"],
+      ["Floor", "3 (Out of 12)"],
+      ["Transaction Type", "Resale"],
+      ["Status", "Ready to Move"],
+      ["Ownership", "Freehold"],
+    ],
+  },
+];
 
+/* ================= COMPONENT ================= */
 const PropertyDetails = () => {
-  const [mainImage, setMainImage] = useState(images[0]);
+  const { state } = useParams(); // 👈 state from URL
+  const property =
+    PROPERTY_DATA.find((item) => item.id === state?.toLowerCase()) ||
+    PROPERTY_DATA[0];
+
+  const [mainImage, setMainImage] = useState(property.images[0]);
 
   return (
     <ThemeProvider theme={theme}>
+      <Navbar />
+
       <Container maxWidth="lg" sx={{ mt: 4, mb: 6 }}>
         <Grid container spacing={4}>
-          {/* ================= LEFT SIDE ================= */}
+          {/* ================= LEFT ================= */}
           <Grid item xs={12} md={8}>
             {/* PRICE */}
             <Typography variant="h4" fontWeight={700}>
-              ₹ 65 Lac
+              {property.price}
               <Typography
                 component="span"
                 sx={{ ml: 1, fontSize: 14, color: "text.secondary" }}
               >
-                EMI ₹23k
+                EMI {property.emi}
               </Typography>
             </Typography>
 
             {/* TITLE */}
             <Typography variant="h6" sx={{ mt: 1, fontWeight: 500 }}>
-              3 BHK Flat For Sale in Galaxy Enclave,&nbsp;
+              {property.title},{" "}
               <Typography component="span" color="primary" fontWeight={600}>
-                Pal, Surat
+                {property.location}
               </Typography>
             </Typography>
 
-            {/* ===== IMAGE GALLERY ===== */}
+            {/* ================= IMAGE GALLERY ================= */}
             <Box sx={{ mt: 2 }}>
-              {/* MAIN IMAGE */}
               <Box
                 component="img"
                 src={mainImage}
                 sx={{
                   width: "100%",
-                  height: {
-                    xs: 240,
-                    md: 380,
-                  },
+                  height: { xs: 240, md: 380 },
                   objectFit: "cover",
                   borderRadius: 3,
                   boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
                 }}
               />
 
-              {/* THUMBNAILS */}
               <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-                {images.slice(0, 4).map((img, index) => (
+                {property.images.slice(0, 4).map((img, index) => (
                   <Box
                     key={index}
                     component="img"
@@ -103,19 +133,17 @@ const PropertyDetails = () => {
                   />
                 ))}
 
-                {/* + MORE PHOTOS */}
                 <Box
                   sx={{
                     width: 90,
                     height: 70,
                     position: "relative",
                     borderRadius: 2,
-                    cursor: "pointer",
                   }}
                 >
                   <Box
                     component="img"
-                    src={images[4]}
+                    src={property.images[4]}
                     sx={{
                       width: "100%",
                       height: "100%",
@@ -135,7 +163,7 @@ const PropertyDetails = () => {
                       fontSize: 14,
                     }}
                   >
-                    +{images.length} Photos
+                    +{property.images.length} Photos
                   </Typography>
                 </Box>
               </Box>
@@ -143,12 +171,7 @@ const PropertyDetails = () => {
 
             {/* FEATURES */}
             <Box sx={{ display: "flex", gap: 1.5, mt: 2, flexWrap: "wrap" }}>
-              {[
-                { icon: <BedIcon />, label: "3 Beds" },
-                { icon: <BathtubIcon />, label: "3 Baths" },
-                { icon: <BalconyIcon />, label: "1 Balcony" },
-                { icon: <ChairIcon />, label: "Furnished" },
-              ].map((item, i) => (
+              {property.features.map((item, i) => (
                 <Chip
                   key={i}
                   icon={item.icon}
@@ -166,14 +189,7 @@ const PropertyDetails = () => {
 
             {/* DETAILS */}
             <Grid container spacing={2} sx={{ mt: 3 }}>
-              {[
-                ["Super Built-up Area", "1405 sqft"],
-                ["Project", "Galaxy Enclave"],
-                ["Floor", "3 (Out of 12)"],
-                ["Transaction Type", "Resale"],
-                ["Status", "Ready to Move"],
-                ["Ownership", "Freehold"],
-              ].map(([label, value], index) => (
+              {property.details.map(([label, value], index) => (
                 <Grid item xs={12} sm={6} key={index}>
                   <Card variant="outlined" sx={{ p: 1.5, borderRadius: 2 }}>
                     <Typography fontSize={13} color="text.secondary">
@@ -187,13 +203,14 @@ const PropertyDetails = () => {
 
             <Divider sx={{ my: 4 }} />
 
-            {/* MORE DETAILS */}
             <Typography variant="h6" fontWeight={700}>
               More Details
             </Typography>
           </Grid>
         </Grid>
       </Container>
+
+      <Footer />
     </ThemeProvider>
   );
 };

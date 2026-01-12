@@ -34,11 +34,11 @@ const AppRoutes = () => {
       {/* 🌍 Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/buy" element={<BuyProperties />} />
-      <Route path="/buyproperty" element={<Propertycard />} />
+      <Route path="/buyproperty/:state" element={<Propertycard />} />
       <Route path="/Rentproperty" element={<RentPropertycard />} />
 
       <Route path="/rent" element={<RentProperties />} />
-      <Route path="/buyview" element={<PropertyDetails />} />
+      <Route path="/buyview/:state" element={<PropertyDetails />} />
       <Route path="/Agent" element={<Agentcard />} />
       {/* <Route path="/property" element={<Propertycard />} /> */}
 

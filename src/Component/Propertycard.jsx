@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ApartmentIcon from "@mui/icons-material/Apartment";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -25,7 +24,7 @@ import Buyimage6 from "../Assets/images/BuyImage6.jpg";
 import { useNavigate } from "react-router-dom";
 
 /* -------------------- DATA -------------------- */
-const Cities = [
+export const Cities = [
   {
     state: "Gujarat",
     name: "Surat",
@@ -70,15 +69,16 @@ const Cities = [
   },
 ];
 
-/* -------------------- CARD COMPONENT -------------------- */
+/* -------------------- CARD -------------------- */
 const PropertyCard = ({ item }) => {
   const navigate = useNavigate();
+
   return (
     <Card
       sx={{
         borderRadius: 4,
         overflow: "hidden",
-        transition: "0.4s ease",
+        transition: "0.4s",
         "&:hover": {
           transform: "translateY(-10px)",
           boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
@@ -93,10 +93,10 @@ const PropertyCard = ({ item }) => {
           height="200"
           image={item.Image}
           alt={item.name}
-          sx={{ transition: "0.5s ease" }}
+          sx={{ transition: "0.5s" }}
         />
 
-        {/* Hover Overlay */}
+        {/* Overlay */}
         <Box
           className="overlay"
           sx={{
@@ -114,11 +114,11 @@ const PropertyCard = ({ item }) => {
         >
           <Button
             variant="contained"
-            onClick={() => navigate("/buyview")}
+            onClick={() => navigate(`/buyview/${item.state}`)}
             sx={{
               borderRadius: 20,
-              textTransform: "none",
               px: 4,
+              textTransform: "none",
               backgroundColor: "#0F4C5C",
               fontWeight: 600,
             }}
@@ -133,49 +133,38 @@ const PropertyCard = ({ item }) => {
           {item.state}
         </Typography>
 
-        <Typography
-          variant="h6"
-          sx={{ fontFamily: "Poppins", fontWeight: 600 }}
-        >
+        <Typography variant="h6" fontWeight={600}>
           <LocationOnIcon fontSize="small" color="primary" /> {item.name}
         </Typography>
 
-        <Typography sx={{ mt: 0.5 }}>{item.flate}</Typography>
+        <Typography>{item.flate}</Typography>
 
-        <Typography
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            mt: 1,
-            fontWeight: 600,
-          }}
-        >
-          <CurrencyRupeeIcon fontSize="small" />
-          {item.Price}
+        <Typography fontWeight={600} mt={1}>
+          <CurrencyRupeeIcon fontSize="small" /> {item.Price}
         </Typography>
       </CardContent>
     </Card>
   );
 };
 
-/* -------------------- MAIN COMPONENT -------------------- */
+/* -------------------- MAIN -------------------- */
 const Propertycard = () => {
   const navigate = useNavigate();
+
   return (
     <Box mt={12}>
       <Container maxWidth="xl">
-        {/* BUY */}
-        <Typography variant="h4" align="center" fontWeight={600} mb={1}>
+        <Typography variant="h4" align="center" fontWeight={600}>
           Explore Buy Properties
         </Typography>
+
         <Typography align="center" color="text.secondary" mb={5}>
           Find premium homes across top cities in India
         </Typography>
 
         <Grid container spacing={4}>
           {Cities.map((item, index) => (
-            <Grid item size={{ xs: 12, sm: 6, md: 4 }}>
+            <Grid item size={{xs:12, sm:6, md:4}}  key={index}>
               <PropertyCard item={item} />
             </Grid>
           ))}

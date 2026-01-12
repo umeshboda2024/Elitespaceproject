@@ -14,23 +14,32 @@ import {
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 
+import { useParams } from "react-router-dom";
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const BuyProperties = () => {
+  const { state } = useParams(); // 👈 STATE FROM URL
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProperties();
-  }, []);
+  }, [state]); // 👈 re-fetch/filter when state changes
 
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
-      console.log("Frontend Properties:", res);
+      const properties = res.Data || [];
 
-      // backend returns { Data: [...] }
-      setData(res.Data || []);
+      // ✅ STATE-WISE FILTER (NO UI CHANGE)
+      const filteredData = state
+        ? properties.filter(
+            (item) =>
+              item.state?.toLowerCase() === state.toLowerCase()
+          )
+        : properties;
+
+      setData(filteredData);
     } catch (error) {
       console.error("Error fetching properties:", error);
       setData([]);
@@ -48,7 +57,9 @@ const BuyProperties = () => {
           textAlign="center"
           gutterBottom
         >
-          Explore Buy Properties
+          {state
+            ? `Buy Properties in ${state}`
+            : "Explore Buy Properties"}
         </Typography>
 
         <Typography
@@ -62,7 +73,9 @@ const BuyProperties = () => {
 
         {/* LOADING */}
         {loading && (
-          <Typography textAlign="center">Loading properties...</Typography>
+          <Typography textAlign="center">
+            Loading properties...
+          </Typography>
         )}
 
         {/* EMPTY */}

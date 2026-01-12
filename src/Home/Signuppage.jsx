@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import {
   Box,
@@ -17,59 +17,67 @@ import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import axios from "axios";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [list, setlist] = useState([]);
+  const [list, setList] = useState([]);
 
-  const ini = {
+  const token = "XI9aLT2keHbs64RP";
+
+  const initialValues = {
     fullname: "",
     emailid: "",
     mobilenumber: "",
     password: "",
     confirompassword: "",
   };
-  const token = "XI9aLT2keHbs64RP";
+
+  // 🔹 API GET (unchanged)
   useEffect(() => {
     Mydata();
   }, []);
+
   function Mydata() {
     axios
       .get("https://generateapi.techsnack.online/api/signup", {
-        headers: {
-          Authorization: token,
-        },
+        headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data.Data);
-        setlist(res.data.Data);
+        setList(res.data.Data);
       })
-      .catch((err) => {
-        console.log("Error loading", err);
-      });
+      .catch((err) => console.log("Error loading", err));
   }
 
+  // 🔹 ONLY LOCALSTORAGE FIX APPLIED HERE
   const handleSubmit = (values, { resetForm }) => {
-    console.log(token);
+    let oldAccounts = localStorage.getItem("Username");
 
-    const oldAccounts = JSON.parse(localStorage.getItem("Username") || "[]");
-    const accountsArray = Array.isArray(oldAccounts) ? oldAccounts : [];
-    const updatedAccounts = [...accountsArray, values];
+    oldAccounts = oldAccounts ? JSON.parse(oldAccounts) : [];
+
+    if (!Array.isArray(oldAccounts)) {
+      oldAccounts = [];
+    }
+
+    const updatedAccounts = [...oldAccounts, values];
+
     localStorage.setItem("Username", JSON.stringify(updatedAccounts));
 
+    // 🔹 API POST (unchanged)
     axios
       .post("https://generateapi.techsnack.online/api/signup", values, {
         headers: { Authorization: token },
       })
-      .then(() => Mydata(), navigate("/login"))
+      .then(() => {
+        navigate("/login");
+      })
       .catch((err) => console.log("Signup Error", err));
 
     resetForm();
   };
 
+  // 🔹 Validation (unchanged)
   const validate = (values) => {
     const errors = {};
 
@@ -114,7 +122,7 @@ const Signup = () => {
           </Typography>
 
           <Formik
-            initialValues={ini}
+            initialValues={initialValues}
             validate={validate}
             onSubmit={handleSubmit}
           >
@@ -178,7 +186,7 @@ const Signup = () => {
                 <TextField
                   fullWidth
                   label="Password"
-                  // type={showPassword ? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={values.password}
                   onChange={handleChange}
@@ -204,12 +212,13 @@ const Signup = () => {
                 <TextField
                   fullWidth
                   label="Confirm Password"
-                  // type="password"
+                  type="password"
                   name="confirompassword"
                   value={values.confirompassword}
                   onChange={handleChange}
                   error={
-                    touched.confirompassword && Boolean(errors.confirompassword)
+                    touched.confirompassword &&
+                    Boolean(errors.confirompassword)
                   }
                   helperText={
                     touched.confirompassword && errors.confirompassword
@@ -224,12 +233,11 @@ const Signup = () => {
                     mt: 3,
                     py: 1.2,
                     borderRadius: 2,
-                    background: "linear-gradient(to right, #6a7cff, #8f5bff)",
+                    background:
+                      "linear-gradient(to right, #6a7cff, #8f5bff)",
                     color: "#fff",
                     fontWeight: "bold",
-                    "&:hover": {
-                      opacity: 0.9,
-                    },
+                    "&:hover": { opacity: 0.9 },
                   }}
                 >
                   Sign Up

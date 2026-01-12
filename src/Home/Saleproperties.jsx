@@ -16,6 +16,17 @@ import Salepropertyimage1 from "../Assets/images/Salepropertyimage1.jpg";
 import Salepropertyimage2 from "../Assets/images/Salepropertyimage2.jpg";
 import Salepropertyimage3 from "../Assets/images/Salepropertyimage3.jpg";
 import Salepropertyimage4 from "../Assets/images/Salepropertyimage4.jpg";
+// import Salepropertyimage from "../Assets/images/salepropertiesimage.jpg"
+import Rentproperyimage from "../Assets/images/Rentpropertiesimage.avif"
+import Rentproperyimage1 from "../Assets/images/Rentpropertiesimage1.avif"
+import Rentproperyimage2 from "../Assets/images/Rentpropertiesimage2.avif"
+import Rentproperyimage3 from "../Assets/images/Rentpropertiesimage3.avif"
+import Rentproperyimage4 from "../Assets/images/Rentpropertiesimage4.avif"
+import Rentproperyimage5 from "../Assets/images/Rentpropertiesimage5.avif"
+import Rentproperyimage6 from "../Assets/images/Rentpropertiesimage6.avif"
+import Rentproperyimage7 from "../Assets/images/Rentpropertiesimage7.avif"
+
+
 
 import Villa from "../Assets/images/Villaimgae.jpg";
 import Rowhouseimage from "../Assets/images/Rowhouseimage.jpg";
@@ -72,6 +83,57 @@ const Saleproperty = () => {
       location: "Katargam, Surat",
     },
   ];
+  const RentProperties = [
+    {
+      image: Rentproperyimage,
+      name: "Flat & Appartment",
+      flat: "2 BHK /1350 sq.ft",
+      location: "Vesu, Surat",
+    },
+    {
+      image: Rentproperyimage1,
+      name: "Luxury Villa",
+      flat: "4 BHK /4000 sq.ft",
+      location: "Pal, Surat",
+    },
+    {
+      image: Rentproperyimage2,
+      name: "Row House",
+      flat: "3 BHK /2000 sq.ft",
+      location: "Adajan, Surat",
+    },
+    {
+      image: Rentproperyimage3,
+      name: "Farm House",
+      flat: "5 BHK /5000 sq.ft",
+      location: "Katargam, Surat",
+    },
+    {
+      image: Rentproperyimage7,
+      name: "Flat & Appartment",
+      flat: "2 BHK /1350 sq.ft",
+      location: "Vesu, Surat",
+    },
+    {
+      image: Rentproperyimage6,
+      name: "Luxury Villa",
+      flat: "4 BHK /4000 sq.ft",
+      location: "Pal, Surat",
+    },
+    {
+      image: Rentproperyimage4,
+      name: "Row House",
+      flat: "3 BHK /2000 sq.ft",
+      location: "Adajan, Surat",
+    },
+    {
+      image: Rentproperyimage5,
+      name: "Farm House",
+      flat: "5 BHK /5000 sq.ft",
+      location: "Katargam, Surat",
+    },
+  ];
+
 
   const scrollRef = useRef();
   const RentRef = useRef();
@@ -219,21 +281,21 @@ const Saleproperty = () => {
                 scrollbarWidth: "none",
               }}
             >
-              {Properties.map((property, index) => (
+              {RentProperties.map((Rent, index) => (
                 <Card key={index} sx={{ minWidth: 350, flexShrink: 0 }}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       height="140"
-                      src={property.image}
-                      alt={property.name}
+                      src={Rent.image}
+                      alt={Rent.name}
                     />
                     <CardContent>
                       <Typography variant="body1" fontWeight={700}>
-                        {property.name}
+                        {Rent.name}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {property.flat} - {property.location}
+                        {Rent.flat} - {Rent.location}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
