@@ -24,6 +24,9 @@ import Content from "../Admin/component/pages/Content";
 // Layouts
 import AdminLayout from "../Layout/Adminlayout";
 import PublicLayout from "../Layout/Publiclayout";
+import RentProperties from "../Home/Rentproperties";
+import RentPropertycard from "../Component/Rentpropertycard";
+import { Agentcard } from "../Component/Agentcard";
 
 const AppRoutes = () => {
   return (
@@ -31,8 +34,13 @@ const AppRoutes = () => {
       {/* 🌍 Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/buy" element={<BuyProperties />} />
+      <Route path="/buyproperty" element={<Propertycard />} />
+      <Route path="/Rentproperty" element={<RentPropertycard />} />
+
+      <Route path="/rent" element={<RentProperties />} />
       <Route path="/buyview" element={<PropertyDetails />} />
-      <Route path="/property" element={<Propertycard />} />
+      <Route path="/Agent" element={<Agentcard />} />
+      {/* <Route path="/property" element={<Propertycard />} /> */}
 
       {/* 🔓 Auth Routes */}
       <Route element={<PublicLayout />}>
@@ -42,7 +50,7 @@ const AppRoutes = () => {
 
       {/* 🔐 Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminHome />} />
+        <Route path="/admin/home" index element={<AdminHome />} />
         <Route path="/admin/properties" element={<Properties />} />
         <Route path="/admin/add-property" element={<AddProperty />} />
         <Route path="agents" element={<Agents />} />

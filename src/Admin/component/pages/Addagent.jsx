@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Paper, TextField, Button, Typography, MenuItem } from "@mui/material";
+import {
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  MenuItem,
+  Box,
+} from "@mui/material";
 import { addAgent } from "../Service/Agentservice";
 import { useNavigate } from "react-router-dom";
 

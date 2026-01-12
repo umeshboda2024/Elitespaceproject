@@ -37,7 +37,7 @@ export default function Agents() {
   };
 
   return (
-    <Paper sx={{ p: 3, borderRadius: 3 }}>
+    <Paper sx={{ p: 3, borderRadius: 3, mt: 5 }}>
       <Box display="flex" justifyContent="space-between" mb={2}>
         <Typography fontWeight="bold">Agents</Typography>
         <Button

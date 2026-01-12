@@ -21,6 +21,7 @@ import Dashboard from "../Admin/component/pages/Dashboard";
 import Signup from "../Home/Signuppage";
 import AddProperty from "../Admin/component/pages/Addproperty";
 import AddAgent from "../Admin/component/pages/Addagent";
+import RentPropertycard from "../Component/Rentpropertycard";
 const Home = () => {
   return (
     <div>
@@ -28,6 +29,7 @@ const Home = () => {
       <Hero></Hero>
       <Stateporpertycard />
       <Propertycard />
+      <RentPropertycard />
       <Propertytypes />
       <StatusSection />
       <Saleproperty />
