@@ -18,7 +18,7 @@ export const getProperties = async () => {
 };
 
 export const getPropertyById = async (id) => {
-  const res = await api.get(`/${id}`);
+  const res = await api.get(`/`);
   return res.data;
 };
 
@@ -29,6 +29,7 @@ export const addProperty = async (propertyData) => {
       "Content-Type": "multipart/form-data",
     },
   });
+
   return res.data;
 };
 

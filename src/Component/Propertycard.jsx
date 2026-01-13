@@ -164,7 +164,7 @@ const Propertycard = () => {
 
         <Grid container spacing={4}>
           {Cities.map((item, index) => (
-            <Grid item size={{xs:12, sm:6, md:4}}  key={index}>
+            <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={index}>
               <PropertyCard item={item} />
             </Grid>
           ))}

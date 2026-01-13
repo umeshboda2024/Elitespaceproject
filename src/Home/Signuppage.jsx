@@ -217,8 +217,7 @@ const Signup = () => {
                   value={values.confirompassword}
                   onChange={handleChange}
                   error={
-                    touched.confirompassword &&
-                    Boolean(errors.confirompassword)
+                    touched.confirompassword && Boolean(errors.confirompassword)
                   }
                   helperText={
                     touched.confirompassword && errors.confirompassword
@@ -233,8 +232,7 @@ const Signup = () => {
                     mt: 3,
                     py: 1.2,
                     borderRadius: 2,
-                    background:
-                      "linear-gradient(to right, #6a7cff, #8f5bff)",
+                    background: "linear-gradient(to right, #6a7cff, #8f5bff)",
                     color: "#fff",
                     fontWeight: "bold",
                     "&:hover": { opacity: 0.9 },

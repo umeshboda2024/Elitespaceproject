@@ -28,19 +28,22 @@ import RentProperties from "../Home/Rentproperties";
 import RentPropertycard from "../Component/Rentpropertycard";
 import { Agentcard } from "../Component/Agentcard";
 import AddEditProperty from "../Admin/component/pages/Addproperty";
+import Contact from "../Home/Contact";
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* 🌍 Public Routes */}
       <Route path="/" element={<Home />} />
-      <Route path="/buy/:state" element={<BuyProperties />} />
-      <Route path="/buyproperty/:state" element={<Propertycard />} />
+      <Route path="/buy" element={<BuyProperties />} />
+      <Route path="/buyproperty/" element={<Propertycard />} />
       <Route path="/Rentproperty" element={<RentPropertycard />} />
 
       <Route path="/rent" element={<RentProperties />} />
       <Route path="/buyview/:state" element={<PropertyDetails />} />
       <Route path="/Agent" element={<Agentcard />} />
+      <Route path="/Contact" element={<Contact />} />
+
       {/* <Route path="/property" element={<Propertycard />} /> */}
 
       {/* 🔓 Auth Routes */}

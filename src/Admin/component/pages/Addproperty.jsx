@@ -24,22 +24,45 @@ export default function AddEditProperty() {
     image: null,
   });
 
-  // ✅ Load data ONLY in edit mode
+  // ✅ LOAD OLD DATA IN EDIT MODE
   useEffect(() => {
-    if (id) fetchProperty();
+    if (id) {
+      fetchProperty();
+    }
   }, [id]);
 
   const fetchProperty = async () => {
     try {
       const res = await getPropertyById(id);
-      setForm({ ...res.Data, image: null }); // 👈 don't preload image
+      console.log("ALL DATA:", res);
+
+      if (res?.Status === "Success" && Array.isArray(res.Data)) {
+        const oldData = res.Data.find((item) => item._id === id);
+
+        if (oldData) {
+          setForm({
+            state: oldData.state || "",
+            name: oldData.name || "",
+            flate: oldData.flate || "",
+            status: oldData.status || "",
+            carpetarea: oldData.carpetarea || "",
+            floor: oldData.floor || "",
+            price: oldData.price || "",
+            persqft: oldData.persqft || "",
+            owner: oldData.owner || "",
+            image: null,
+          });
+        }
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
+  // ✅ HANDLE INPUT CHANGE
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     if (name === "image") {
       setForm({ ...form, image: files[0] });
     } else {
@@ -47,12 +70,22 @@ export default function AddEditProperty() {
     }
   };
 
+  // ✅ SUBMIT (ADD / UPDATE)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
+
     Object.keys(form).forEach((key) => {
-      if (form[key]) formData.append(key, form[key]);
+      if (key === "image") {
+        // image only if selected
+        if (form.image) {
+          formData.append("image", form.image);
+        }
+      } else {
+        // always send other fields
+        formData.append(key, form[key]);
+      }
     });
 
     try {
@@ -92,6 +125,7 @@ export default function AddEditProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
+
         <TextField
           fullWidth
           label="Property Name"
@@ -100,6 +134,7 @@ export default function AddEditProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
+
         <TextField
           fullWidth
           label="Flat Type"
@@ -131,6 +166,7 @@ export default function AddEditProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
+
         <TextField
           fullWidth
           label="Floor"
@@ -139,6 +175,7 @@ export default function AddEditProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
+
         <TextField
           fullWidth
           label="Price"
@@ -147,6 +184,7 @@ export default function AddEditProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
+
         <TextField
           fullWidth
           label="Price Per Sqft"
@@ -155,6 +193,7 @@ export default function AddEditProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
+
         <TextField
           fullWidth
           label="Owner Name"

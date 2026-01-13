@@ -1,57 +1,73 @@
 import { Box, Container, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import villa from "../Assets/images/Getintouchimage.jpg";
 
 const GetInTouchSection = () => {
+  const navigate = useNavigate();
+
   const handleContactClick = () => {
-    const section = document.getElementById("footer-section");
-    section?.scrollIntoView({ behavior: "smooth" });
+    navigate("/Contact");
   };
 
   return (
     <Box
       sx={{
-        py: 10,
-        // background: "linear-gradient(135deg, #0b5c6b, #0e7688)",
+        position: "relative",
+        py: { xs: 8, md: 12 },
         color: "#fff",
         textAlign: "center",
         backgroundImage: `url(${villa})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundPositionX: "60%",
-        backgroundPositionY: "40%",
+        backgroundPosition: "center",
+        overflow: "hidden",
       }}
     >
-      <Container>
-        <Typography variant="h4" fontWeight="bold" mb={2}>
+      {/* Overlay */}
+      <Box
+        sx={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.4))",
+          zIndex: 1,
+        }}
+      />
+
+      <Container sx={{ position: "relative", zIndex: 2 }}>
+        <Typography
+          variant="h3"
+          fontWeight="bold"
+          mb={2}
+          sx={{ fontSize: { xs: "1.8rem", md: "2.6rem" } }}
+        >
           Looking for Your Dream Home?
         </Typography>
 
         <Typography
-          variant="h6"
           sx={{
-            maxWidth: 650,
+            maxWidth: 680,
             mx: "auto",
             mb: 4,
-            color: "rgba(255,255,255,0.9)",
+            color: "rgba(255,255,255,0.85)",
           }}
         >
-          Let our experts help you find the perfect property that fits your
+          Let our experts guide you to premium properties that fit your
           lifestyle and budget.
         </Typography>
 
         <Button
-          variant="contained"
           size="large"
           onClick={handleContactClick}
           sx={{
-            backgroundColor: "#fff",
-            color: "#0b5c6b",
-            px: 4,
-            py: 1.5,
+            px: 5,
+            py: 1.6,
+            borderRadius: "50px",
             fontWeight: "bold",
-            borderRadius: 3,
+            color: "#000",
+            background: "linear-gradient(90deg, #00e5ff, #1de9b6)",
             "&:hover": {
-              backgroundColor: "#f1f1f1",
+              background: "linear-gradient(90deg, #1de9b6, #00e5ff)",
             },
           }}
         >

@@ -18,29 +18,27 @@ import { useParams } from "react-router-dom";
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const BuyProperties = () => {
-  const { state } = useParams(); // URL param
+  const { state } = useParams(); // 👈 STATE FROM URL
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 NORMALIZE FUNCTION (VERY IMPORTANT)
-  const normalize = (value) =>
-    value?.toLowerCase().replace(/,/g, "").replace(/\s+/g, "");
-
   useEffect(() => {
     fetchProperties();
-  }, [state]);
+  }, [state]); // 👈 re-fetch/filter when state changes
 
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
       const properties = res.Data || [];
 
-      // ✅ STATE-WISE FILTER (ROBUST)
-      const filtered = properties.filter((item) =>
-        normalize(item.state)?.includes(normalize(state))
-      );
+      // ✅ STATE-WISE FILTER (NO UI CHANGE)
+      const filteredData = state
+        ? properties.filter(
+            (item) => item.state?.toLowerCase() === state.toLowerCase()
+          )
+        : properties;
 
-      setData(filtered);
+      setData(filteredData);
     } catch (error) {
       console.error("Error fetching properties:", error);
       setData([]);
@@ -58,7 +56,7 @@ const BuyProperties = () => {
           textAlign="center"
           gutterBottom
         >
-          Buy Properties in {state}
+          {state ? `Buy Properties in ${state}` : "Explore Buy Properties"}
         </Typography>
 
         <Typography
@@ -106,7 +104,7 @@ const BuyProperties = () => {
                     image={
                       property.image || "https://via.placeholder.com/400x250"
                     }
-                    alt={property.name}
+                    alt={property.title}
                   />
 
                   <Chip
