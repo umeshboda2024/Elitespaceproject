@@ -25,15 +25,15 @@ export default function Properties() {
 
   const fetchProperties = async () => {
     try {
-    const res = await getProperties();
-    console.log("GET PROPERTIES:", res);
+      const res = await getProperties();
+      console.log("GET PROPERTIES:", res);
 
-    // ✅ CORRECT KEY
-    setData(res.Data || []);
-  } catch (error) {
-    console.error(error);
-    setData([]);
-  }
+      // ✅ CORRECT KEY
+      setData(res.Data || []);
+    } catch (error) {
+      console.error(error);
+      setData([]);
+    }
   };
 
   const handleDelete = async (_id) => {
@@ -54,7 +54,7 @@ export default function Properties() {
   };
 
   return (
-    <Paper  sx={{ p: 3 ,mt:5 }}>
+    <Paper sx={{ p: 3, mt: 5 }}>
       <Box display="flex" justifyContent="space-between" mb={2}>
         <Typography fontWeight="bold">Properties</Typography>
 
@@ -101,7 +101,7 @@ export default function Properties() {
               <TableCell align="center">
                 <Button
                   size="small"
-                  // onClick={() => navigate(`/edit-property/${item._id}`)}
+                  onClick={() => navigate(`/admin/edit-property/${item._id}`)}
                 >
                   Edit
                 </Button>

@@ -18,7 +18,7 @@ const Stateporpertycard = () => {
   ];
 
   const handleClick = (stateName) => {
-    navigate(`/buyproperty/${stateName}`);
+    navigate(`/buy/${stateName}`);
   };
 
   return (

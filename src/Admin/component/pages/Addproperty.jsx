@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Paper, TextField, Button, Typography, MenuItem } from "@mui/material";
-import { addProperty } from "../Service/Propertyservice";
-import { useNavigate } from "react-router-dom";
+import {
+  addProperty,
+  getPropertyById,
+  updateProperty,
+} from "../Service/Propertyservice";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function AddProperty() {
+export default function AddEditProperty() {
   const navigate = useNavigate();
+  const { id } = useParams(); // 👈 IF ID EXISTS → EDIT MODE
 
   const [form, setForm] = useState({
     state: "",
@@ -19,9 +24,22 @@ export default function AddProperty() {
     image: null,
   });
 
+  // ✅ Load data ONLY in edit mode
+  useEffect(() => {
+    if (id) fetchProperty();
+  }, [id]);
+
+  const fetchProperty = async () => {
+    try {
+      const res = await getPropertyById(id);
+      setForm({ ...res.Data, image: null }); // 👈 don't preload image
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
     if (name === "image") {
       setForm({ ...form, image: files[0] });
     } else {
@@ -33,37 +51,36 @@ export default function AddProperty() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("state", form.state);
-    formData.append("name", form.name);
-    formData.append("flate", form.flate);
-    formData.append("status", form.status);
-    formData.append("carpetarea", form.carpetarea);
-    formData.append("floor", form.floor);
-    formData.append("price", form.price);
-    formData.append("persqft", form.persqft);
-    formData.append("owner", form.owner);
-    formData.append("image", form.image);
+    Object.keys(form).forEach((key) => {
+      if (form[key]) formData.append(key, form[key]);
+    });
 
     try {
-    const res = await addProperty(formData);
-    console.log("Add Property Success:", res);
+      let res;
 
-    // ✅ CORRECT SUCCESS CHECK
-    if (res?.Status === "Success") {
-      navigate("/admin/properties");
-    } else {
-      alert("Property not saved!");
+      if (id) {
+        // ✅ UPDATE
+        res = await updateProperty(id, formData);
+      } else {
+        // ✅ ADD
+        res = await addProperty(formData);
+      }
+
+      if (res?.Status === "Success") {
+        navigate("/admin/properties");
+      } else {
+        alert("Something went wrong!");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("API Error");
     }
-  } catch (error) {
-    console.error("Failed to add property", error);
-    alert("API Error");
-  }
   };
 
   return (
     <Paper sx={{ p: 4, maxWidth: 600, mx: "auto" }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
-        Add Property
+        {id ? "Edit Property" : "Add Property"}
       </Typography>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -75,7 +92,6 @@ export default function AddProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
-
         <TextField
           fullWidth
           label="Property Name"
@@ -84,7 +100,6 @@ export default function AddProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
-
         <TextField
           fullWidth
           label="Flat Type"
@@ -116,7 +131,6 @@ export default function AddProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
-
         <TextField
           fullWidth
           label="Floor"
@@ -125,7 +139,6 @@ export default function AddProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
-
         <TextField
           fullWidth
           label="Price"
@@ -134,7 +147,6 @@ export default function AddProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
-
         <TextField
           fullWidth
           label="Price Per Sqft"
@@ -143,7 +155,6 @@ export default function AddProperty() {
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
-
         <TextField
           fullWidth
           label="Owner Name"
@@ -165,7 +176,7 @@ export default function AddProperty() {
         </Button>
 
         <Button type="submit" variant="contained" fullWidth>
-          Save Property
+          {id ? "Update Property" : "Save Property"}
         </Button>
       </form>
     </Paper>

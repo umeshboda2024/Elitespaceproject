@@ -17,6 +17,11 @@ export const getProperties = async () => {
   return res.data;
 };
 
+export const getPropertyById = async (id) => {
+  const res = await api.get(`/${id}`);
+  return res.data;
+};
+
 // ✅ POST add property (image upload)
 export const addProperty = async (propertyData) => {
   const res = await api.post("/", propertyData, {

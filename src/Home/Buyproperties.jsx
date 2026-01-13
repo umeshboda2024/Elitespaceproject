@@ -18,28 +18,29 @@ import { useParams } from "react-router-dom";
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const BuyProperties = () => {
-  const { state } = useParams(); // 👈 STATE FROM URL
+  const { state } = useParams(); // URL param
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // 🔥 NORMALIZE FUNCTION (VERY IMPORTANT)
+  const normalize = (value) =>
+    value?.toLowerCase().replace(/,/g, "").replace(/\s+/g, "");
+
   useEffect(() => {
     fetchProperties();
-  }, [state]); // 👈 re-fetch/filter when state changes
+  }, [state]);
 
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
       const properties = res.Data || [];
 
-      // ✅ STATE-WISE FILTER (NO UI CHANGE)
-      const filteredData = state
-        ? properties.filter(
-            (item) =>
-              item.state?.toLowerCase() === state.toLowerCase()
-          )
-        : properties;
+      // ✅ STATE-WISE FILTER (ROBUST)
+      const filtered = properties.filter((item) =>
+        normalize(item.state)?.includes(normalize(state))
+      );
 
-      setData(filteredData);
+      setData(filtered);
     } catch (error) {
       console.error("Error fetching properties:", error);
       setData([]);
@@ -57,9 +58,7 @@ const BuyProperties = () => {
           textAlign="center"
           gutterBottom
         >
-          {state
-            ? `Buy Properties in ${state}`
-            : "Explore Buy Properties"}
+          Buy Properties in {state}
         </Typography>
 
         <Typography
@@ -73,16 +72,12 @@ const BuyProperties = () => {
 
         {/* LOADING */}
         {loading && (
-          <Typography textAlign="center">
-            Loading properties...
-          </Typography>
+          <Typography textAlign="center">Loading properties...</Typography>
         )}
 
         {/* EMPTY */}
         {!loading && data.length === 0 && (
-          <Typography textAlign="center">
-            No properties available
-          </Typography>
+          <Typography textAlign="center">No properties available</Typography>
         )}
 
         {/* PROPERTIES */}
@@ -109,10 +104,9 @@ const BuyProperties = () => {
                     component="img"
                     height="220"
                     image={
-                      property.image ||
-                      "https://via.placeholder.com/400x250"
+                      property.image || "https://via.placeholder.com/400x250"
                     }
-                    alt={property.title}
+                    alt={property.name}
                   />
 
                   <Chip
@@ -143,17 +137,17 @@ const BuyProperties = () => {
                     mt={0.5}
                   >
                     <LocationOnIcon color="error" fontSize="small" />
-                    {property.location}
+                    {property.state}
                   </Typography>
 
                   <Typography color="text.secondary">
-                    {property.type}
+                    {property.name}
                   </Typography>
 
                   <Box display="flex" gap={1} mt={2} flexWrap="wrap">
                     <Chip
                       icon={<SquareFootIcon />}
-                      label={`${property.carpetArea} sqft`}
+                      label={`${property.carpetarea} sqft`}
                       size="small"
                     />
                     <Chip
@@ -165,33 +159,21 @@ const BuyProperties = () => {
 
                   {/* PRICE */}
                   <Box mt={3}>
-                    <Typography
-                      variant="h6"
-                      fontWeight={900}
-                      color="error"
-                    >
+                    <Typography variant="h6" fontWeight={900} color="error">
                       ₹{property.price} Lac
                     </Typography>
 
                     <Typography fontSize={13} color="text.secondary">
-                      ₹{property.pricePerSqft} per sqft
+                      ₹{property.persqft} per sqft
                     </Typography>
                   </Box>
 
                   {/* ACTIONS */}
                   <Box mt={2} display="flex" gap={1} flexWrap="wrap">
-                    <Button
-                      variant="contained"
-                      color="error"
-                      size="small"
-                    >
+                    <Button variant="contained" color="error" size="small">
                       Contact Owner
                     </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                    >
+                    <Button variant="outlined" color="error" size="small">
                       Availability
                     </Button>
                   </Box>
