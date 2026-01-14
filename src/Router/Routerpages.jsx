@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import BuyProperties from "../Home/Buyproperties";
 import Propertycard from "../Component/Propertycard";
-import PropertyDetails from "../Home/BuyViewdetail";
+import PropertyDetails from "../Home/Buypropertydata";
 import LoginPage from "../Home/Loginpage";
 import Signup from "../Home/Signuppage";
 
@@ -28,7 +28,10 @@ import RentProperties from "../Home/Rentproperties";
 import RentPropertycard from "../Component/Rentpropertycard";
 import { Agentcard } from "../Component/Agentcard";
 import AddEditProperty from "../Admin/component/pages/Addproperty";
+import BuyView from "../Home/Buyviewdetails";
 import Contact from "../Home/Contact";
+import RentView from "../Home/Rentviewdetails";
+import AddReviewDialog from "../Home/Addreviewsection";
 
 const AppRoutes = () => {
   return (
@@ -38,11 +41,14 @@ const AppRoutes = () => {
       <Route path="/buy" element={<BuyProperties />} />
       <Route path="/buyproperty/" element={<Propertycard />} />
       <Route path="/Rentproperty" element={<RentPropertycard />} />
+      <Route path="/buyview/:id" element={<BuyView />} />
+      <Route path="/rentview/:id" element={<RentView />} />
 
       <Route path="/rent" element={<RentProperties />} />
-      <Route path="/buyview/:state" element={<PropertyDetails />} />
       <Route path="/Agent" element={<Agentcard />} />
       <Route path="/Contact" element={<Contact />} />
+      <Route path="/Review" element={<AddReviewDialog />} />
+
 
       {/* <Route path="/property" element={<Propertycard />} /> */}
 

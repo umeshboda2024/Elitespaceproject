@@ -11,6 +11,9 @@ import {
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { Button } from "@mui/material";
+import { useState } from "react";
+import AddReviewDialog from "../Home/Addreviewsection";
 
 // Single clean image
 import ReviewImage from "../Assets/images/reviewimage1.jpeg";
@@ -60,6 +63,8 @@ export default function ReviewSection() {
       behavior: "smooth",
     });
   };
+   const [open, setOpen] = useState(false);
+
 
   return (
     <Box sx={{ py: { xs: 6, md: 10 } }}>
@@ -193,6 +198,25 @@ export default function ReviewSection() {
             <ArrowForwardIosIcon />
           </IconButton>
         </Box>
+       <Box display="flex" justifyContent="center" mt={4}>
+  <Button
+    variant="outlined"
+    onClick={() => setOpen(true)}
+    sx={{
+      px: 4,
+      py: 1.2,
+      borderRadius: 3,
+      fontWeight: 600,
+    }}
+  >
+    ⭐ Write a Review
+  </Button>
+</Box>
+
+      <AddReviewDialog
+        open={open}
+        onClose={() => setOpen(false)}
+      />
       </Container>
     </Box>
   );
