@@ -81,7 +81,7 @@ const BuyProperties = () => {
         {/* PROPERTIES */}
         <Grid container spacing={4}>
           {data.map((property) => (
-            <Grid item xs={12} sm={6} md={4} key={property._id}>
+            <Grid item size={{xs:12 ,sm:6 ,md:4}}  key={property._id}>
               <Card
                 sx={{
                   display: "flex",
@@ -101,7 +101,9 @@ const BuyProperties = () => {
                   <CardMedia
                     component="img"
                     height="220"
+                    width="100%"
                     image={
+                    
                       property.image || "https://via.placeholder.com/400x250"
                     }
                     alt={property.title}

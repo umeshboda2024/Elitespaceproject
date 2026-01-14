@@ -33,6 +33,17 @@ import Buy3viewdetails3 from "../Assets/images/Buy3viewdetailimage4.jpg"
 import Buy3viewdetails4 from "../Assets/images/Buy3viewdetailimage5.jpg"
 import Buy3viewdetails5 from "../Assets/images/Buy3viewdetailimage6.jpg"
 import Buy3viewdetails6 from "../Assets/images/Buy3viewdetailimage7.jpg"
+import Buy4viewdetails1 from "../Assets/images/Buy4viewdetailimage1.jpg"
+import Buy4viewdetails2 from "../Assets/images/Buy4viewdetailimage2.jpg"
+import Buy4viewdetails3 from "../Assets/images/Buy4viewdetailimage3.jpg"
+import Buy4viewdetails4 from "../Assets/images/Buy4viewdetailimage4.jpg"
+import Buy4viewdetails5 from "../Assets/images/Buy4viewdetailimage5.jpg"
+import Buy5viewdetails1 from "../Assets/images/Buy5viewdetailimage1.jpg"
+import Buy5viewdetails2 from "../Assets/images/Buy5viewdetailimage2.jpg"
+import Buy5viewdetails3 from "../Assets/images/Buy5viewdetailimage3.jpg"
+import Buy5viewdetails4 from "../Assets/images/Buy5viewdetailimage4.jpg"
+
+
 
 
 
@@ -54,7 +65,7 @@ export const Cities = [
     flate: "3 BHK Flat",
     price: "₹ 2.00 Cr",
     area: "1250 Sq.Ft",
-    images: [Buyimage2, Buyimage3, Buyimage4],
+    images: [Buyimage2, Buy4viewdetails1, Buy4viewdetails2,Buy4viewdetails3,Buy4viewdetails4,Buy4viewdetails5],
   },
   {
     id: "mumbai",
@@ -63,7 +74,7 @@ export const Cities = [
     flate: "2 BHK Flat",
     price: "₹ 1.85 Cr",
     area: "862 Sq.Ft",
-    images: [Buyimage3, Buyimage5, Buyimage6],
+    images: [Buyimage3,Buy5viewdetails1,Buy5viewdetails2,Buy5viewdetails3,Buy5viewdetails4],
   },
   {
     id: "pune",
