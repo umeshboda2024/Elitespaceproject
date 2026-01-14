@@ -24,7 +24,7 @@ import Elitespacelogo from "../Assets/images/Elitespacelogo-removebg-preview.png
 
 /* ================= MENU DATA ================= */
 
-const pages = ["Home", "Buy", "Rent", "Sell", "Agent", "Blog", "About"];
+const pages = ["Home", "Buy", "Rent", "Sell", "Agent", "About" ,"Contact"];
 
 const routeMap = {
   Home: "/",
@@ -32,7 +32,7 @@ const routeMap = {
   Rent: "/Rentproperty",
   Sell: "/sell",
   Agent: "/Agent",
-  Blog: "/blog",
+  Contact: "/Contact",
   About: "/about",
 };
 

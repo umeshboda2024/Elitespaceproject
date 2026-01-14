@@ -13,7 +13,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
 import { RentCities } from "../Home/Rentpropertydata";
-
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 /* =======================
    SINGLE PROPERTY CARD
 ======================= */
@@ -126,18 +126,20 @@ const RentPropertyCard = () => {
           size="large"
           onClick={() => navigate("/rent")}
           sx={{
-            px: 6,
-            py: 1.5,
-            borderRadius: 30,
-            fontWeight: 600,
-            backgroundColor: "#0F4C5C",
+             mt: { xs: 3, md: 2 },
+                px: { xs: 3, md: 4 },
+                borderRadius: "10px",
+                textTransform: "none",
+                fontWeight: "bold",
+                backgroundColor: "#0F4C5C",
+                gap: 2,
             "&:hover": {
               backgroundColor: "#093944",
               transform: "translateY(-2px)",
             },
           }}
         >
-          View All Rent Properties
+          View All Rent Properties <ArrowForwardIcon />
         </Button>
       </Box>
     </Container>

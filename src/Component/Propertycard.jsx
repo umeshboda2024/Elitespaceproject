@@ -13,6 +13,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
 import { Cities } from "../Home/Buypropertydata";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 /* =======================
    SINGLE PROPERTY CARD
@@ -121,18 +122,20 @@ const Propertycard = () => {
           size="large"
           onClick={() => navigate("/buy")}
           sx={{
-            px: 6,
-            py: 1.5,
-            borderRadius: 30,
-            fontWeight: 600,
-            backgroundColor: "#0F4C5C",
+           mt: { xs: 3, md: 2 },
+                px: { xs: 3, md: 4 },
+                borderRadius: "10px",
+                textTransform: "none",
+                fontWeight: "bold",
+                backgroundColor: "#0F4C5C",
+                gap: 2,
             "&:hover": {
               backgroundColor: "#093944",
               transform: "translateY(-2px)",
             },
           }}
         >
-          View All Buy Properties
+          View All Buy Properties <ArrowForwardIcon />
         </Button>
       </Box>
     </Container>
