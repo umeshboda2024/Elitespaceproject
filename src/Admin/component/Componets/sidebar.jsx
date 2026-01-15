@@ -89,12 +89,12 @@ export default function Sidebar() {
         {menuItem("Locaton", <LocationCityIcon />, open, () =>
           navigate("/admin/locations")
         )}
-        {menuItem("Cities", <LocationCityIcon />, open, () =>
+        {/* {menuItem("Cities", <LocationCityIcon />, open, () =>
           navigate("/admin/cities")
-        )}
-        {menuItem("Settings", <SettingsIcon />, open, () =>
+        )} */}
+        {/* {menuItem("Settings", <SettingsIcon />, open, () =>
           navigate("/admin/settings")
-        )}
+        )} */}
         {menuItem("Logout", <LogoutIcon />, open, () => {
           localStorage.clear();
           navigate("/");

@@ -78,6 +78,7 @@ const Propertytypes = () => {
           {/* Button */}
           <Grid item xs={12} display="flex" justifyContent="center">
             <Button
+             onClick={() => navigate("/buy")}
               variant="contained"
               size="large"
               sx={{
