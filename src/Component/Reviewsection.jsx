@@ -17,11 +17,16 @@ import AddReviewDialog from "../Home/Addreviewsection";
 
 // Single clean image
 import ReviewImage from "../Assets/images/reviewimage1.jpeg";
+import ReviewImage2 from "../Assets/images/reviewimage2.jpeg";
+import ReviewImage3 from "../Assets/images/reviewimage3.jpeg";
+import ReviewImage4 from "../Assets/images/reviewimage4.jpeg";
+
 
 const reviews = [
   {
     name: "Rahul Mehta",
     city: "Ahmedabad",
+    image: ReviewImage,
     rating: 5,
     review:
       "Elite Space made my home-buying journey smooth and stress-free. Their property options and agent support were excellent.",
@@ -29,6 +34,7 @@ const reviews = [
   {
     name: "Priya Sharma",
     city: "Mumbai",
+    image: ReviewImage2,
     rating: 5,
     review:
       "I found my perfect 2 BHK flat within a week. The team is professional, transparent, and very responsive.",
@@ -36,6 +42,7 @@ const reviews = [
   {
     name: "Amit Verma",
     city: "Gurugram",
+    image: ReviewImage3,
     rating: 4,
     review:
       "Great platform for both buying and renting properties. Easy search filters and genuine listings.",
@@ -43,6 +50,7 @@ const reviews = [
   {
     name: "Neha Patel",
     city: "Surat",
+    image: ReviewImage4,
     rating: 5,
     review:
       "Highly trusted platform. Genuine listings and excellent customer support throughout the journey.",
@@ -135,7 +143,7 @@ export default function ReviewSection() {
                 }}
               >
                 <Avatar
-                  src={ReviewImage}
+                  src={item.image}
                   sx={{
                     width: 90,
                     height: 90,

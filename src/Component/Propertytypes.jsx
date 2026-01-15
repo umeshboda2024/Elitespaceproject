@@ -10,14 +10,20 @@ import Appartmentimage from "../Assets/images/Appartmentimage.jpg";
 import Villa from "../Assets/images/Villaimgae.jpg";
 import Rowhouseimage from "../Assets/images/Rowhouseimage.jpg";
 import Farmhouseimage from "../Assets/images/Farmhouseimage.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Propertytypes = () => {
+  const navigate = useNavigate();
   const Properties = [
     { image: Appartmentimage, name: "Appartment" },
     { image: Villa, name: "Villas" },
     { image: Rowhouseimage, name: "Rowhouse" },
     { image: Farmhouseimage, name: "Farmhouse" },
   ];
+  
+  const handleClick = (type) => {
+    navigate(`/buy/type/${type}`);
+  };
 
   return (
     <Box py={{ xs: 3, md: 4 }} mt={{ xs: 3, md: 5 }}>

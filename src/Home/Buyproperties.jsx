@@ -9,36 +9,48 @@ import {
   Button,
   Box,
   Chip,
+  TextField,
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
-
 import { useParams } from "react-router-dom";
+
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const BuyProperties = () => {
-  const { state } = useParams(); // 👈 STATE FROM URL
+  const { state, propertyType } = useParams(); // ✅ BOTH PARAMS
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProperties();
-  }, [state]); // 👈 re-fetch/filter when state changes
+  }, [state, propertyType]);
 
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
-      const properties = res.Data || [];
+      let properties = res.Data || [];
 
-      // ✅ STATE-WISE FILTER (NO UI CHANGE)
-      const filteredData = state
-        ? properties.filter(
-            (item) => item.state?.toLowerCase() === state.toLowerCase()
-          )
-        : properties;
+      // ✅ STATE FILTER
+      if (state) {
+        properties = properties.filter(
+          (item) =>
+            item.state?.toLowerCase() === state.toLowerCase()
+        );
+      }
 
-      setData(filteredData);
+      // ✅ PROPERTY TYPE FILTER (IMPORTANT)
+      if (propertyType) {
+        properties = properties.filter(
+          (item) =>
+            item.type?.toLowerCase() ===
+            propertyType.toLowerCase()
+        );
+      }
+
+      setData(properties);
     } catch (error) {
       console.error("Error fetching properties:", error);
       setData([]);
@@ -47,83 +59,81 @@ const BuyProperties = () => {
     }
   };
 
+  // ✅ NAME SEARCH FILTER
+  const filteredData = data.filter((item) =>
+    item.name?.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box mt={12} mb={6} sx={{ backgroundColor: "#f9f9f9", py: 6 }}>
-      <Container>
-        <Typography
-          variant="h4"
-          fontWeight={800}
-          textAlign="center"
-          gutterBottom
-        >
-          {state ? `Buy Properties in ${state}` : "Explore Buy Properties"}
+      <Container maxWidth="xl">
+        {/* TITLE */}
+        <Typography variant="h4" fontWeight={800} textAlign="center">
+          Buy {propertyType || ""} Properties {state && `in ${state}`}
         </Typography>
 
         <Typography
           textAlign="center"
           color="text.secondary"
-          mb={6}
+          mb={4}
           sx={{ maxWidth: 600, mx: "auto" }}
         >
           Discover verified properties available for purchase
         </Typography>
 
+        {/* 🔍 SEARCH */}
+        <TextField
+          label="Search Property Name"
+          fullWidth
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{
+            maxWidth: 400,
+            mx: "auto",
+            display: "block",
+            mb: 6,
+            backgroundColor: "#fff",
+            borderRadius: 2,
+          }}
+        />
+
         {/* LOADING */}
         {loading && (
-          <Typography textAlign="center">Loading properties...</Typography>
+          <Typography textAlign="center">
+            Loading properties...
+          </Typography>
         )}
 
         {/* EMPTY */}
-        {!loading && data.length === 0 && (
-          <Typography textAlign="center">No properties available</Typography>
+        {!loading && filteredData.length === 0 && (
+          <Typography textAlign="center">
+            No properties found
+          </Typography>
         )}
 
         {/* PROPERTIES */}
         <Grid container spacing={4}>
-          {data.map((property) => (
-            <Grid item size={{xs:12 ,sm:6 ,md:4}}  key={property._id}>
+          {filteredData .slice(0,9).map((property) => (
+            <Grid item size={{xs:12,sm:6,md:4}}  key={property._id}>
               <Card
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
                   borderRadius: 3,
-                  overflow: "hidden",
-                  boxShadow: "0 12px 35px rgba(0,0,0,0.08)",
-                  transition: "0.4s",
+                  transition: "0.3s",
                   "&:hover": {
                     transform: "translateY(-8px)",
-                    boxShadow: "0 25px 60px rgba(0,0,0,0.15)",
                   },
                 }}
               >
-                {/* IMAGE */}
-                <Box sx={{ position: "relative" }}>
-                  <CardMedia
-                    component="img"
-                    height="220"
-                    width="100%"
-                    image={
-                    
-                      property.image || "https://via.placeholder.com/400x250"
-                    }
-                    alt={property.title}
-                  />
+                <CardMedia
+                  component="img"
+                  height="220"
+                  image={
+                    property.image ||
+                    "https://via.placeholder.com/400x250"
+                  }
+                />
 
-                  <Chip
-                    label={property.status || "Available"}
-                    color="success"
-                    size="small"
-                    sx={{
-                      position: "absolute",
-                      top: 12,
-                      left: 12,
-                      fontWeight: 600,
-                    }}
-                  />
-                </Box>
-
-                {/* CONTENT */}
-                <CardContent sx={{ flex: 1 }}>
+                <CardContent>
                   <Typography fontSize={13} color="text.secondary">
                     Owner: {property.owner}
                   </Typography>
@@ -134,15 +144,12 @@ const BuyProperties = () => {
                     display="flex"
                     alignItems="center"
                     gap={0.5}
-                    mt={0.5}
                   >
                     <LocationOnIcon color="error" fontSize="small" />
                     {property.state}
                   </Typography>
 
-                  <Typography color="text.secondary">
-                    {property.name}
-                  </Typography>
+                  <Typography>{property.name}</Typography>
 
                   <Box display="flex" gap={1} mt={2} flexWrap="wrap">
                     <Chip
@@ -157,19 +164,16 @@ const BuyProperties = () => {
                     />
                   </Box>
 
-                  {/* PRICE */}
-                  <Box mt={3}>
-                    <Typography variant="h6" fontWeight={900} color="error">
-                      ₹{property.price} Lac
-                    </Typography>
+                  <Typography
+                    variant="h6"
+                    fontWeight={900}
+                    color="error"
+                    mt={2}
+                  >
+                    ₹{property.price} Lac
+                  </Typography>
 
-                    <Typography fontSize={13} color="text.secondary">
-                      ₹{property.persqft} per sqft
-                    </Typography>
-                  </Box>
-
-                  {/* ACTIONS */}
-                  <Box mt={2} display="flex" gap={1} flexWrap="wrap">
+                  <Box mt={2} display="flex" gap={1}>
                     <Button variant="contained" color="error" size="small">
                       Contact Owner
                     </Button>

@@ -63,7 +63,7 @@ const RentPropertyCardItem = ({ item }) => {
         >
           <Button
             variant="contained"
-            onClick={() => navigate(`/buyview/${item.id}`, { state: item })}
+            onClick={() => navigate(`/Rent/${item.id}`, { state: item })}
             sx={{
               borderRadius: 20,
               px: 4,
@@ -124,7 +124,7 @@ const RentPropertyCard = () => {
         <Button
           variant="contained"
           size="large"
-          onClick={() => navigate("/rent")}
+          onClick={() => navigate("/Rent")}
           sx={{
              mt: { xs: 3, md: 2 },
                 px: { xs: 3, md: 4 },

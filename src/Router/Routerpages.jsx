@@ -38,13 +38,15 @@ const AppRoutes = () => {
     <Routes>
       {/* 🌍 Public Routes */}
       <Route path="/" element={<Home />} />
-      <Route path="/buy" element={<BuyProperties />} />
+      <Route path="/buy/:state?" element={<BuyProperties />} />
+      <Route path="/buy/type/:propertyType" element={<BuyProperties />} />
       <Route path="/buyproperty/" element={<Propertycard />} />
       <Route path="/Rentproperty" element={<RentPropertycard />} />
       <Route path="/buyview/:id" element={<BuyView />} />
       <Route path="/rentview/:id" element={<RentView />} />
 
-      <Route path="/rent" element={<RentProperties />} />
+       <Route path="/Rent/:state?" element={<RentProperties />} />
+      <Route path="/Rent/type/:propertyType" element={<RentProperties />} />
       <Route path="/Agent" element={<Agentcard />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Review" element={<AddReviewDialog />} />
