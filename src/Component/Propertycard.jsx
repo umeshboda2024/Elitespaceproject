@@ -1,145 +1,70 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Container,
-  Grid,
-  Button,
-  Box,
-} from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useNavigate } from "react-router-dom";
-import { Cities } from "../Home/Buypropertydata";
+import React, { useEffect, useState } from "react";
+import { Container, Grid, Button, Box, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useNavigate } from "react-router-dom";
+import { getProperties } from "../Admin/component/Service/Propertyservice";
+import PropertyCard from "../Component/Propertycardui";
 
-/* =======================
-   SINGLE PROPERTY CARD
-======================= */
-const PropertyCard = ({ item }) => {
+const PropertyList = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  return (
-    <Card
-      sx={{
-        borderRadius: 4,
-        overflow: "hidden",
-        transition: "0.4s",
-        "&:hover": {
-          transform: "translateY(-10px)",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-          "& img": { transform: "scale(1.1)" },
-          "& .overlay": { opacity: 1 },
-        },
-      }}
-    >
-      {/* IMAGE SECTION */}
-      <Box sx={{ position: "relative", overflow: "hidden" }}>
-        <CardMedia
-          component="img"
-          height="200"
-          image={item.images[0]}
-          alt={item.name}
-          sx={{ transition: "0.5s" }}
-        />
+  useEffect(() => {
+    fetchProperties();
+  }, []);
 
-        {/* OVERLAY BUTTON */}
-        <Box
-          className="overlay"
-          sx={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0))",
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "center",
-            pb: 2,
-            opacity: 0,
-            transition: "0.4s",
-          }}
-        >
-          <Button
-            variant="contained"
-            onClick={() => navigate(`/buyview/${item.id}`, { state: item })}
-            sx={{
-              borderRadius: 20,
-              px: 4,
-              backgroundColor: "#0F4C5C",
-            }}
-          >
-            View Details
-          </Button>
-        </Box>
-      </Box>
+  const fetchProperties = async () => {
+    try {
+      const res = await getProperties();
+      setData(res.Data || []);
+    } catch (error) {
+      console.error("API Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      {/* CONTENT */}
-      <CardContent>
-        <Typography variant="caption" color="text.secondary">
-          {item.state}
-        </Typography>
-
-        <Typography fontWeight={600} mt={0.5}>
-          <LocationOnIcon fontSize="small" /> {item.name}
-        </Typography>
-
-        <Typography variant="body2" color="text.secondary">
-          {item.flate}
-        </Typography>
-
-        <Typography fontWeight={600} mt={1}>
-          <CurrencyRupeeIcon fontSize="small" />
-          {item.price} | {item.area}
-        </Typography>
-      </CardContent>
-    </Card>
-  );
-};
-
-/* =======================
-   PROPERTY GRID + BUTTON
-======================= */
-const Propertycard = () => {
-  const navigate = useNavigate(); // ✅ REQUIRED
+  if (loading) {
+    return (
+      <Typography textAlign="center" mt={10}>
+        Loading properties...
+      </Typography>
+    );
+  }
 
   return (
     <Container maxWidth="xl" sx={{ mt: 10 }}>
-      {/* PROPERTY GRID */}
-      <Grid container spacing={5}>
-        {Cities.map((item) => (
-          <Grid item size={{xs:12 ,sm:6 ,md:4}}  key={item.id}>
+      <Grid container spacing={4}>
+        {data.slice(0, 9).map((item) => (
+          <Grid item xs={12} sm={6} md={4} key={item._id}>
             <PropertyCard item={item} />
           </Grid>
         ))}
       </Grid>
 
-      {/* VIEW ALL BUY PROPERTIES BUTTON */}
-      <Box sx={{ textAlign: "center", mt: 6 }}>
+      {/* VIEW ALL */}
+      <Box textAlign="center" mt={6}>
         <Button
           variant="contained"
           size="large"
           onClick={() => navigate("/buy")}
           sx={{
-           mt: { xs: 3, md: 2 },
-                px: { xs: 3, md: 4 },
-                borderRadius: "10px",
-                textTransform: "none",
-                fontWeight: "bold",
-                backgroundColor: "#0F4C5C",
-                gap: 2,
+            px: 5,
+            borderRadius: 2,
+            fontWeight: "bold",
+            backgroundColor: "#0F4C5C",
             "&:hover": {
               backgroundColor: "#093944",
               transform: "translateY(-2px)",
             },
           }}
         >
-          View All Buy Properties <ArrowForwardIcon />
+          View All Properties <ArrowForwardIcon />
         </Button>
       </Box>
     </Container>
   );
 };
 
-export default Propertycard;
+export default PropertyList;

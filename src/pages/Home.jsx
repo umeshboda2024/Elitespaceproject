@@ -3,7 +3,7 @@ import Navbar from "../Component/Navbar";
 import Hero from "../Home/Hero";
 import StateProperties from "../Home/StateProperties";
 import Buyproperties from "../Home/Buyproperties";
-import Propertycard from "../Component/Propertycard";
+import Propertycard from "../Component/Propertycardui";
 import Stateporpertycard from "../Component/Stateporpertycard";
 import Propertytypes from "../Component/Propertytypes";
 import StatusSection from "../Home/StatusSection";

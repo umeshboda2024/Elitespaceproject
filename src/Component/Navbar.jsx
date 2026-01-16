@@ -24,13 +24,13 @@ import Elitespacelogo from "../Assets/images/Elitespacelogo-removebg-preview.png
 
 /* ================= MENU DATA ================= */
 
-const pages = ["Home", "Buy", "Rent", "Sell", "Agent", "About" ,"Contact"];
+const pages = ["Home", "Buy", "Rent", "Sell", "Agent", "About", "Contact"];
 
 const routeMap = {
   Home: "/",
   Buy: "/buyproperty",
   Rent: "/Rentproperty",
-  Sell: "/sell",
+  Sell: "/sale",
   Agent: "/Agent",
   Contact: "/Contact",
   About: "/about",

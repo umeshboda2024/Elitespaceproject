@@ -32,6 +32,7 @@ import BuyView from "../Home/Buyviewdetails";
 import Contact from "../Home/Contact";
 import RentView from "../Home/Rentviewdetails";
 import AddReviewDialog from "../Home/Addreviewsection";
+import Saleproperty from "../Home/Saleproperties";
 
 const AppRoutes = () => {
   return (
@@ -44,13 +45,13 @@ const AppRoutes = () => {
       <Route path="/Rentproperty" element={<RentPropertycard />} />
       <Route path="/buyview/:id" element={<BuyView />} />
       <Route path="/rentview/:id" element={<RentView />} />
+      <Route path="/sale" element={<Saleproperty />} />
 
-       <Route path="/Rent/:state?" element={<RentProperties />} />
+      <Route path="/Rent/:state?" element={<RentProperties />} />
       <Route path="/Rent/type/:propertyType" element={<RentProperties />} />
       <Route path="/Agent" element={<Agentcard />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Review" element={<AddReviewDialog />} />
-
 
       {/* <Route path="/property" element={<Propertycard />} /> */}
 
