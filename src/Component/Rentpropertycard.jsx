@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useNavigate } from "react-router-dom";
-import { RentCities } from "../Home/Rentpropertydata";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProperties } from "../Admin/component/Service/Propertyservice";
+
 /* =======================
    SINGLE PROPERTY CARD
 ======================= */
@@ -34,18 +35,15 @@ const RentPropertyCardItem = ({ item }) => {
         },
       }}
     >
-      {/* IMAGE SECTION */}
       <Box sx={{ position: "relative", overflow: "hidden" }}>
         <CardMedia
           component="img"
           height="200"
-          width="450"
-          image={item.images?.[0] || "/no-image.jpg"}
+          image={item.image || "https://via.placeholder.com/400x300"}
           alt={item.name}
           sx={{ transition: "0.5s" }}
         />
 
-        {/* OVERLAY BUTTON */}
         <Box
           className="overlay"
           sx={{
@@ -63,14 +61,12 @@ const RentPropertyCardItem = ({ item }) => {
         >
           <Button
             variant="contained"
-            onClick={() => navigate(`/Rent/${item.id}`, { state: item })}
+            onClick={() => navigate(`/rentview/${item._id}`, { state: item })}
             sx={{
               borderRadius: 20,
               px: 4,
               backgroundColor: "#0F4C5C",
-              "&:hover": {
-                backgroundColor: "#093944",
-              },
+              "&:hover": { backgroundColor: "#093944" },
             }}
           >
             View Details
@@ -78,13 +74,17 @@ const RentPropertyCardItem = ({ item }) => {
         </Box>
       </Box>
 
-      {/* CONTENT */}
       <CardContent>
         <Typography variant="caption" color="text.secondary">
           {item.state}
         </Typography>
 
-        <Typography fontWeight={600} mt={0.5} display="flex" alignItems="center">
+        <Typography
+          fontWeight={600}
+          mt={0.5}
+          display="flex"
+          alignItems="center"
+        >
           <LocationOnIcon fontSize="small" sx={{ mr: 0.5 }} />
           {item.name}
         </Typography>
@@ -95,7 +95,7 @@ const RentPropertyCardItem = ({ item }) => {
 
         <Typography fontWeight={600} mt={1} display="flex" alignItems="center">
           <CurrencyRupeeIcon fontSize="small" />
-          {item.price} | {item.area}
+          {item.price} Month | {item.area}
         </Typography>
       </CardContent>
     </Card>
@@ -103,36 +103,86 @@ const RentPropertyCardItem = ({ item }) => {
 };
 
 /* =======================
-   PROPERTY GRID + BUTTON
+   PROPERTY GRID
 ======================= */
 const RentPropertyCard = () => {
   const navigate = useNavigate();
+  const { state, propertyType } = useParams();
+
+  const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // 🔹 clear search when route changes
+  useEffect(() => {
+    setSearch("");
+    fetchProperties();
+  }, [state, propertyType]);
+
+  const fetchProperties = async () => {
+    try {
+      setLoading(true);
+      const res = await getProperties();
+
+      let properties = res?.Data || [];
+
+      if (state) {
+        properties = properties.filter(
+          (item) => item.state?.toLowerCase() === state.toLowerCase()
+        );
+      }
+
+      if (propertyType) {
+        properties = properties.filter(
+          (item) => item.type?.toLowerCase() === propertyType.toLowerCase()
+        );
+      }
+
+      setData(properties);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🔹 search filter (fixed)
+  const filteredData = data.filter((item) =>
+    item.name?.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <Container maxWidth="xl" sx={{ mt: 10 }}>
-      {/* PROPERTY GRID */}
-      <Grid container  spacing={5}>
-        {RentCities.map((item) => (
-          <Grid item size={{xs:12 ,sm:6 ,md:4}}  key={item.id}>
+      <Typography variant="h4" fontWeight={800} textAlign="center" mb={1}>
+        Explore Rent Properties
+      </Typography>
+
+      <Typography textAlign="center" color="text.secondary" mb={6}>
+        Premium residential projects handpicked for you
+      </Typography>
+
+      <Grid container spacing={5}>
+        {filteredData.slice(9, 18).map((item) => (
+          <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={item.id}>
             <RentPropertyCardItem item={item} />
           </Grid>
         ))}
       </Grid>
 
-      {/* VIEW ALL RENT PROPERTIES BUTTON */}
       <Box sx={{ textAlign: "center", mt: 6 }}>
         <Button
           variant="contained"
           size="large"
           onClick={() => navigate("/Rent")}
           sx={{
-             mt: { xs: 3, md: 2 },
-                px: { xs: 3, md: 4 },
-                borderRadius: "10px",
-                textTransform: "none",
-                fontWeight: "bold",
-                backgroundColor: "#0F4C5C",
-                gap: 2,
+            mt: { xs: 3, md: 2 },
+            px: { xs: 3, md: 4 },
+            borderRadius: "10px",
+            textTransform: "none",
+            fontWeight: "bold",
+            backgroundColor: "#0F4C5C",
+            gap: 2,
             "&:hover": {
               backgroundColor: "#093944",
               transform: "translateY(-2px)",

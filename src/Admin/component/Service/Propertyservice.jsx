@@ -1,45 +1,37 @@
 import axios from "axios";
 
-const API_URL = "https://generateapi.techsnack.online/api/properties";
-const PROJECT_KEY = "eQTHfzOnseFMw1Mk";
-
-// ✅ Axios instance
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: "https://generateapi.techsnack.online/api/properties",
   headers: {
-    Authorization: PROJECT_KEY,
+    Authorization: "3K3BYd3gR7H98FEE",
   },
 });
 
-// ✅ GET all properties
+/* ADD PROPERTY */
+export const addProperty = async (data) => {
+  const res = await api.post("/", data);
+  return res.data;
+};
+
+/* GET ALL */
 export const getProperties = async () => {
   const res = await api.get("/");
   return res.data;
 };
 
+/* GET ONE */
 export const getPropertyById = async (id) => {
-  const res = await api.get(`/`);
+  const res = await api.get(`/${id}`);
   return res.data;
 };
 
-// ✅ POST add property (image upload)
-export const addProperty = async (propertyData) => {
-  const res = await api.post("/", propertyData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-
+/* UPDATE */
+export const updateProperty = async (id, data) => {
+  const res = await api.patch(`/${id}`, data);
   return res.data;
 };
 
-// ✅ UPDATE property
-export const updateProperty = async (id, updatedData) => {
-  const res = await api.patch(`/${id}`, updatedData);
-  return res.data;
-};
-
-// ✅ DELETE property
+/* DELETE */
 export const deleteProperty = async (id) => {
   const res = await api.delete(`/${id}`);
   return res.data;

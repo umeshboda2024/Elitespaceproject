@@ -73,6 +73,7 @@ export default function Properties() {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
+            <TableCell>City</TableCell>
             <TableCell>State</TableCell>
             <TableCell>Floor</TableCell>
             <TableCell>Status</TableCell>
@@ -84,7 +85,8 @@ export default function Properties() {
         <TableBody>
           {data.map((item) => (
             <TableRow key={item._id}>
-              <TableCell>{item.name}</TableCell>
+              <TableCell>{item.propertyname}</TableCell>
+              <TableCell>{item.city}</TableCell>
               <TableCell>{item.state}</TableCell>
               <TableCell>{item.floor}</TableCell>
 

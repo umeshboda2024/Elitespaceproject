@@ -21,7 +21,6 @@ import ReviewImage2 from "../Assets/images/reviewimage2.jpeg";
 import ReviewImage3 from "../Assets/images/reviewimage3.jpeg";
 import ReviewImage4 from "../Assets/images/reviewimage4.jpeg";
 
-
 const reviews = [
   {
     name: "Rahul Mehta",
@@ -71,8 +70,7 @@ export default function ReviewSection() {
       behavior: "smooth",
     });
   };
-   const [open, setOpen] = useState(false);
-
+  const [open, setOpen] = useState(false);
 
   return (
     <Box sx={{ py: { xs: 6, md: 10 } }}>
@@ -206,25 +204,22 @@ export default function ReviewSection() {
             <ArrowForwardIosIcon />
           </IconButton>
         </Box>
-       <Box display="flex" justifyContent="center" mt={4}>
-  <Button
-    variant="outlined"
-    onClick={() => setOpen(true)}
-    sx={{
-      px: 4,
-      py: 1.2,
-      borderRadius: 3,
-      fontWeight: 600,
-    }}
-  >
-    ⭐ Write a Review
-  </Button>
-</Box>
+        <Box display="flex" justifyContent="center" mt={4}>
+          <Button
+            variant="outlined"
+            onClick={() => setOpen(true)}
+            sx={{
+              px: 4,
+              py: 1.2,
+              borderRadius: 3,
+              fontWeight: 600,
+            }}
+          >
+            ⭐ Write a Review
+          </Button>
+        </Box>
 
-      <AddReviewDialog
-        open={open}
-        onClose={() => setOpen(false)}
-      />
+        <AddReviewDialog open={open} onClose={() => setOpen(false)} />
       </Container>
     </Box>
   );

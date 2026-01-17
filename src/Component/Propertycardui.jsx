@@ -7,22 +7,22 @@ import {
   Container,
   Grid,
   Box,
-  Chip,
   Button,
+  Chip,
   Stack,
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
-import ApartmentIcon from "@mui/icons-material/Apartment";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import LayersIcon from "@mui/icons-material/Layers";
+import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import { useNavigate } from "react-router-dom";
 
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const Propertycard = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,28 +32,25 @@ const Propertycard = () => {
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
-      const properties = res?.Data || [];
-
-      // ✅ NAME + STATE UNIQUE
-      const uniqueMap = {};
-      properties.forEach((item) => {
-        const key = `${item.name}-${item.state}`;
-        if (!uniqueMap[key]) {
-          uniqueMap[key] = item;
-        }
-      });
-
-      setData(Object.values(uniqueMap));
-    } catch (error) {
-      console.error(error);
-      setData([]);
-    } finally {
-      setLoading(false);
+      setData(res?.Data || []);
+    } catch (err) {
+      console.error(err);
     }
   };
 
+  const getImage = (property) => {
+    if (!property.image || property.image.length === 0) {
+      return "https://via.placeholder.com/400x300";
+    }
+
+    const img = property.image[0];
+    if (img.startsWith("http")) return img;
+
+    return `https://generateapi.techsnack.online/uploads/${img}`;
+  };
+
   return (
-    <Box mt={12} mb={8} sx={{ background: "#f7f9fc", py: 6 }}>
+    <Box mt={12} mb={10} sx={{ background: "#f7f9fc", py: 6 }}>
       <Container maxWidth="xl">
         <Typography variant="h4" fontWeight={800} textAlign="center" mb={1}>
           Explore Buy Properties
@@ -63,153 +60,95 @@ const Propertycard = () => {
           Premium residential projects handpicked for you
         </Typography>
 
-        {loading && (
-          <Typography textAlign="center">Loading properties...</Typography>
-        )}
-
-        {!loading && data.length === 0 && (
-          <Typography textAlign="center">No properties found</Typography>
-        )}
-
         <Grid container spacing={4}>
           {data.map((property) => (
             <Grid item xs={12} sm={6} md={4} key={property._id}>
               <Card
                 sx={{
-                  height: "100%",
                   borderRadius: 4,
                   overflow: "hidden",
-                  backgroundColor: "#fff",
                   boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-                  transition: "0.35s ease",
+                  transition: "0.35s",
                   "&:hover": {
                     transform: "translateY(-8px)",
-                    boxShadow: "0 20px 45px rgba(0,0,0,0.18)",
+                    boxShadow: "0 20px 40px rgba(0,0,0,0.18)",
                   },
                 }}
               >
-                {/* IMAGE SECTION */}
-                <Box
-                  sx={{
-                    position: "relative",
-                    overflow: "hidden",
-                    "& img": {
-                      transition: "0.5s ease",
-                    },
-                    "&:hover img": {
-                      transform: "scale(1.08)",
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="240"
-                    image={
-                      property.image || "https://via.placeholder.com/400x300"
-                    }
-                    alt={property.name}
-                  />
+                <CardMedia
+                  component="img"
+                  height="230"
+                  image={getImage(property)}
+                  alt={property.propertyname}
+                />
 
-                  {/* PROPERTY TYPE BADGE */}
-                  <Chip
-                    label={property.type}
-                    sx={{
-                      position: "absolute",
-                      top: 16,
-                      left: 16,
-                      background: "linear-gradient(135deg, #0f4c5c, #1b6f82)",
-                      color: "#fff",
-                      fontWeight: 600,
-                    }}
-                  />
-
-                  {/* HOVER BUTTON */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      inset: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "rgba(0,0,0,0.45)",
-                      opacity: 0,
-                      transition: "0.3s ease",
-                      "&:hover": { opacity: 1 },
-                    }}
-                  >
-                    <Button
-                      onClick={() =>
-                        navigate(`/buy/${property.id}`, { state: property })
-                      }
-                      sx={{
-                        px: 4,
-                        py: 1.3,
-                        borderRadius: "30px",
-                        backgroundColor: "#fff",
-                        color: "#0f4c5c",
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        "&:hover": {
-                          backgroundColor: "#f1f1f1",
-                        },
-                      }}
-                    >
-                      Explore Project
-                    </Button>
-                  </Box>
-                </Box>
-
-                {/* CONTENT */}
                 <CardContent>
-                  <Stack spacing={1}>
-                    <Typography fontSize={13} color="text.secondary">
-                      {property.name}
-                    </Typography>
-
-                    <Typography
-                      variant="h6"
-                      fontWeight={700}
-                      display="flex"
-                      alignItems="center"
-                      gap={0.5}
-                    >
-                      <LocationOnIcon fontSize="small" color="primary" />
-                      {property.state}
-                    </Typography>
-
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      alignItems="center"
-                      mt={1}
-                    >
-                      <Chip
-                        icon={<ApartmentIcon />}
-                        label={property.type}
-                        size="small"
-                        variant="outlined"
-                      />
-                      <Chip
-                        icon={<SquareFootIcon />}
-                        label={`${property.carpetarea} Sq.Ft`}
-                        size="small"
-                        variant="outlined"
-                      />
-                    </Stack>
-
-                    <Typography
-                      mt={2}
-                      fontSize={18}
-                      fontWeight={800}
-                      color="#0f4c5c"
-                      display="flex"
-                      alignItems="center"
-                      gap={0.5}
-                    >
-                      <CurrencyRupeeIcon fontSize="small" />
-                      {property.price} Lac
+                  {/* Status */}
+                  <Stack direction="row" justifyContent="space-between">
+                    <Chip
+                      label={property.status}
+                      size="small"
+                      color={
+                        property.status === "Available" ? "success" : "warning"
+                      }
+                    />
+                    <Typography fontSize={12} color="text.secondary">
+                      Floor: {property.floor}
                     </Typography>
                   </Stack>
+
+                  {/* Property Name */}
+                  <Typography fontWeight={700} fontSize={18} mt={1}>
+                    {property.propertyname}
+                  </Typography>
+
+                  {/* Address */}
+                  <Typography
+                    fontSize={13}
+                    color="text.secondary"
+                    display="flex"
+                    gap={0.5}
+                    alignItems="center"
+                    mt={0.5}
+                  >
+                    <LocationOnIcon fontSize="small" />
+                    {property.address}
+                  </Typography>
+
+                  {/* Type & BHK */}
+                  <Typography fontSize={14} color="text.secondary" mt={0.5}>
+                    {property.propertytype} • {property.bhk} BHK
+                  </Typography>
+
+                  {/* Price */}
+                  <Typography fontWeight={800} fontSize={18} mt={1}>
+                    <CurrencyRupeeIcon fontSize="small" />
+                    {property.price} Lac
+                  </Typography>
+
+                  {/* Carpet Area */}
+                  <Typography
+                    fontSize={13}
+                    color="text.secondary"
+                    display="flex"
+                    gap={0.5}
+                  >
+                    <SquareFootIcon fontSize="small" />
+                    Carpet Area: {property.carpetarea} Sq.Ft
+                  </Typography>
+
+                  <Button
+                    fullWidth
+                    sx={{ mt: 2 }}
+                    variant="contained"
+                    onClick={() =>
+                      navigate(`/buyview/${property._id}`, {
+                        state: property,
+                      })
+                    }
+                  >
+                    View Details
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>

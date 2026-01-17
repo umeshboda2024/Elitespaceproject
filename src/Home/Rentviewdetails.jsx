@@ -1,72 +1,95 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
-  Container,
-  Grid,
-  Typography,
   Box,
-  Chip,
-  Card,
+  Container,
+  Typography,
+  CircularProgress,
+  Grid,
 } from "@mui/material";
+import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const RentView = () => {
-  const location = useLocation();
-  const property = location.state;
+  const { id } = useParams();
 
-  const [mainImage, setMainImage] = useState(property.images[0]);
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProperty();
+  }, [id]);
+
+  const fetchProperty = async () => {
+    try {
+      setLoading(true);
+      const res = await getProperties();
+      const allData = res?.Data || [];
+
+      const singleData = allData.find(
+        (item) => item.id?.toString() === id?.toString()
+      );
+
+      setProperty(singleData || null);
+    } catch (error) {
+      console.error("Error loading property:", error);
+      setProperty(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🔹 Loading
+  if (loading) {
+    return (
+      <Box sx={{ mt: 10, textAlign: "center" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // 🔹 Not found
+  if (!property) {
+    return (
+      <Typography mt={10} textAlign="center" color="error">
+        Property not found
+      </Typography>
+    );
+  }
 
   return (
-    <Container sx={{ mt: 5 }}>
-      <Typography variant="h4" fontWeight={700}>
-        {property.price}
-      </Typography>
-
-      <Typography variant="h6" mb={3}>
-        {property.flate} in {property.name}, {property.state}
-      </Typography>
-
+    <Container maxWidth="lg" sx={{ mt: 10 }}>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={6}>
           <Box
             component="img"
-            src={mainImage}
+            src={property.image || "https://via.placeholder.com/600x400"}
+            alt={property.name}
             sx={{
               width: "100%",
-              height: 400,
-              objectFit: "cover",
               borderRadius: 3,
+              objectFit: "cover",
             }}
           />
-
-          <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-            {property.images.map((img, i) => (
-              <Box
-                key={i}
-                component="img"
-                src={img}
-                onClick={() => setMainImage(img)}
-                sx={{
-                  width: 90,
-                  height: 70,
-                  cursor: "pointer",
-                  borderRadius: 2,
-                  border:
-                    mainImage === img
-                      ? "2px solid #1976d2"
-                      : "1px solid #ccc",
-                }}
-              />
-            ))}
-          </Box>
         </Grid>
 
-        <Grid item xs={12} md={4}>
-          <Card sx={{ p: 3 }}>
-            <Chip label={property.flate} sx={{ mb: 1 }} />
-            <Typography>Area: {property.area}</Typography>
-            <Typography mt={1}>Location: {property.name}</Typography>
-            <Typography mt={1}>State: {property.state}</Typography>
-          </Card>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h4" fontWeight="bold">
+            {property.name}
+          </Typography>
+
+          <Typography color="text.secondary" mt={1}>
+            {property.state}
+          </Typography>
+
+          <Typography mt={2} fontSize={18} fontWeight={600}>
+            ₹ {property.price} / month
+          </Typography>
+
+          <Typography mt={1}>{property.flate}</Typography>
+
+          <Typography mt={2} color="text.secondary">
+            Area: {property.area}
+          </Typography>
         </Grid>
       </Grid>
     </Container>

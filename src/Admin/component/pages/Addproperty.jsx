@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Paper, TextField, Button, Typography, MenuItem } from "@mui/material";
+import { Paper, TextField, Button, Typography } from "@mui/material";
 import {
   addProperty,
   getPropertyById,
@@ -9,205 +9,139 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function AddEditProperty() {
   const navigate = useNavigate();
-  const { id } = useParams(); // 👈 IF ID EXISTS → EDIT MODE
+  const { id } = useParams();
+
+  const numberFields = [
+    "carpetarea",
+    "floor",
+    "price",
+    "pricepersqft",
+    "bedroom",
+    "hall",
+    "kitchen",
+    "builtuparea",
+    "securitydeposit",
+    "maintainance",
+  ];
 
   const [form, setForm] = useState({
+    city: "",
     state: "",
-    name: "",
-    flate: "",
+    propertyname: "",
+    propertytype: "",
+    bhk: "",
     status: "",
     carpetarea: "",
     floor: "",
     price: "",
-    persqft: "",
-    owner: "",
-    image: null,
+    pricepersqft: "",
+    ownername: "",
+    address: "",
+    bedroom: "",
+    hall: "",
+    kitchen: "",
+    builtuparea: "",
+    ownertype: "",
+    ownermobilenumber: "",
+    securitydeposit: "",
+    maintainance: "",
+    image: [],
   });
 
-  // ✅ LOAD OLD DATA IN EDIT MODE
+  // LOAD DATA IN EDIT MODE
   useEffect(() => {
-    if (id) {
-      fetchProperty();
-    }
+    if (id) fetchProperty();
   }, [id]);
 
   const fetchProperty = async () => {
     try {
       const res = await getPropertyById(id);
-      console.log("ALL DATA:", res);
-
-      if (res?.Status === "Success" && Array.isArray(res.Data)) {
-        const oldData = res.Data.find((item) => item._id === id);
-
-        if (oldData) {
-          setForm({
-            state: oldData.state || "",
-            name: oldData.name || "",
-            flate: oldData.flate || "",
-            status: oldData.status || "",
-            carpetarea: oldData.carpetarea || "",
-            floor: oldData.floor || "",
-            price: oldData.price || "",
-            persqft: oldData.persqft || "",
-            owner: oldData.owner || "",
-            image: null,
-          });
-        }
+      if (res?.Status === "Success" && res.Data) {
+        setForm({ ...res.Data, image: [] });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  // ✅ HANDLE INPUT CHANGE
+  // HANDLE CHANGE
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
     if (name === "image") {
-      setForm({ ...form, image: files[0] });
+      setForm({ ...form, image: files });
     } else {
       setForm({ ...form, [name]: value });
     }
   };
 
-  // ✅ SUBMIT (ADD / UPDATE)
+  // SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
 
     Object.keys(form).forEach((key) => {
       if (key === "image") {
-        // image only if selected
-        if (form.image) {
-          formData.append("image", form.image);
+        for (let i = 0; i < form.image.length; i++) {
+          formData.append("image", form.image[i]);
         }
       } else {
-        // always send other fields
-        formData.append(key, form[key]);
+        if (numberFields.includes(key)) {
+          formData.append(key, Number(form[key]) || 0); // ✅ FIX
+        } else {
+          formData.append(key, form[key]);
+        }
       }
     });
 
     try {
       let res;
-
       if (id) {
-        // ✅ UPDATE
         res = await updateProperty(id, formData);
       } else {
-        // ✅ ADD
         res = await addProperty(formData);
       }
 
       if (res?.Status === "Success") {
         navigate("/admin/properties");
       } else {
-        alert("Something went wrong!");
+        alert("Something went wrong");
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       alert("API Error");
     }
   };
 
   return (
-    <Paper sx={{ p: 4, maxWidth: 600, mx: "auto" }}>
-      <Typography variant="h6" fontWeight="bold" mb={3}>
+    <Paper sx={{ p: 4, maxWidth: 800, mx: "auto" }}>
+      <Typography variant="h6" mb={3} fontWeight="bold">
         {id ? "Edit Property" : "Add Property"}
       </Typography>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <TextField
-          fullWidth
-          label="State"
-          name="state"
-          value={form.state}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
-
-        <TextField
-          fullWidth
-          label="Property Name"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
-
-        <TextField
-          fullWidth
-          label="Flat Type"
-          name="flate"
-          value={form.flate}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
-
-        <TextField
-          select
-          fullWidth
-          label="Status"
-          name="status"
-          value={form.status}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        >
-          <MenuItem value="Available">Available</MenuItem>
-          <MenuItem value="Sold">Sold</MenuItem>
-          <MenuItem value="Rent">Rent</MenuItem>
-        </TextField>
-
-        <TextField
-          fullWidth
-          label="Carpet Area"
-          name="carpetarea"
-          value={form.carpetarea}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
-
-        <TextField
-          fullWidth
-          label="Floor"
-          name="floor"
-          value={form.floor}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
-
-        <TextField
-          fullWidth
-          label="Price"
-          name="price"
-          value={form.price}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
-
-        <TextField
-          fullWidth
-          label="Price Per Sqft"
-          name="persqft"
-          value={form.persqft}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
-
-        <TextField
-          fullWidth
-          label="Owner Name"
-          name="owner"
-          value={form.owner}
-          onChange={handleChange}
-          sx={{ mb: 2 }}
-        />
+        {Object.keys(form).map(
+          (key) =>
+            key !== "image" && (
+              <TextField
+                key={key}
+                fullWidth
+                type={numberFields.includes(key) ? "number" : "text"} // ✅
+                label={key.toUpperCase()}
+                name={key}
+                value={form[key]}
+                onChange={handleChange}
+                sx={{ mb: 2 }}
+              />
+            )
+        )}
 
         <Button variant="outlined" component="label" fullWidth sx={{ mb: 3 }}>
-          Upload Property Image
+          Upload Property Images
           <input
             type="file"
             name="image"
+            multiple
             hidden
             accept="image/*"
             onChange={handleChange}
