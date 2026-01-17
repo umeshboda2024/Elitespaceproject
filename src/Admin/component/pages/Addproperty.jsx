@@ -48,7 +48,9 @@ export default function AddEditProperty() {
     image: [],
   });
 
-  // LOAD DATA IN EDIT MODE
+  /* =========================
+     LOAD DATA IN EDIT MODE
+  ========================== */
   useEffect(() => {
     if (id) fetchProperty();
   }, [id]);
@@ -57,14 +59,38 @@ export default function AddEditProperty() {
     try {
       const res = await getPropertyById(id);
       if (res?.Status === "Success" && res.Data) {
-        setForm({ ...res.Data, image: [] });
+        setForm({
+          city: res.Data.city || "",
+          state: res.Data.state || "",
+          propertyname: res.Data.propertyname || "",
+          propertytype: res.Data.propertytype || "",
+          bhk: res.Data.bhk || "",
+          status: res.Data.status || "",
+          carpetarea: res.Data.carpetarea || "",
+          floor: res.Data.floor || "",
+          price: res.Data.price || "",
+          pricepersqft: res.Data.pricepersqft || "",
+          ownername: res.Data.ownername || "",
+          address: res.Data.address || "",
+          bedroom: res.Data.bedroom || "",
+          hall: res.Data.hall || "",
+          kitchen: res.Data.kitchen || "",
+          builtuparea: res.Data.builtuparea || "",
+          ownertype: res.Data.ownertype || "",
+          ownermobilenumber: res.Data.ownermobilenumber || "",
+          securitydeposit: res.Data.securitydeposit || "",
+          maintainance: res.Data.maintainance || "",
+          image: [], // ⚠️ image input always empty
+        });
       }
     } catch (err) {
-      console.error(err);
+      console.error("Fetch error:", err);
     }
   };
 
-  // HANDLE CHANGE
+  /* =========================
+        HANDLE CHANGE
+  ========================== */
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -75,9 +101,12 @@ export default function AddEditProperty() {
     }
   };
 
-  // SUBMIT
+  /* =========================
+          SUBMIT
+  ========================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
 
     Object.keys(form).forEach((key) => {
@@ -87,7 +116,7 @@ export default function AddEditProperty() {
         }
       } else {
         if (numberFields.includes(key)) {
-          formData.append(key, Number(form[key]) || 0); // ✅ FIX
+          formData.append(key, Number(form[key]) || 0);
         } else {
           formData.append(key, form[key]);
         }
@@ -113,6 +142,29 @@ export default function AddEditProperty() {
     }
   };
 
+  const fields = [
+    "city",
+    "state",
+    "propertyname",
+    "propertytype",
+    "bhk",
+    "status",
+    "carpetarea",
+    "floor",
+    "price",
+    "pricepersqft",
+    "ownername",
+    "address",
+    "bedroom",
+    "hall",
+    "kitchen",
+    "builtuparea",
+    "ownertype",
+    "ownermobilenumber",
+    "securitydeposit",
+    "maintainance",
+  ];
+
   return (
     <Paper sx={{ p: 4, maxWidth: 800, mx: "auto" }}>
       <Typography variant="h6" mb={3} fontWeight="bold">
@@ -120,21 +172,18 @@ export default function AddEditProperty() {
       </Typography>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        {Object.keys(form).map(
-          (key) =>
-            key !== "image" && (
-              <TextField
-                key={key}
-                fullWidth
-                type={numberFields.includes(key) ? "number" : "text"} // ✅
-                label={key.toUpperCase()}
-                name={key}
-                value={form[key]}
-                onChange={handleChange}
-                sx={{ mb: 2 }}
-              />
-            )
-        )}
+        {fields.map((key) => (
+          <TextField
+            key={key}
+            fullWidth
+            type={numberFields.includes(key) ? "number" : "text"}
+            label={key.toUpperCase()}
+            name={key}
+            value={form[key]}
+            onChange={handleChange}
+            sx={{ mb: 2 }}
+          />
+        ))}
 
         <Button variant="outlined" component="label" fullWidth sx={{ mb: 3 }}>
           Upload Property Images

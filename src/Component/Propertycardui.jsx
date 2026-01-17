@@ -62,7 +62,7 @@ const Propertycard = () => {
 
         <Grid container spacing={4}>
           {data.map((property) => (
-            <Grid item xs={12} sm={6} md={4} key={property._id}>
+            <Grid item size={{xs:12,sm:6,md:4}}  key={property._id}>
               <Card
                 sx={{
                   borderRadius: 4,
