@@ -18,6 +18,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import LayersIcon from "@mui/icons-material/Layers";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import { useNavigate } from "react-router-dom";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
@@ -61,7 +62,7 @@ const Propertycard = () => {
         </Typography>
 
         <Grid container spacing={4}>
-          {data.map((property) => (
+          {data.slice(0,10).map((property) => (
             <Grid item size={{xs:12,sm:6,md:4}}  key={property._id}>
               <Card
                 sx={{
@@ -154,6 +155,28 @@ const Propertycard = () => {
             </Grid>
           ))}
         </Grid>
+          <Box sx={{ textAlign: "center", mt: 6 }}>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => navigate("/buy")}
+          sx={{
+            mt: { xs: 3, md: 2 },
+            px: { xs: 3, md: 4 },
+            borderRadius: "10px",
+            textTransform: "none",
+            fontWeight: "bold",
+            backgroundColor: "#0F4C5C",
+            gap: 2,
+            "&:hover": {
+              backgroundColor: "#093944",
+              transform: "translateY(-2px)",
+            },
+          }}
+        >
+          View All Rent Properties <ArrowForwardIcon />
+        </Button>
+      </Box>
       </Container>
     </Box>
   );

@@ -14,12 +14,14 @@ import {
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const BuyProperties = () => {
-  const { state, propertyType } = useParams(); // ✅ BOTH PARAMS
+  const { state, propertyType } = useParams();
+  const navigate = useNavigate();
+
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -31,57 +33,62 @@ const BuyProperties = () => {
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
-      let properties = res.Data || [];
 
-      // ✅ STATE FILTER
+      // ✅ SAME AS Propertycard
+      let properties = res?.Data || res?.data || [];
+
+      // FILTER BY STATE
       if (state) {
         properties = properties.filter(
-          (item) =>
-            item.state?.toLowerCase() === state.toLowerCase()
+          (item) => item.state?.toLowerCase() === state.toLowerCase()
         );
       }
 
-      // ✅ PROPERTY TYPE FILTER (IMPORTANT)
+      // FILTER BY TYPE
       if (propertyType) {
         properties = properties.filter(
           (item) =>
-            item.type?.toLowerCase() ===
-            propertyType.toLowerCase()
+            item.propertytype?.toLowerCase() === propertyType.toLowerCase()
         );
       }
 
       setData(properties);
     } catch (error) {
-      console.error("Error fetching properties:", error);
+      console.error(error);
       setData([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ NAME SEARCH FILTER
+  // 🔍 SEARCH
   const filteredData = data.filter((item) =>
-    item.name?.toLowerCase().includes(search.toLowerCase())
+    item.propertyname?.toLowerCase().includes(search.toLowerCase())
   );
+
+  // ✅ IMAGE LOGIC (SAME AS Propertycard)
+  const getImage = (property) => {
+    if (!property.image || property.image.length === 0) {
+      return "https://via.placeholder.com/400x300";
+    }
+
+    const img = property.image[0];
+    if (img.startsWith("http")) return img;
+
+    return `https://generateapi.techsnack.online/uploads/${img}`;
+  };
 
   return (
     <Box mt={12} mb={6} sx={{ backgroundColor: "#f9f9f9", py: 6 }}>
       <Container maxWidth="xl">
-        {/* TITLE */}
         <Typography variant="h4" fontWeight={800} textAlign="center">
-          Buy {propertyType || ""} Properties {state && `in ${state}`}
+          Buy {propertyType || "All"} Properties {state && `in ${state}`}
         </Typography>
 
-        <Typography
-          textAlign="center"
-          color="text.secondary"
-          mb={4}
-          sx={{ maxWidth: 600, mx: "auto" }}
-        >
+        <Typography textAlign="center" color="text.secondary" mb={4}>
           Discover verified properties available for purchase
         </Typography>
 
-        {/* 🔍 SEARCH */}
         <TextField
           label="Search Property Name"
           fullWidth
@@ -97,40 +104,28 @@ const BuyProperties = () => {
           }}
         />
 
-        {/* LOADING */}
         {loading && (
-          <Typography textAlign="center">
-            Loading properties...
-          </Typography>
+          <Typography textAlign="center">Loading properties...</Typography>
         )}
 
-        {/* EMPTY */}
         {!loading && filteredData.length === 0 && (
-          <Typography textAlign="center">
-            No properties found
-          </Typography>
+          <Typography textAlign="center">No properties found</Typography>
         )}
 
-        {/* PROPERTIES */}
         <Grid container spacing={4}>
-          {filteredData .slice(0,9).map((property) => (
-            <Grid item size={{xs:12,sm:6,md:4}}  key={property._id}>
+          {filteredData. slice(0,10).map((property) => (
+            <Grid item size={{xs:12,sm:6,md:4}}key={property._id}>
               <Card
                 sx={{
                   borderRadius: 3,
                   transition: "0.3s",
-                  "&:hover": {
-                    transform: "translateY(-8px)",
-                  },
+                  "&:hover": { transform: "translateY(-8px)" },
                 }}
               >
                 <CardMedia
                   component="img"
                   height="220"
-                  image={
-                    property.image ||
-                    "https://via.placeholder.com/400x250"
-                  }
+                  image={getImage(property)} // 🔥 SAME IMAGE LOGIC
                 />
 
                 <CardContent>
@@ -149,7 +144,7 @@ const BuyProperties = () => {
                     {property.state}
                   </Typography>
 
-                  <Typography>{property.name}</Typography>
+                  <Typography>{property.propertyname}</Typography>
 
                   <Box display="flex" gap={1} mt={2} flexWrap="wrap">
                     <Chip
@@ -174,11 +169,17 @@ const BuyProperties = () => {
                   </Typography>
 
                   <Box mt={2} display="flex" gap={1}>
-                    <Button variant="contained" color="error" size="small">
-                      Contact Owner
-                    </Button>
-                    <Button variant="outlined" color="error" size="small">
-                      Availability
+                    <Button
+                      variant="contained"
+                      color="error"
+                      size="small"
+                      onClick={() =>
+                        navigate(`/buyview/${property._id}`, {
+                          state: property,
+                        })
+                      }
+                    >
+                      View Details
                     </Button>
                   </Box>
                 </CardContent>

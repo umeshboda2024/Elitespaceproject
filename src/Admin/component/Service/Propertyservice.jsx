@@ -8,8 +8,12 @@ const api = axios.create({
 });
 
 /* ADD PROPERTY */
-export const addProperty = async (data) => {
-  const res = await api.post("/", data);
+export const addProperty = async (formData) => {
+  const res = await api.post("/", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 
@@ -19,15 +23,20 @@ export const getProperties = async () => {
   return res.data;
 };
 
-/* GET ONE */
+/* GET ONE (API DOES NOT SUPPORT /:id so workaround) */
 export const getPropertyById = async (id) => {
-  const res = await api.get(`/${id}`);
-  return res.data;
+  const res = await api.get("/");
+  const item = res.data?.Data?.find((p) => p._id === id);
+  return { Data: item };
 };
 
-/* UPDATE */
-export const updateProperty = async (id, data) => {
-  const res = await api.patch(`/${id}`, data);
+/* UPDATE PROPERTY (PATCH REQUIRED) */
+export const updateProperty = async (id, formData) => {
+  const res = await api.patch(`/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 
