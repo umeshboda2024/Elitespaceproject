@@ -8,6 +8,7 @@ import {
   Box,
   Typography,
   IconButton,
+  Collapse,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -20,6 +21,9 @@ import StarIcon from "@mui/icons-material/Star";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -28,6 +32,7 @@ const collapsedWidth = 70;
 export default function Sidebar() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
     <Drawer
@@ -69,32 +74,55 @@ export default function Sidebar() {
       {/* MENU */}
       <List>
         {menuItem("Dashboard", <DashboardIcon />, open, () =>
-          navigate("/admin/home")
+          navigate("/admin/home"),
         )}
         {menuItem("Properties", <HomeWorkIcon />, open, () =>
-          navigate("/admin/properties")
+          navigate("/admin/properties"),
         )}
         {menuItem("Agents", <PersonIcon />, open, () =>
-          navigate("/admin/agents")
+          navigate("/admin/agents"),
         )}
         {menuItem("Users", <PeopleIcon />, open, () =>
-          navigate("/admin/users")
+          navigate("/admin/users"),
         )}
         {menuItem("Inquiries", <MailIcon />, open, () =>
-          navigate("/admin/inquiries")
+          navigate("/admin/inquiries"),
         )}
         {menuItem("Reviews", <StarIcon />, open, () =>
-          navigate("/admin/reviews")
+          navigate("/admin/reviews"),
         )}
-        {menuItem("Locaton", <LocationCityIcon />, open, () =>
-          navigate("/admin/locations")
-        )}
-        {/* {menuItem("Cities", <LocationCityIcon />, open, () =>
-          navigate("/admin/cities")
-        )} */}
-        {/* {menuItem("Settings", <SettingsIcon />, open, () =>
-          navigate("/admin/settings")
-        )} */}
+
+        {/* SETTINGS GROUP */}
+        <ListItemButton
+          onClick={() => setSettingsOpen(!settingsOpen)}
+          sx={{
+            justifyContent: open ? "initial" : "center",
+            px: 2.5,
+            "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
+          }}
+        >
+          <ListItemIcon
+            sx={{ color: "#fff", minWidth: 0, mr: open ? 2 : "auto" }}
+          >
+            <SettingsIcon />
+          </ListItemIcon>
+
+          {open && (
+            <>
+              <ListItemText primary="Settings" />
+              {settingsOpen ? <ExpandLess /> : <ExpandMore />}
+            </>
+          )}
+        </ListItemButton>
+
+        <Collapse in={settingsOpen && open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {submenuItem("States", () => navigate("/admin/addstate-property"))}
+            {submenuItem("Cities", () => navigate("/admin/cities"))}
+            {submenuItem("Locations", () => navigate("/admin/locations"))}
+          </List>
+        </Collapse>
+
         {menuItem("Logout", <LogoutIcon />, open, () => {
           localStorage.clear();
           navigate("/");
@@ -126,6 +154,21 @@ function menuItem(text, icon, open, onClick) {
       </ListItemIcon>
 
       {open && <ListItemText primary={text} />}
+    </ListItemButton>
+  );
+}
+
+function submenuItem(text, onClick) {
+  return (
+    <ListItemButton
+      onClick={onClick}
+      sx={{
+        pl: 6,
+        color: "#ddd",
+        "&:hover": { backgroundColor: "rgba(255,255,255,0.08)" },
+      }}
+    >
+      <ListItemText primary={text} />
     </ListItemButton>
   );
 }

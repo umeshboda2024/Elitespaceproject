@@ -7,7 +7,9 @@ const api = axios.create({
   },
 });
 
-/* ADD PROPERTY */
+/* =========================
+   ADD PROPERTY
+========================= */
 export const addProperty = async (formData) => {
   const res = await api.post("/", formData, {
     headers: {
@@ -17,20 +19,27 @@ export const addProperty = async (formData) => {
   return res.data;
 };
 
-/* GET ALL */
+/* =========================
+   GET ALL PROPERTIES
+========================= */
 export const getProperties = async () => {
   const res = await api.get("/");
   return res.data;
 };
 
-/* GET ONE (API DOES NOT SUPPORT /:id so workaround) */
+/* =========================
+   GET PROPERTY BY ID
+   (TechSnack workaround)
+========================= */
 export const getPropertyById = async (id) => {
   const res = await api.get("/");
   const item = res.data?.Data?.find((p) => p._id === id);
-  return { Data: item };
+  return { Data: item || null };
 };
 
-/* UPDATE PROPERTY (PATCH REQUIRED) */
+/* =========================
+   UPDATE PROPERTY
+========================= */
 export const updateProperty = async (id, formData) => {
   const res = await api.patch(`/${id}`, formData, {
     headers: {
@@ -40,7 +49,9 @@ export const updateProperty = async (id, formData) => {
   return res.data;
 };
 
-/* DELETE */
+/* =========================
+   DELETE PROPERTY
+========================= */
 export const deleteProperty = async (id) => {
   const res = await api.delete(`/${id}`);
   return res.data;

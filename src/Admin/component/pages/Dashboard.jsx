@@ -18,7 +18,7 @@ import {
   Cell,
 } from "recharts";
 
-import StatCard from "../Componets/StateCard";
+import StatCard from "./StateCard";
 import RecentProperties from "../Componets/Recentpropertis";
 
 /* ================= DATA ================= */

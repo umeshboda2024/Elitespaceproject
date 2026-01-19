@@ -10,10 +10,17 @@ import {
   Box,
   Chip,
   TextField,
+  Stack,
+  Divider,
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import BedIcon from "@mui/icons-material/Bed";
+import WeekendIcon from "@mui/icons-material/Weekend";
+import KitchenIcon from "@mui/icons-material/Kitchen";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { getProperties } from "../Admin/component/Service/Propertyservice";
@@ -33,153 +40,204 @@ const BuyProperties = () => {
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
-
-      // ✅ SAME AS Propertycard
       let properties = res?.Data || res?.data || [];
+
+      // ✅ ONLY AVAILABLE PROPERTIES
+      properties = properties.filter(
+        (i) => i.status?.toLowerCase() === "available",
+      );
 
       // FILTER BY STATE
       if (state) {
         properties = properties.filter(
-          (item) => item.state?.toLowerCase() === state.toLowerCase()
+          (i) => i.state?.toLowerCase() === state.toLowerCase(),
         );
       }
 
-      // FILTER BY TYPE
+      // FILTER BY PROPERTY TYPE
       if (propertyType) {
         properties = properties.filter(
-          (item) =>
-            item.propertytype?.toLowerCase() === propertyType.toLowerCase()
+          (i) => i.propertytype?.toLowerCase() === propertyType.toLowerCase(),
         );
       }
 
       setData(properties);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       setData([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // 🔍 SEARCH
   const filteredData = data.filter((item) =>
-    item.propertyname?.toLowerCase().includes(search.toLowerCase())
+    item.propertyname?.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // ✅ IMAGE LOGIC (SAME AS Propertycard)
   const getImage = (property) => {
-    if (!property.image || property.image.length === 0) {
+    if (!property.image || property.image.length === 0)
       return "https://via.placeholder.com/400x300";
-    }
 
     const img = property.image[0];
     if (img.startsWith("http")) return img;
-
     return `https://generateapi.techsnack.online/uploads/${img}`;
   };
 
   return (
-    <Box mt={12} mb={6} sx={{ backgroundColor: "#f9f9f9", py: 6 }}>
+    <Box mt={12} py={6} sx={{ background: "#f4f6fb" }}>
       <Container maxWidth="xl">
-        <Typography variant="h4" fontWeight={800} textAlign="center">
-          Buy {propertyType || "All"} Properties {state && `in ${state}`}
-        </Typography>
+        {/* HEADER */}
+        <Box textAlign="center" mb={5}>
+          <Typography variant="h4" fontWeight={800}>
+            Buy {propertyType || "Properties"} {state && `in ${state}`}
+          </Typography>
+          <Typography color="text.secondary" mt={1}>
+            Only Available • Verified Properties
+          </Typography>
+        </Box>
 
-        <Typography textAlign="center" color="text.secondary" mb={4}>
-          Discover verified properties available for purchase
-        </Typography>
+        {/* SEARCH */}
+        <Box display="flex" justifyContent="center" mb={5}>
+          <TextField
+            label="Search property name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{
+              width: 400,
+              background: "#fff",
+              borderRadius: 3,
+            }}
+          />
+        </Box>
 
-        <TextField
-          label="Search Property Name"
-          fullWidth
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          sx={{
-            maxWidth: 400,
-            mx: "auto",
-            display: "block",
-            mb: 6,
-            backgroundColor: "#fff",
-            borderRadius: 2,
-          }}
-        />
-
-        {loading && (
-          <Typography textAlign="center">Loading properties...</Typography>
-        )}
-
+        {loading && <Typography textAlign="center">Loading...</Typography>}
         {!loading && filteredData.length === 0 && (
-          <Typography textAlign="center">No properties found</Typography>
+          <Typography textAlign="center">
+            No available properties found
+          </Typography>
         )}
 
         <Grid container spacing={4}>
-          {filteredData. slice(0,10).map((property) => (
-            <Grid item size={{xs:12,sm:6,md:4}}key={property._id}>
+          {filteredData.slice(0, 12).map((property) => (
+            <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={property._id}>
               <Card
                 sx={{
-                  borderRadius: 3,
+                  borderRadius: 4,
+                  overflow: "hidden",
                   transition: "0.3s",
-                  "&:hover": { transform: "translateY(-8px)" },
+                  position: "relative",
+                  "&:hover": {
+                    transform: "translateY(-10px)",
+                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+                  },
+                  "&:hover .zoom-img": {
+                    transform: "scale(1.18)",
+                  },
                 }}
               >
-                <CardMedia
-                  component="img"
-                  height="220"
-                  image={getImage(property)} // 🔥 SAME IMAGE LOGIC
+                {/* IMAGE */}
+                <Box sx={{ overflow: "hidden", height: 230 }}>
+                  <CardMedia
+                    component="img"
+                    height="230"
+                    image={getImage(property)}
+                    className="zoom-img"
+                    sx={{ transition: "0.6s ease" }}
+                  />
+                </Box>
+
+                {/* STATUS */}
+                <Chip
+                  icon={<VerifiedIcon />}
+                  label="Available"
+                  color="success"
+                  size="small"
+                  sx={{
+                    position: "absolute",
+                    top: 12,
+                    left: 12,
+                    fontWeight: 700,
+                  }}
                 />
 
                 <CardContent>
-                  <Typography fontSize={13} color="text.secondary">
-                    Owner: {property.owner}
+                  <Typography variant="h6" fontWeight={700}>
+                    {property.propertyname}
                   </Typography>
 
                   <Typography
-                    variant="h6"
-                    fontWeight={700}
+                    fontSize={13}
+                    color="text.secondary"
                     display="flex"
                     alignItems="center"
                     gap={0.5}
+                    mt={0.5}
                   >
-                    <LocationOnIcon color="error" fontSize="small" />
-                    {property.state}
+                    <LocationOnIcon fontSize="small" color="error" />
+                    {property.address}, {property.city}, {property.state}
                   </Typography>
 
-                  <Typography>{property.propertyname}</Typography>
+                  <Divider sx={{ my: 1.5 }} />
 
-                  <Box display="flex" gap={1} mt={2} flexWrap="wrap">
+                  <Stack direction="row" spacing={1} flexWrap="wrap">
+                    <Chip
+                      icon={<ApartmentIcon />}
+                      label={property.propertytype}
+                      size="small"
+                    />
+                    <Chip
+                      label={`${property.bhk} BHK`}
+                      size="small"
+                      color="primary"
+                    />
                     <Chip
                       icon={<SquareFootIcon />}
                       label={`${property.carpetarea} sqft`}
                       size="small"
                     />
+                    <Chip label={`Floor ${property.floor}`} size="small" />
+                  </Stack>
+
+                  <Stack direction="row" spacing={1} mt={1}>
                     <Chip
-                      label={`Floor: ${property.floor}`}
+                      icon={<BedIcon />}
+                      label={property.bedroom}
                       size="small"
-                      variant="outlined"
                     />
-                  </Box>
+                    <Chip
+                      icon={<WeekendIcon />}
+                      label={property.hall}
+                      size="small"
+                    />
+                    <Chip
+                      icon={<KitchenIcon />}
+                      label={property.kitchen}
+                      size="small"
+                    />
+                  </Stack>
 
-                  <Typography
-                    variant="h6"
-                    fontWeight={900}
-                    color="error"
+                  <Box
                     mt={2}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
                   >
-                    ₹{property.price} Lac
-                  </Typography>
+                    <Typography variant="h6" fontWeight={900} color="error">
+                      ₹{property.price} Lac
+                    </Typography>
 
-                  <Box mt={2} display="flex" gap={1}>
                     <Button
                       variant="contained"
                       color="error"
                       size="small"
+                      sx={{ borderRadius: 3 }}
                       onClick={() =>
                         navigate(`/buyview/${property._id}`, {
                           state: property,
                         })
                       }
                     >
-                      View Details
+                      View
                     </Button>
                   </Box>
                 </CardContent>

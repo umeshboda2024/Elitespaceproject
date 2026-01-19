@@ -33,15 +33,17 @@ import Contact from "../Home/Contact";
 import RentView from "../Home/Rentviewdetails";
 import AddReviewDialog from "../Home/Addreviewsection";
 import Saleproperty from "../Home/Saleproperties";
+import AddEditStateProperty from "../Admin/component/pages/StateCard";
+import StateProperties from "../Admin/component/pages/Statepropeties";
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* 🌍 Public Routes */}
       <Route path="/" element={<Home />} />
-    <Route path="/buy" element={<BuyProperties />} />
-<Route path="/buy/:state" element={<BuyProperties />} />
-<Route path="/buy/:state/:propertyType" element={<BuyProperties />} />
+      <Route path="/buy" element={<BuyProperties />} />
+      <Route path="/buy/:state" element={<BuyProperties />} />
+      <Route path="/buy/:state/:propertyType" element={<BuyProperties />} />
       <Route path="/buy/type/:propertyType" element={<BuyProperties />} />
       <Route path="/buyproperty/" element={<Propertycard />} />
       <Route path="/Rentproperty" element={<RentPropertycard />} />
@@ -67,8 +69,18 @@ const AppRoutes = () => {
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="/admin/home" index element={<AdminHome />} />
         <Route path="/admin/properties" element={<Properties />} />
-   <Route path="/admin/add-property" element={<AddEditProperty />} />
-<Route path="/admin/edit-property/:id" element={<AddEditProperty />} />
+        <Route path="/admin/add-property" element={<AddEditProperty />} />
+        <Route path="/admin/edit-property/:id" element={<AddEditProperty />} />
+        <Route
+          path="/admin/state-property"
+          element={<AddEditStateProperty />}
+        />
+
+        <Route
+          path="/admin/stateedit-property/:id"
+          element={<AddEditStateProperty />}
+        />
+        <Route path="/admin/addstate-property" element={<StateProperties />} />
         <Route path="agents" element={<Agents />} />
         <Route path="add-agent" element={<AddAgent />} />
         <Route path="users" element={<Users />} />
