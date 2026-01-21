@@ -6,7 +6,7 @@ import {
   addPropertyType,
   getPropertyTypeById,
   updatePropertyType,
-} from "../Service/Propertytype";
+} from "../Service/PropertyTypeService";
 
 export default function AddEditPropertyType() {
   const { id } = useParams();

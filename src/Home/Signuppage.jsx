@@ -22,7 +22,6 @@ import axios from "axios";
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [list, setList] = useState([]);
 
   const token = "XI9aLT2keHbs64RP";
 
@@ -32,48 +31,20 @@ const Signup = () => {
     mobilenumber: "",
     password: "",
     confirompassword: "",
-    role: "user", // 👈 ADD THIS LINE
   };
 
-  // 🔹 API GET (unchanged)
-  useEffect(() => {
-    Mydata();
-  }, []);
-
-  function Mydata() {
-    axios
-      .get("https://generateapi.techsnack.online/api/signup", {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        setList(res.data.Data);
-      })
-      .catch((err) => console.log("Error loading", err));
-  }
-
-  // 🔹 ONLY LOCALSTORAGE FIX APPLIED HERE
   const handleSubmit = (values, { resetForm }) => {
-    console.log(token);
+    // 🔥 API ONLY expects these keys
+    const payload = {
+      fullname: values.fullname,
+      emailid: values.emailid,
+      mobilenumber: Number(values.mobilenumber), // important
+      password: values.password,
+      confirompassword: values.confirompassword,
+    };
 
-    if (values.emailid === "admin@gmail.com") {
-      values.role = "admin";
-    } else {
-      values.role = "user";
-    }
-    let oldAccounts = localStorage.getItem("Username");
-
-    oldAccounts = oldAccounts ? JSON.parse(oldAccounts) : [];
-
-    if (!Array.isArray(oldAccounts)) {
-      oldAccounts = [];
-    }
-
-    const updatedAccounts = [...oldAccounts, values];
-    localStorage.setItem("Username", JSON.stringify(updatedAccounts));
-
-    // 🔹 API POST (unchanged)
     axios
-      .post("https://generateapi.techsnack.online/api/signup", values, {
+      .post("https://generateapi.techsnack.online/api/signup", payload, {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
@@ -82,15 +53,16 @@ const Signup = () => {
       .then(() => {
         navigate("/login");
       })
-      .catch((err) => console.log("Signup Error", err));
+      .catch((err) => {
+        console.log("Signup Error", err);
+        alert("Signup failed (check console)");
+      });
 
     resetForm();
   };
 
-  // 🔹 Validation (unchanged)
   const validate = (values) => {
     const errors = {};
-
     if (!values.fullname) errors.fullname = "Full name is required";
     if (!values.emailid) errors.emailid = "Email is required";
     if (!values.mobilenumber) errors.mobilenumber = "Mobile number is required";
@@ -104,7 +76,6 @@ const Signup = () => {
     ) {
       errors.confirompassword = "Passwords do not match";
     }
-
     return errors;
   };
 
@@ -121,14 +92,6 @@ const Signup = () => {
         <Paper elevation={10} sx={{ p: 4, borderRadius: 3 }}>
           <Typography variant="h5" align="center" fontWeight="bold">
             Create Account
-          </Typography>
-          <Typography
-            variant="body2"
-            align="center"
-            color="text.secondary"
-            mb={3}
-          >
-            Sign up to get started
           </Typography>
 
           <Formik
@@ -227,7 +190,8 @@ const Signup = () => {
                   value={values.confirompassword}
                   onChange={handleChange}
                   error={
-                    touched.confirompassword && Boolean(errors.confirompassword)
+                    touched.confirompassword &&
+                    Boolean(errors.confirompassword)
                   }
                   helperText={
                     touched.confirompassword && errors.confirompassword
@@ -242,10 +206,10 @@ const Signup = () => {
                     mt: 3,
                     py: 1.2,
                     borderRadius: 2,
-                    background: "linear-gradient(to right, #6a7cff, #8f5bff)",
+                    background:
+                      "linear-gradient(to right, #6a7cff, #8f5bff)",
                     color: "#fff",
                     fontWeight: "bold",
-                    "&:hover": { opacity: 0.9 },
                   }}
                 >
                   Sign Up

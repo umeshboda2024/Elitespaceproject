@@ -10,38 +10,31 @@ import {
   Stack,
   Divider,
 } from "@mui/material";
+import axios from "axios";
 
 const Loginpage = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    emailid: "",
+    email: "",
     password: "",
   };
 
-  const handleSubmit = (values) => {
-    // 🔹 Safely get old users
-    let storedUsers = localStorage.getItem("Username");
-    storedUsers = storedUsers ? JSON.parse(storedUsers) : [];
+  const handleSubmit = async (values) => {
+    try {
+      const res = await axios.post(
+        "https://generateapi.techsnack.online/auth/login",
+        values
+      );
 
-    if (!Array.isArray(storedUsers)) {
-      storedUsers = [];
-    }
-
-    // 🔹 Match user
-    const matchedUser = storedUsers.find(
-      (user) =>
-        user.emailid === values.emailid &&
-        user.password === values.password
-    );
-
-    if (matchedUser) {
-      // Optional: store logged-in user
-      localStorage.setItem("loggedUser", JSON.stringify(matchedUser));
+      // save token / user
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       navigate("/admin");
-    } else {
+    } catch (err) {
       alert("Invalid email or password");
+      console.log(err);
     }
   };
 
@@ -55,30 +48,9 @@ const Loginpage = () => {
         justifyContent: "center",
       }}
     >
-      <Paper
-        elevation={10}
-        sx={{
-          width: 380,
-          p: 4,
-          borderRadius: 4,
-        }}
-      >
-        <Typography
-          variant="h5"
-          fontWeight="bold"
-          textAlign="center"
-          gutterBottom
-        >
+      <Paper elevation={10} sx={{ width: 380, p: 4, borderRadius: 4 }}>
+        <Typography variant="h5" fontWeight="bold" textAlign="center">
           Welcome Back 👋
-        </Typography>
-
-        <Typography
-          variant="body2"
-          textAlign="center"
-          color="text.secondary"
-          mb={3}
-        >
-          Login to continue
         </Typography>
 
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -87,9 +59,8 @@ const Loginpage = () => {
               <Stack spacing={2}>
                 <Field
                   as={TextField}
-                  name="emailid"
+                  name="email"
                   label="Email"
-                  type="email"
                   fullWidth
                   onChange={handleChange}
                 />
@@ -107,28 +78,14 @@ const Loginpage = () => {
                   type="submit"
                   variant="contained"
                   size="large"
-                  sx={{
-                    borderRadius: 2,
-                    py: 1.2,
-                    textTransform: "none",
-                    fontWeight: "bold",
-                  }}
+                  sx={{ py: 1.2 }}
                 >
                   Login
                 </Button>
 
                 <Divider>OR</Divider>
 
-                <Button
-                  variant="outlined"
-                  size="large"
-                  sx={{
-                    borderRadius: 2,
-                    textTransform: "none",
-                    fontWeight: "bold",
-                  }}
-                  onClick={() => navigate("/signup")}
-                >
+                <Button onClick={() => navigate("/signup")}>
                   Create Account
                 </Button>
               </Stack>

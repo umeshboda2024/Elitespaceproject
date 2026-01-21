@@ -35,6 +35,9 @@ import AddReviewDialog from "../Home/Addreviewsection";
 import Saleproperty from "../Home/Saleproperties";
 import AddEditStateProperty from "../Admin/component/pages/StateCard";
 import StateProperties from "../Admin/component/pages/Statepropeties";
+import Propertytypes from "../Component/Propertytypes";
+import AddEditPropertyType from "../Admin/component/pages/StateCard";
+import PropertyTypescard from "../Admin/component/pages/Propertytypecard";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +79,9 @@ const AppRoutes = () => {
           path="/admin/edit-state/:id"
           element={<AddEditStateProperty />}
         />
+         <Route path="/admin/property-types" element={<AddEditPropertyType/>} />
+        <Route path="/admin/edit-property-types" element={<AddEditPropertyType/>} />
+        <Route path="/admin/Propertytype" element={<PropertyTypescard/>} />
         <Route path="/admin/addstate-property" element={<StateProperties />} />
         <Route path="agents" element={<Agents />} />
         <Route path="add-agent" element={<AddAgent />} />
@@ -84,6 +90,8 @@ const AppRoutes = () => {
         <Route path="reviews" element={<Reviews />} />
         <Route path="locations" element={<Locations />} />
         <Route path="content" element={<Content />} />
+       
+        
       </Route>
     </Routes>
   );

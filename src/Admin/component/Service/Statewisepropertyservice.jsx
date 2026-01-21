@@ -4,7 +4,7 @@ import axios from "axios";
    CITY API INSTANCE
 ===================== */
 const api = axios.create({
-  baseURL: "https://generateapi.techsnack.online/api/city",
+  baseURL: "https://generateapi.techsnack.online/api/state",
   headers: {
     Authorization: "Y4m6iIEhi0gGJ4dP",
   },

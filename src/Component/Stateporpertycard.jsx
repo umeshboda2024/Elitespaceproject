@@ -1,7 +1,6 @@
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LocationCityIcon from "@mui/icons-material/LocationCity";
 
 import { getCityProperties } from "../Admin/component/Service/Statewisepropertyservice";
 
@@ -18,17 +17,12 @@ const Stateporpertycard = () => {
       const res = await getCityProperties();
       setStates(res?.Data || []);
     } catch (err) {
-      console.error("API Error", err);
+      console.error(err);
     }
   };
 
-  const handleBuy = (city) => {
-    navigate(`/buy/${city}`);
-  };
-
-  const handleRent = (city) => {
-    navigate(`/rent/${city}`);
-  };
+  const handleBuy = (city) => navigate(`/buy/${city}`);
+  const handleRent = (city) => navigate(`/rent/${city}`);
 
   const getImage = (item) => {
     if (!item.image) return "https://via.placeholder.com/300";
@@ -39,129 +33,106 @@ const Stateporpertycard = () => {
   };
 
   return (
-    <Box py={{ xs: 4, md: 6 }} mt={6}>
+    <Box py={6}>
       <Container maxWidth="xl">
-        <Typography
-          variant="h4"
-          fontWeight={800}
-          textAlign="center"
-          mb={5}
-          sx={{ fontSize: { xs: 22, sm: 28, md: 34 } }}
-        >
+        <Typography variant="h4" fontWeight={800} textAlign="center" mb={5}>
           Explore Properties By City
         </Typography>
 
-        <Grid container spacing={{ xs: 3, md: 4 }}>
+        <Grid container spacing={4} justifyContent="center">
           {states.map((item, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={3}
-              key={item._id || index}
-              textAlign="center"
-            >
-              <Box
-                sx={{
-                  position: "relative",
-                  borderRadius: 5,
-                  overflow: "hidden",
-                  height: 300,
-                  cursor: "pointer",
-                  boxShadow: "0 15px 40px rgba(0,0,0,0.15)",
-                  transition: "0.4s",
-                  "&:hover": {
-                    transform: "translateY(-10px)",
-                    boxShadow: "0 25px 60px rgba(0,0,0,0.25)",
-                  },
-                }}
-              >
-                {/* IMAGE */}
+            <Grid item size={{xs:12,sm:6,md:3}}  key={item._id || index}>
+              {/* CIRCLE CARD */}
+              <Box textAlign="center">
                 <Box
-                  component="img"
-                  src={getImage(item)}
-                  alt={item.city}
                   sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    transition: "0.6s",
-                    "&:hover": {
-                      transform: "scale(1.15)",
+                    position: "relative",
+                    width: 350,
+                    height: 350,
+                    mx: "auto",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    cursor: "pointer",
+                    transition: "0.4s",
+                    boxShadow: "0 12px 35px rgba(0,0,0,0.2)",
+                    "&:hover img": {
+                      transform: "scale(1.1)",
+                    },
+                    "&:hover .overlay": {
+                      opacity: 1,
                     },
                   }}
-                />
-
-                {/* GLASS OVERLAY */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                    p: 2,
-                    background:
-                      "linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.75))",
-                  }}
                 >
+                  {/* IMAGE */}
                   <Box
+                    component="img"
+                    src={getImage(item)}
+                    alt={item.city}
                     sx={{
-                      backdropFilter: "blur(6px)",
-                      background: "rgba(255,255,255,0.15)",
-                      borderRadius: 3,
-                      p: 2,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      transition: "0.4s",
+                    }}
+                  />
+
+                  {/* HOVER OVERLAY */}
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: 1.5,
+                      background:
+                        "linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.75))",
+                      opacity: 0,
+                      transition: "0.4s",
                     }}
                   >
-                    <Typography
-                      variant="h6"
-                      fontWeight={800}
-                      color="#fff"
-                      display="flex"
-                      alignItems="center"
-                      gap={1}
+                    <Button
+                      size="small"
+                      onClick={() => handleBuy(item.city)}
+                      sx={{
+                        px: 3,
+                        borderRadius: 3,
+                        color: "#fff",
+                        fontWeight: 600,
+                        background:
+                          "linear-gradient(135deg, #1976d2, #42a5f5)",
+                      }}
                     >
-                      <LocationCityIcon />
-                      {item.city}
-                    </Typography>
+                      Buy
+                    </Button>
 
-                    <Typography fontSize={13} color="rgba(255,255,255,0.8)">
-                      {item.project || 0} Properties
-                    </Typography>
-
-                    <Box mt={2} display="flex" gap={1}>
-                      <Button
-                        fullWidth
-                        size="small"
-                        onClick={() => handleBuy(item.city)}
-                        sx={{
-                          color: "#fff",
-                          borderRadius: 3,
-                          fontWeight: 600,
-                          background:
-                            "linear-gradient(135deg, #1976d2, #42a5f5)",
-                        }}
-                      >
-                        Buy
-                      </Button>
-
-                      <Button
-                        fullWidth
-                        size="small"
-                        variant="outlined"
-                        onClick={() => handleRent(item.city)}
-                        sx={{
-                          borderColor: "#fff",
-                          color: "#fff",
-                          borderRadius: 3,
-                          fontWeight: 600,
-                        }}
-                      >
-                        Rent
-                      </Button>
-                    </Box>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => handleRent(item.city)}
+                      sx={{
+                        px: 3,
+                        borderRadius: 3,
+                        color: "#fff",
+                        borderColor: "#fff",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Rent
+                    </Button>
                   </Box>
                 </Box>
+
+                {/* TEXT BELOW IMAGE */}
+                <Typography mt={2} fontWeight={700} fontSize={18}>
+                  {item.city}
+                </Typography>
+
+                <Typography fontSize={14} color="text.secondary">
+                  {item.project || 0} Properties
+                </Typography>
               </Box>
             </Grid>
           ))}
