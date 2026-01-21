@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Box, Grid, TextField, Button, Typography } from "@mui/material";
 
 import {
-  addStateProperty,
-  getStatePropertyById,
-  updateStateProperty,
+  addCityProperty,
+  getCityPropertyById,
+  updateCityProperty,
 } from "../Service/Statewisepropertyservice";
 
 export default function AddEditStateProperty() {
@@ -15,48 +15,60 @@ export default function AddEditStateProperty() {
   const [form, setForm] = useState({
     state: "",
     city: "",
-    totalProjects: "",
+    project: "",
   });
 
   const [images, setImages] = useState([]);
 
+  /* =====================
+     GET CITY BY ID
+  ===================== */
   useEffect(() => {
     if (id) {
-      getStatePropertyById(id).then((res) => {
+      getCityPropertyById(id).then((res) => {
         if (res?.Data) {
           setForm({
-            state: res.Data.state,
-            city: res.Data.city,
-            totalProjects: res.Data.totalProjects,
+            state: res.Data.state || "",
+            city: res.Data.city || "",
+            project: res.Data.project || "",
           });
         }
       });
     }
   }, [id]);
 
-  const handleChange = (e) =>
+  /* =====================
+     HANDLE CHANGE
+  ===================== */
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
+  /* =====================
+     SUBMIT
+  ===================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       if (id) {
-        // UPDATE (NO IMAGE)
-        await updateStateProperty(id, form);
-        alert("State updated");
+        // UPDATE CITY (NO IMAGE)
+        await updateCityProperty(id, form);
+        alert("City updated successfully");
       } else {
-        // ADD (IMAGE OK)
+        // ADD CITY
         const fd = new FormData();
         fd.append("state", form.state);
         fd.append("city", form.city);
-        fd.append("totalProjects", form.totalProjects);
+        fd.append("project", form.project);
+
         images.forEach((img) => fd.append("image", img));
-        await addStateProperty(fd);
-        alert("State added");
+
+        await addCityProperty(fd);
+        alert("City added successfully");
       }
 
-      navigate("/admin/stateproperties");
+      navigate("/admin/addstate-property");
     } catch (err) {
       console.error(err);
       alert("API Error (check console)");
@@ -66,7 +78,7 @@ export default function AddEditStateProperty() {
   return (
     <Box p={4}>
       <Typography variant="h5" mb={3}>
-        {id ? "Edit State Property" : "Add State Property"}
+        {id ? "Edit City Property" : "Add City Property"}
       </Typography>
 
       <form onSubmit={handleSubmit}>
@@ -78,6 +90,7 @@ export default function AddEditStateProperty() {
               name="state"
               value={form.state}
               onChange={handleChange}
+              required
             />
           </Grid>
 
@@ -88,22 +101,27 @@ export default function AddEditStateProperty() {
               name="city"
               value={form.city}
               onChange={handleChange}
+              required
             />
           </Grid>
 
           <Grid item xs={12} md={4}>
             <TextField
               fullWidth
-              label="Total Projects"
-              name="totalProjects"
-              value={form.totalProjects}
+              label="Project Count"
+              name="project"
+              value={form.project}
               onChange={handleChange}
+              required
             />
           </Grid>
         </Grid>
 
         {!id && (
           <Box mt={3}>
+            <Typography fontSize={14} mb={1}>
+              City Image
+            </Typography>
             <input
               type="file"
               multiple
@@ -113,7 +131,7 @@ export default function AddEditStateProperty() {
         )}
 
         <Button type="submit" variant="contained" sx={{ mt: 3 }}>
-          {id ? "UPDATE" : "ADD"}
+          {id ? "UPDATE CITY" : "ADD CITY"}
         </Button>
       </form>
     </Box>

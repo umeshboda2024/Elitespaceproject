@@ -42,19 +42,19 @@ const BuyProperties = () => {
       const res = await getProperties();
       let properties = res?.Data || res?.data || [];
 
-      // ✅ ONLY AVAILABLE PROPERTIES
+      // ✅ Only available
       properties = properties.filter(
         (i) => i.status?.toLowerCase() === "available",
       );
 
-      // FILTER BY STATE
+      // ✅ Filter by state
       if (state) {
         properties = properties.filter(
           (i) => i.state?.toLowerCase() === state.toLowerCase(),
         );
       }
 
-      // FILTER BY PROPERTY TYPE
+      // ✅ Filter by property type
       if (propertyType) {
         properties = properties.filter(
           (i) => i.propertytype?.toLowerCase() === propertyType.toLowerCase(),
@@ -70,9 +70,16 @@ const BuyProperties = () => {
     }
   };
 
-  const filteredData = data.filter((item) =>
-    item.propertyname?.toLowerCase().includes(search.toLowerCase()),
-  );
+  // 🔥 CITY WISE SEARCH
+  const filteredData = data.filter((item) => {
+    const q = search.toLowerCase();
+    return (
+      item.propertyname?.toLowerCase().includes(q) ||
+      item.city?.toLowerCase().includes(q) ||
+      item.state?.toLowerCase().includes(q) ||
+      item.address?.toLowerCase().includes(q)
+    );
+  });
 
   const getImage = (property) => {
     if (!property.image || property.image.length === 0)
@@ -99,11 +106,11 @@ const BuyProperties = () => {
         {/* SEARCH */}
         <Box display="flex" justifyContent="center" mb={5}>
           <TextField
-            label="Search property name..."
+            label="Search by city, state, address, property name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             sx={{
-              width: 400,
+              width: 420,
               background: "#fff",
               borderRadius: 3,
             }}
@@ -118,8 +125,8 @@ const BuyProperties = () => {
         )}
 
         <Grid container spacing={4}>
-          {filteredData.slice(0, 12).map((property) => (
-            <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={property._id}>
+          {filteredData.map((property) => (
+            <Grid item xs={12} sm={6} md={4} key={property._id}>
               <Card
                 sx={{
                   borderRadius: 4,

@@ -1,49 +1,56 @@
 import axios from "axios";
 
+/* =====================
+   CITY API INSTANCE
+===================== */
 const api = axios.create({
-  baseURL: "https://generateapi.techsnack.online/api/stateproperties",
+  baseURL: "https://generateapi.techsnack.online/api/city",
   headers: {
-    Authorization: "3K3BYd3gR7H98FEE",
+    Authorization: "Y4m6iIEhi0gGJ4dP",
   },
 });
 
 /* =====================
-   ADD STATE (POST)
+   ADD CITY (POST)
 ===================== */
-export const addStateProperty = async (formData) => {
-  const res = await api.post("/", formData); // axios auto sets headers
+export const addCityProperty = async (formData) => {
+  const res = await api.post("/", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 
 /* =====================
-   GET ALL STATES
+   GET ALL CITIES
 ===================== */
-export const getStateProperties = async () => {
+export const getCityProperties = async () => {
   const res = await api.get("/");
   return res.data;
 };
 
 /* =====================
-   GET BY ID (workaround)
+   GET CITY BY ID
 ===================== */
-export const getStatePropertyById = async (id) => {
+export const getCityPropertyById = async (id) => {
   const res = await api.get("/");
-  const item = res.data?.Data?.find((p) => p._id === id);
+  const item = res.data?.Data?.find((c) => c._id === id);
   return { Data: item || null };
 };
 
 /* =====================
-   UPDATE STATE (NO IMAGE)
+   UPDATE CITY (NO IMAGE)
 ===================== */
-export const updateStateProperty = async (id, data) => {
-  const res = await api.patch(`/${id}`, data); // no image in patch
+export const updateCityProperty = async (id, data) => {
+  const res = await api.patch(`/${id}`, data);
   return res.data;
 };
 
 /* =====================
-   DELETE STATE
+   DELETE CITY
 ===================== */
-export const deleteStateProperty = async (id) => {
+export const deleteCityProperty = async (id) => {
   const res = await api.delete(`/${id}`);
   return res.data;
 };

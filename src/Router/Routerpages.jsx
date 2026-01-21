@@ -50,8 +50,8 @@ const AppRoutes = () => {
       <Route path="/buyview/:id" element={<BuyView />} />
       <Route path="/rentview/:id" element={<RentView />} />
       <Route path="/sale" element={<Saleproperty />} />
-
-      <Route path="/Rent/:state?" element={<RentProperties />} />
+      <Route path="/rent" element={<RentProperties />} />
+      <Route path="/rent/:state?" element={<RentProperties />} />
       <Route path="/Rent/type/:propertyType" element={<RentProperties />} />
       <Route path="/Agent" element={<Agentcard />} />
       <Route path="/Contact" element={<Contact />} />
@@ -71,13 +71,9 @@ const AppRoutes = () => {
         <Route path="/admin/properties" element={<Properties />} />
         <Route path="/admin/add-property" element={<AddEditProperty />} />
         <Route path="/admin/edit-property/:id" element={<AddEditProperty />} />
+        <Route path="/admin/add-state" element={<AddEditStateProperty />} />
         <Route
-          path="/admin/state-property"
-          element={<AddEditStateProperty />}
-        />
-
-        <Route
-          path="/admin/stateedit-property/:id"
+          path="/admin/edit-state/:id"
           element={<AddEditStateProperty />}
         />
         <Route path="/admin/addstate-property" element={<StateProperties />} />

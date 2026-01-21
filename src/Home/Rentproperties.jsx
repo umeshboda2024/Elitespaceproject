@@ -10,16 +10,25 @@ import {
   Box,
   Chip,
   TextField,
+  Stack,
+  Divider,
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
-import { useParams } from "react-router-dom";
+import BedIcon from "@mui/icons-material/Bed";
+import WeekendIcon from "@mui/icons-material/Weekend";
+import KitchenIcon from "@mui/icons-material/Kitchen";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const RentProperties = () => {
-  const { state, propertyType } = useParams(); // ✅ BOTH PARAMS
+  const { state, propertyType } = useParams();
+  const navigate = useNavigate();
+
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -31,154 +40,198 @@ const RentProperties = () => {
   const fetchProperties = async () => {
     try {
       const res = await getProperties();
-      let properties = res.Data || [];
+      let properties = res?.Data || res?.data || [];
 
-      // ✅ STATE FILTER
+      // ✅ ONLY RENT PROPERTIES (ADMIN STATUS)
+      properties = properties.filter((i) => i.status?.toLowerCase() === "rent");
+
       if (state) {
         properties = properties.filter(
-          (item) =>
-            item.state?.toLowerCase() === state.toLowerCase()
+          (i) => i.state?.toLowerCase() === state.toLowerCase(),
         );
       }
 
-      // ✅ PROPERTY TYPE FILTER (IMPORTANT)
       if (propertyType) {
         properties = properties.filter(
-          (item) =>
-            item.type?.toLowerCase() ===
-            propertyType.toLowerCase()
+          (i) => i.propertytype?.toLowerCase() === propertyType.toLowerCase(),
         );
       }
 
       setData(properties);
-    } catch (error) {
-      console.error("Error fetching properties:", error);
+    } catch (err) {
+      console.error(err);
       setData([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ NAME SEARCH FILTER
   const filteredData = data.filter((item) =>
-    item.name?.toLowerCase().includes(search.toLowerCase())
+    item.propertyname?.toLowerCase().includes(search.toLowerCase()),
   );
 
+  const getImage = (property) => {
+    if (!property.image || property.image.length === 0)
+      return "https://via.placeholder.com/400x300";
+
+    const img = property.image[0];
+    if (img.startsWith("http")) return img;
+    return `https://generateapi.techsnack.online/uploads/${img}`;
+  };
+
   return (
-    <Box mt={12} mb={6} sx={{ backgroundColor: "#f9f9f9", py: 6 }}>
+    <Box mt={12} py={6} sx={{ background: "#f4f6fb" }}>
       <Container maxWidth="xl">
-        {/* TITLE */}
-        <Typography variant="h4" fontWeight={800} textAlign="center">
-          Rent {propertyType || ""} Properties {state && `in ${state}`}
-        </Typography>
-
-        <Typography
-          textAlign="center"
-          color="text.secondary"
-          mb={4}
-          sx={{ maxWidth: 600, mx: "auto" }}
-        >
-          Discover verified properties available for purchase
-        </Typography>
-
-        {/* 🔍 SEARCH */}
-        <TextField
-          label="Search Property Name"
-          fullWidth
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          sx={{
-            maxWidth: 400,
-            mx: "auto",
-            display: "block",
-            mb: 6,
-            backgroundColor: "#fff",
-            borderRadius: 2,
-          }}
-        />
-
-        {/* LOADING */}
-        {loading && (
-          <Typography textAlign="center">
-            Loading properties...
+        {/* HEADER */}
+        <Box textAlign="center" mb={5}>
+          <Typography variant="h4" fontWeight={800}>
+            Rent {propertyType || "Properties"} {state && `in ${state}`}
           </Typography>
-        )}
+          <Typography color="text.secondary" mt={1}>
+            Only Available • Verified Rent Properties
+          </Typography>
+        </Box>
 
-        {/* EMPTY */}
+        {/* SEARCH */}
+        <Box display="flex" justifyContent="center" mb={5}>
+          <TextField
+            label="Search property name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{
+              width: 400,
+              background: "#fff",
+              borderRadius: 3,
+            }}
+          />
+        </Box>
+
+        {loading && <Typography textAlign="center">Loading...</Typography>}
         {!loading && filteredData.length === 0 && (
-          <Typography textAlign="center">
-            No properties found
-          </Typography>
+          <Typography textAlign="center">No rent properties found</Typography>
         )}
 
-        {/* PROPERTIES */}
         <Grid container spacing={4}>
-          {filteredData.slice(9,18).map((property) => (
-            <Grid item size={{xs:12,sm:6,md:4}}  key={property._id}>
+          {filteredData.slice(0, 12).map((property) => (
+            <Grid item xs={12} sm={6} md={4} key={property._id}>
               <Card
                 sx={{
-                  borderRadius: 3,
+                  borderRadius: 4,
+                  overflow: "hidden",
                   transition: "0.3s",
+                  position: "relative",
                   "&:hover": {
-                    transform: "translateY(-8px)",
+                    transform: "translateY(-10px)",
+                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+                  },
+                  "&:hover .zoom-img": {
+                    transform: "scale(1.18)",
                   },
                 }}
               >
-                <CardMedia
-                  component="img"
-                  height="220"
-                  image={
-                    property.image ||
-                    "https://via.placeholder.com/400x250"
-                  }
+                {/* IMAGE */}
+                <Box sx={{ overflow: "hidden", height: 230 }}>
+                  <CardMedia
+                    component="img"
+                    height="230"
+                    image={getImage(property)}
+                    className="zoom-img"
+                    sx={{ transition: "0.6s ease" }}
+                  />
+                </Box>
+
+                {/* STATUS */}
+                <Chip
+                  icon={<VerifiedIcon />}
+                  label="Rent"
+                  color="warning"
+                  size="small"
+                  sx={{
+                    position: "absolute",
+                    top: 12,
+                    left: 12,
+                    fontWeight: 700,
+                  }}
                 />
 
                 <CardContent>
-                  <Typography fontSize={13} color="text.secondary">
-                    Owner: {property.owner}
+                  <Typography variant="h6" fontWeight={700}>
+                    {property.propertyname}
                   </Typography>
 
                   <Typography
-                    variant="h6"
-                    fontWeight={700}
+                    fontSize={13}
+                    color="text.secondary"
                     display="flex"
                     alignItems="center"
                     gap={0.5}
+                    mt={0.5}
                   >
-                    <LocationOnIcon color="error" fontSize="small" />
-                    {property.state}
+                    <LocationOnIcon fontSize="small" color="error" />
+                    {property.address}, {property.city}, {property.state}
                   </Typography>
 
-                  <Typography>{property.name}</Typography>
+                  <Divider sx={{ my: 1.5 }} />
 
-                  <Box display="flex" gap={1} mt={2} flexWrap="wrap">
+                  <Stack direction="row" spacing={1} flexWrap="wrap">
+                    <Chip
+                      icon={<ApartmentIcon />}
+                      label={property.propertytype}
+                      size="small"
+                    />
+                    <Chip
+                      label={`${property.bhk} BHK`}
+                      size="small"
+                      color="primary"
+                    />
                     <Chip
                       icon={<SquareFootIcon />}
                       label={`${property.carpetarea} sqft`}
                       size="small"
                     />
+                    <Chip label={`Floor ${property.floor}`} size="small" />
+                  </Stack>
+
+                  <Stack direction="row" spacing={1} mt={1}>
                     <Chip
-                      label={`Floor: ${property.floor}`}
+                      icon={<BedIcon />}
+                      label={property.bedroom}
                       size="small"
-                      variant="outlined"
                     />
-                  </Box>
+                    <Chip
+                      icon={<WeekendIcon />}
+                      label={property.hall}
+                      size="small"
+                    />
+                    <Chip
+                      icon={<KitchenIcon />}
+                      label={property.kitchen}
+                      size="small"
+                    />
+                  </Stack>
 
-                  <Typography
-                    variant="h6"
-                    fontWeight={900}
-                    color="error"
+                  <Box
                     mt={2}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
                   >
-                    ₹{property.price} Month
-                  </Typography>
+                    <Typography variant="h6" fontWeight={900} color="error">
+                      ₹{property.price} / Month
+                    </Typography>
 
-                  <Box mt={2} display="flex" gap={1}>
-                    <Button variant="contained" color="error" size="small">
-                      Contact Owner
-                    </Button>
-                    <Button variant="outlined" color="error" size="small">
-                      Availability
+                    <Button
+                      variant="contained"
+                      color="error"
+                      size="small"
+                      sx={{ borderRadius: 3 }}
+                      onClick={() =>
+                        navigate(`/rentview/${property._id}`, {
+                          state: property,
+                        })
+                      }
+                    >
+                      View
                     </Button>
                   </Box>
                 </CardContent>

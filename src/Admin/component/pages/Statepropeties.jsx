@@ -9,12 +9,13 @@ import {
   TableRow,
   Button,
   Box,
+  Avatar,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import {
-  getStateProperties,
-  deleteStateProperty,
+  getCityProperties,
+  deleteCityProperty,
 } from "../Service/Statewisepropertyservice";
 
 export default function StateProperties() {
@@ -22,36 +23,56 @@ export default function StateProperties() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchStates();
+    fetchCities();
   }, []);
 
-  const fetchStates = async () => {
-    const res = await getStateProperties();
-    setData(res.Data || []);
+  const fetchCities = async () => {
+    try {
+      const res = await getCityProperties();
+      setData(res?.Data || []);
+    } catch (err) {
+      console.error("Fetch city error:", err);
+      setData([]);
+    }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete this state?")) return;
-    await deleteStateProperty(id);
-    setData((prev) => prev.filter((i) => i._id !== id));
+    if (!window.confirm("Delete this city?")) return;
+
+    try {
+      await deleteCityProperty(id);
+      setData((prev) => prev.filter((i) => i._id !== id));
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Delete failed");
+    }
+  };
+
+  const getImage = (item) => {
+    if (!item.image) return "https://via.placeholder.com/60x40";
+    const img = Array.isArray(item.image) ? item.image[0] : item.image;
+    return img.startsWith("http")
+      ? img
+      : `https://generateapi.techsnack.online/uploads/${img}`;
   };
 
   return (
     <Paper sx={{ p: 3, mt: 5 }}>
       <Box display="flex" justifyContent="space-between" mb={2}>
-        <Typography fontWeight="bold">State Properties</Typography>
+        <Typography fontWeight="bold">City Properties</Typography>
 
         <Button
           variant="contained"
           onClick={() => navigate("/admin/add-state")}
         >
-          Add State
+          Add City
         </Button>
       </Box>
 
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell>Image</TableCell>
             <TableCell>State</TableCell>
             <TableCell>City</TableCell>
             <TableCell>Total Projects</TableCell>
@@ -62,9 +83,17 @@ export default function StateProperties() {
         <TableBody>
           {data.map((item) => (
             <TableRow key={item._id}>
+              <TableCell>
+                <Avatar
+                  src={getImage(item)}
+                  variant="rounded"
+                  sx={{ width: 60, height: 40 }}
+                />
+              </TableCell>
+
               <TableCell>{item.state}</TableCell>
               <TableCell>{item.city}</TableCell>
-              <TableCell>{item.totalProjects}</TableCell>
+              <TableCell>{item.project}</TableCell>
 
               <TableCell align="center">
                 <Button
@@ -73,6 +102,7 @@ export default function StateProperties() {
                 >
                   Edit
                 </Button>
+
                 <Button
                   size="small"
                   color="error"
@@ -86,7 +116,7 @@ export default function StateProperties() {
 
           {data.length === 0 && (
             <TableRow>
-              <TableCell colSpan={4} align="center">
+              <TableCell colSpan={5} align="center">
                 No data found
               </TableCell>
             </TableRow>

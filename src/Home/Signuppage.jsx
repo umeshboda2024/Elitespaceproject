@@ -32,6 +32,7 @@ const Signup = () => {
     mobilenumber: "",
     password: "",
     confirompassword: "",
+    role: "user", // 👈 ADD THIS LINE
   };
 
   // 🔹 API GET (unchanged)
@@ -52,6 +53,13 @@ const Signup = () => {
 
   // 🔹 ONLY LOCALSTORAGE FIX APPLIED HERE
   const handleSubmit = (values, { resetForm }) => {
+    console.log(token);
+
+    if (values.emailid === "admin@gmail.com") {
+      values.role = "admin";
+    } else {
+      values.role = "user";
+    }
     let oldAccounts = localStorage.getItem("Username");
 
     oldAccounts = oldAccounts ? JSON.parse(oldAccounts) : [];
@@ -61,13 +69,15 @@ const Signup = () => {
     }
 
     const updatedAccounts = [...oldAccounts, values];
-
     localStorage.setItem("Username", JSON.stringify(updatedAccounts));
 
     // 🔹 API POST (unchanged)
     axios
       .post("https://generateapi.techsnack.online/api/signup", values, {
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
       })
       .then(() => {
         navigate("/login");
