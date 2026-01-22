@@ -41,14 +41,14 @@ const Stateporpertycard = () => {
 
         <Grid container spacing={4} justifyContent="center">
           {states.map((item, index) => (
-            <Grid item size={{xs:12,sm:6,md:3}}  key={item._id || index}>
+            <Grid item size={{ xs: 12, sm: 6, md: 3 }} key={item._id || index}>
               {/* CIRCLE CARD */}
               <Box textAlign="center">
                 <Box
                   sx={{
                     position: "relative",
-                    width: 350,
-                    height: 350,
+                    width: 250,
+                    height: 250,
                     mx: "auto",
                     borderRadius: "50%",
                     overflow: "hidden",
@@ -101,8 +101,7 @@ const Stateporpertycard = () => {
                         borderRadius: 3,
                         color: "#fff",
                         fontWeight: 600,
-                        background:
-                          "linear-gradient(135deg, #1976d2, #42a5f5)",
+                        background: "linear-gradient(135deg, #1976d2, #42a5f5)",
                       }}
                     >
                       Buy

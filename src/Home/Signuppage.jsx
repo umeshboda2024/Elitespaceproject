@@ -34,6 +34,7 @@ const Signup = () => {
   };
 
   const handleSubmit = (values, { resetForm }) => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
     // 🔥 API ONLY expects these keys
     const payload = {
       fullname: values.fullname,
@@ -42,7 +43,9 @@ const Signup = () => {
       password: values.password,
       confirompassword: values.confirompassword,
     };
-
+    users.push(payload);
+    localStorage.setItem("users", JSON.stringify(users));
+    console.log("Saved Users:", users);
     axios
       .post("https://generateapi.techsnack.online/api/signup", payload, {
         headers: {
@@ -52,6 +55,7 @@ const Signup = () => {
       })
       .then(() => {
         navigate("/login");
+        alert("Signup successful!");
       })
       .catch((err) => {
         console.log("Signup Error", err);
@@ -190,8 +194,7 @@ const Signup = () => {
                   value={values.confirompassword}
                   onChange={handleChange}
                   error={
-                    touched.confirompassword &&
-                    Boolean(errors.confirompassword)
+                    touched.confirompassword && Boolean(errors.confirompassword)
                   }
                   helperText={
                     touched.confirompassword && errors.confirompassword
@@ -206,8 +209,7 @@ const Signup = () => {
                     mt: 3,
                     py: 1.2,
                     borderRadius: 2,
-                    background:
-                      "linear-gradient(to right, #6a7cff, #8f5bff)",
+                    background: "linear-gradient(to right, #6a7cff, #8f5bff)",
                     color: "#fff",
                     fontWeight: "bold",
                   }}

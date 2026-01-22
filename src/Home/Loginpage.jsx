@@ -20,24 +20,23 @@ const Loginpage = () => {
     password: "",
   };
 
-  const handleSubmit = async (values) => {
-    try {
-      const res = await axios.post(
-        "https://generateapi.techsnack.online/auth/login",
-        values
-      );
+  const handleSubmit = (values) => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-      // save token / user
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+    const foundUser = users.find(
+      (u) => u.email === values.email && u.password === values.password,
+    );
 
-      navigate("/admin");
-    } catch (err) {
+    if (!foundUser) {
       alert("Invalid email or password");
-      console.log(err);
+      return;
     }
-  };
 
+    localStorage.setItem("token", "LOGIN_SUCCESS");
+    localStorage.setItem("user", JSON.stringify(foundUser));
+
+    navigate("/admin");
+  };
   return (
     <Box
       sx={{
