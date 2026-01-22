@@ -1,42 +1,42 @@
-// Dummy in-memory data (replace with backend later)
-let agents = [
-  {
-    id: 1,
-    name: "Rohan Shah",
-    email: "rohan@gmail.com",
-    phone: "9876543210",
-    city: "Ahmedabad",
-    status: "Active",
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "https://generateapi.techsnack.online/api/agent",
+  headers: {
+    Authorization: "In842CKq2NaqIetn", // 👈 apni key
   },
-  {
-    id: 2,
-    name: "Priya Malik",
-    email: "priya@gmail.com",
-    phone: "9123456789",
-    city: "Mumbai",
-    status: "Inactive",
-  },
-];
+});
 
-export const getAgents = () => {
-  return Promise.resolve(agents);
+/* =======================
+   GET ALL AGENTS
+======================= */
+export const getAgents = async () => {
+  const res = await api.get("/");
+  return res.data.Data;
 };
 
-export const addAgent = (agent) => {
-  agents.push({ ...agent, id: Date.now(), status: "Active" });
-  return Promise.resolve(agent);
+/* =======================
+   ADD AGENT
+======================= */
+export const addAgent = async (formData) => {
+  const res = await api.post("/", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
 };
 
-export const deleteAgent = (id) => {
-  agents = agents.filter((a) => a.id !== id);
-  return Promise.resolve(id);
+/* =======================
+   DELETE AGENT
+======================= */
+export const deleteAgent = async (id) => {
+  const res = await api.delete(`/${id}`);
+  return res.data;
 };
 
-export const toggleAgentStatus = (id) => {
-  agents = agents.map((a) =>
-    a.id === id
-      ? { ...a, status: a.status === "Active" ? "Inactive" : "Active" }
-      : a
-  );
-  return Promise.resolve();
+/* =======================
+   UPDATE AGENT
+======================= */
+export const updateAgent = async (id, formData) => {
+  const res = await api.patch(`/${id}`, formData);
+  return res.data;
 };

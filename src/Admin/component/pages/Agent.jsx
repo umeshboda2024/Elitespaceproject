@@ -12,42 +12,30 @@ import {
   Box,
   TableContainer,
 } from "@mui/material";
-import {
-  getAgents,
-  deleteAgent,
-  toggleAgentStatus,
-} from "../Service/Agentservice";
+import { getAgents, deleteAgent } from "../Service/Agentservice";
 import { useNavigate } from "react-router-dom";
 
 export default function Agents() {
   const [agents, setAgents] = useState([]);
   const navigate = useNavigate();
 
+  const loadAgents = async () => {
+    const data = await getAgents();
+    setAgents(data);
+  };
+
   useEffect(() => {
-    getAgents().then(setAgents);
+    loadAgents();
   }, []);
 
   const handleDelete = async (id) => {
     await deleteAgent(id);
-    setAgents((prev) => prev.filter((a) => a.id !== id));
-  };
-
-  const handleStatus = async (id) => {
-    await toggleAgentStatus(id);
-    getAgents().then(setAgents);
+    loadAgents();
   };
 
   return (
     <Paper sx={{ p: 3, borderRadius: 3, mt: 5 }}>
-      {/* Header */}
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={2}
-        flexWrap="wrap"
-        gap={2}
-      >
+      <Box display="flex" justifyContent="space-between" mb={2}>
         <Typography fontWeight="bold">Agents</Typography>
 
         <Button
@@ -58,7 +46,6 @@ export default function Agents() {
         </Button>
       </Box>
 
-      {/* RESPONSIVE TABLE WRAPPER */}
       <TableContainer sx={{ overflowX: "auto" }}>
         <Table>
           <TableHead>
@@ -74,7 +61,7 @@ export default function Agents() {
 
           <TableBody>
             {agents.map((agent) => (
-              <TableRow key={agent.id}>
+              <TableRow key={agent._id}>
                 <TableCell>{agent.name}</TableCell>
                 <TableCell>{agent.email}</TableCell>
                 <TableCell>{agent.phone}</TableCell>
@@ -82,10 +69,8 @@ export default function Agents() {
 
                 <TableCell>
                   <Chip
-                    label={agent.status}
-                    color={
-                      agent.status === "Active" ? "success" : "default"
-                    }
+                    label={agent.status || "Active"}
+                    color={agent.status === "Inactive" ? "default" : "success"}
                     size="small"
                   />
                 </TableCell>
@@ -93,14 +78,8 @@ export default function Agents() {
                 <TableCell>
                   <Button
                     size="small"
-                    onClick={() => handleStatus(agent.id)}
-                  >
-                    Toggle
-                  </Button>
-                  <Button
-                    size="small"
                     color="error"
-                    onClick={() => handleDelete(agent.id)}
+                    onClick={() => handleDelete(agent._id)}
                   >
                     Delete
                   </Button>

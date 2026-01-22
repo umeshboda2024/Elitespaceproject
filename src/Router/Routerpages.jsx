@@ -38,7 +38,7 @@ import StateProperties from "../Admin/component/pages/Statepropeties";
 import Propertytypes from "../Component/Propertytypes";
 import AddEditPropertyType from "../Admin/component/pages/StateCard";
 import PropertyTypescard from "../Admin/component/pages/Propertytypecard";
-
+import AllProperties from "../Layout/Allproperty";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -47,11 +47,12 @@ const AppRoutes = () => {
       <Route path="/buy" element={<BuyProperties />} />
       <Route path="/buy/:state" element={<BuyProperties />} />
       <Route path="/buy/:state/:propertyType" element={<BuyProperties />} />
-      <Route path="/buy/type/:propertyType" element={<BuyProperties />} />
+      <Route path="/buy/:propertyType" element={<BuyProperties />} />
       <Route path="/buyproperty/" element={<Propertycard />} />
       <Route path="/Rentproperty" element={<RentPropertycard />} />
       <Route path="/buyview/:id" element={<BuyView />} />
       <Route path="/rentview/:id" element={<RentView />} />
+
       <Route path="/sale" element={<Saleproperty />} />
       <Route path="/rent" element={<RentProperties />} />
       <Route path="/rent/:state?" element={<RentProperties />} />
@@ -61,6 +62,8 @@ const AppRoutes = () => {
       <Route path="/Review" element={<AddReviewDialog />} />
 
       {/* <Route path="/property" element={<Propertycard />} /> */}
+      <Route path="/properties" element={<AllProperties />} />
+      <Route path="/properties/:propertyType" element={<AllProperties />} />
 
       {/* 🔓 Auth Routes */}
       <Route element={<PublicLayout />}>
@@ -79,9 +82,12 @@ const AppRoutes = () => {
           path="/admin/edit-state/:id"
           element={<AddEditStateProperty />}
         />
-         <Route path="/admin/property-types" element={<AddEditPropertyType/>} />
-        <Route path="/admin/edit-property-types" element={<AddEditPropertyType/>} />
-        <Route path="/admin/Propertytype" element={<PropertyTypescard/>} />
+        <Route path="/admin/property-types" element={<AddEditPropertyType />} />
+        <Route
+          path="/admin/edit-property-types"
+          element={<AddEditPropertyType />}
+        />
+        <Route path="/admin/Propertytype" element={<PropertyTypescard />} />
         <Route path="/admin/addstate-property" element={<StateProperties />} />
         <Route path="agents" element={<Agents />} />
         <Route path="add-agent" element={<AddAgent />} />
@@ -90,8 +96,6 @@ const AppRoutes = () => {
         <Route path="reviews" element={<Reviews />} />
         <Route path="locations" element={<Locations />} />
         <Route path="content" element={<Content />} />
-       
-        
       </Route>
     </Routes>
   );

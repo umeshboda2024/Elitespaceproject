@@ -25,8 +25,9 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
-const RentProperties = () => {
-  const { state, propertyType } = useParams();
+const RentProperties = (props) => {
+  const { state, propertyType: paramType } = useParams();
+  const finalType = props?.propertyType || paramType;
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
@@ -35,7 +36,7 @@ const RentProperties = () => {
 
   useEffect(() => {
     fetchProperties();
-  }, [state, propertyType]);
+  }, [state, finalType]);
 
   const fetchProperties = async () => {
     try {
@@ -51,10 +52,24 @@ const RentProperties = () => {
         );
       }
 
-      if (propertyType) {
-        properties = properties.filter(
-          (i) => i.propertytype?.toLowerCase() === propertyType.toLowerCase(),
-        );
+      if (finalType) {
+        properties = properties.filter((i) => {
+          const apiType =
+            typeof i.propertytype === "object"
+              ? i.propertytype.typename
+              : i.propertytype;
+
+          return (
+            apiType
+              ?.toLowerCase()
+              .replace(/\s+/g, "")
+              .replace("appartment", "apartment") ===
+            finalType
+              .toLowerCase()
+              .replace(/\s+/g, "")
+              .replace("appartment", "apartment")
+          );
+        });
       }
 
       setData(properties);
@@ -85,7 +100,7 @@ const RentProperties = () => {
         {/* HEADER */}
         <Box textAlign="center" mb={5}>
           <Typography variant="h4" fontWeight={800}>
-            Rent {propertyType || "Properties"} {state && `in ${state}`}
+            Rent {finalType || "Properties"} {state && `in ${state}`}
           </Typography>
           <Typography color="text.secondary" mt={1}>
             Only Available • Verified Rent Properties
@@ -113,7 +128,7 @@ const RentProperties = () => {
 
         <Grid container spacing={4}>
           {filteredData.slice(0, 12).map((property) => (
-            <Grid item xs={12} sm={6} md={4} key={property._id}>
+            <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={property._id}>
               <Card
                 sx={{
                   borderRadius: 4,
@@ -176,7 +191,11 @@ const RentProperties = () => {
                   <Stack direction="row" spacing={1} flexWrap="wrap">
                     <Chip
                       icon={<ApartmentIcon />}
-                      label={property.propertytype}
+                      label={
+                        typeof property.propertytype === "object"
+                          ? property.propertytype.typename
+                          : property.propertytype
+                      }
                       size="small"
                     />
                     <Chip
