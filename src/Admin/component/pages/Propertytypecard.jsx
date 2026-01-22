@@ -66,7 +66,7 @@ export default function PropertyTypescard() {
 
         <Button
           variant="contained"
-          onClick={() => navigate("/admin/Propertytype")}
+          onClick={() => navigate("/admin/property-types")}
         >
           Add Type
         </Button>
@@ -98,7 +98,7 @@ export default function PropertyTypescard() {
                 <Button
                   size="small"
                   onClick={() =>
-                    navigate(`/admin/property-types/edit/${item._id}`)
+                    navigate(`/admin/edit-property-types/${item._id}`)
                   }
                 >
                   Edit

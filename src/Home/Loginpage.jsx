@@ -10,33 +10,40 @@ import {
   Stack,
   Divider,
 } from "@mui/material";
-import axios from "axios";
 
 const Loginpage = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    email: "",
+    emailid: "",
     password: "",
   };
 
   const handleSubmit = (values) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+    // 🔹 Safely get old users
+    let storedUsers = localStorage.getItem("Username");
+    storedUsers = storedUsers ? JSON.parse(storedUsers) : [];
 
-    const foundUser = users.find(
-      (u) => u.email === values.email && u.password === values.password,
-    );
-
-    if (!foundUser) {
-      alert("Invalid email or password");
-      return;
+    if (!Array.isArray(storedUsers)) {
+      storedUsers = [];
     }
 
-    localStorage.setItem("token", "LOGIN_SUCCESS");
-    localStorage.setItem("user", JSON.stringify(foundUser));
+    // 🔹 Match user
+    const matchedUser = storedUsers.find(
+      (user) =>
+        user.emailid === values.emailid && user.password === values.password,
+    );
 
-    navigate("/admin");
+    if (matchedUser) {
+      // Optional: store logged-in user
+      localStorage.setItem("loggedUser", JSON.stringify(matchedUser));
+
+      navigate("/admin");
+    } else {
+      alert("Invalid email or password");
+    }
   };
+
   return (
     <Box
       sx={{
@@ -47,9 +54,30 @@ const Loginpage = () => {
         justifyContent: "center",
       }}
     >
-      <Paper elevation={10} sx={{ width: 380, p: 4, borderRadius: 4 }}>
-        <Typography variant="h5" fontWeight="bold" textAlign="center">
+      <Paper
+        elevation={10}
+        sx={{
+          width: 380,
+          p: 4,
+          borderRadius: 4,
+        }}
+      >
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          textAlign="center"
+          gutterBottom
+        >
           Welcome Back 👋
+        </Typography>
+
+        <Typography
+          variant="body2"
+          textAlign="center"
+          color="text.secondary"
+          mb={3}
+        >
+          Login to continue
         </Typography>
 
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -58,8 +86,9 @@ const Loginpage = () => {
               <Stack spacing={2}>
                 <Field
                   as={TextField}
-                  name="email"
+                  name="emailid"
                   label="Email"
+                  type="email"
                   fullWidth
                   onChange={handleChange}
                 />
@@ -77,14 +106,28 @@ const Loginpage = () => {
                   type="submit"
                   variant="contained"
                   size="large"
-                  sx={{ py: 1.2 }}
+                  sx={{
+                    borderRadius: 2,
+                    py: 1.2,
+                    textTransform: "none",
+                    fontWeight: "bold",
+                  }}
                 >
                   Login
                 </Button>
 
                 <Divider>OR</Divider>
 
-                <Button onClick={() => navigate("/signup")}>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  sx={{
+                    borderRadius: 2,
+                    textTransform: "none",
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => navigate("/signup")}
+                >
                   Create Account
                 </Button>
               </Stack>

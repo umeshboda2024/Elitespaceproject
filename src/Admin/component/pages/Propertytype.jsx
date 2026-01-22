@@ -31,30 +31,32 @@ export default function AddEditPropertyType() {
   /* =====================
      SUBMIT
   ===================== */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+   e.preventDefault();
 
-    try {
-      const fd = new FormData();
-      fd.append("typename", typename);
+   try {
+     const fd = new FormData();
+     fd.append("typename", typename);
 
-      if (!id) {
-        // ADD
-        images.forEach((img) => fd.append("image", img));
-        await addPropertyType(fd);
-        alert("Property type added successfully");
-      } else {
-        // UPDATE (no image change)
-        await updatePropertyType(id, fd);
-        alert("Property type updated successfully");
-      }
+     if (!id) {
+       images.forEach((img) => fd.append("image", img));
+       await addPropertyType(fd);
+       alert("Property type added successfully");
+     } else {
+       await updatePropertyType(id, fd);
+       alert("Property type updated successfully");
+     }
 
-      navigate("/admin/property-types");
-    } catch (err) {
-      console.error(err);
-      alert("API Error (check console)");
-    }
-  };
+     // ✅ force redirect
+     setTimeout(() => {
+       navigate("/admin/Propertytype", { replace: true });
+     }, 100);
+   } catch (err) {
+     console.error(err);
+     alert("API Error (check console)");
+   }
+ };
+
 
   return (
     <Box p={4}>
