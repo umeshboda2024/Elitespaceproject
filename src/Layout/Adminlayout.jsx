@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import Sidebar from "../Admin/component/Componets/sidebar";
 
 import Topbar from "../Admin/component/Componets/Topbar";
-import Adminhome from "../Admin/component/Home/Adminhome";
 
 const AdminLayout = () => {
   return (

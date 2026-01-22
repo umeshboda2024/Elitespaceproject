@@ -74,7 +74,7 @@ export default function Sidebar() {
       {/* MENU */}
       <List>
         {menuItem("Dashboard", <DashboardIcon />, open, () =>
-          navigate("/admin/home"),
+          navigate("home"),
         )}
         {menuItem("Properties", <HomeWorkIcon />, open, () =>
           navigate("/admin/properties"),

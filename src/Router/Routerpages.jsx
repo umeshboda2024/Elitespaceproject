@@ -10,7 +10,7 @@ import LoginPage from "../Home/Loginpage";
 import Signup from "../Home/Signuppage";
 
 // Admin Pages
-import AdminHome from "../Admin/component/Home/Adminhome";
+
 import Properties from "../Admin/component/pages/Properties";
 import AddProperty from "../Admin/component/pages/Addproperty";
 import Agents from "../Admin/component/pages/Agent";
@@ -39,6 +39,7 @@ import Propertytypes from "../Component/Propertytypes";
 import AddEditPropertyType from "../Admin/component/pages/StateCard";
 import PropertyTypescard from "../Admin/component/pages/Propertytypecard";
 import AllProperties from "../Layout/Allproperty";
+import Dashboard from "../Admin/component/pages/Dashboard";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -73,7 +74,8 @@ const AppRoutes = () => {
 
       {/* 🔐 Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="/admin/home" index element={<AdminHome />} />
+          <Route index element={<Dashboard />} />
+        <Route path="home" element={<Dashboard />} />
         <Route path="/admin/properties" element={<Properties />} />
         <Route path="/admin/add-property" element={<AddEditProperty />} />
         <Route path="/admin/edit-property/:id" element={<AddEditProperty />} />
