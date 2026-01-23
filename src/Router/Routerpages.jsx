@@ -39,12 +39,8 @@ import Propertytypes from "../Component/Propertytypes";
 import AddEditPropertyType from "../Admin/component/pages/StateCard";
 import PropertyTypescard from "../Admin/component/pages/Propertytypecard";
 import AllProperties from "../Layout/Allproperty";
-<<<<<<< HEAD
-
 import ReviewCards from "../Admin/component/pages/ReviewCard";
-=======
 import Dashboard from "../Admin/component/pages/Dashboard";
->>>>>>> b9815a23a6ea08ef65d343688c9b04899fbc8660
 const AppRoutes = () => {
   return (
     <Routes>
@@ -79,7 +75,7 @@ const AppRoutes = () => {
 
       {/* 🔐 Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
+        <Route index element={<Dashboard />} />
         <Route path="home" element={<Dashboard />} />
         <Route path="/admin/properties" element={<Properties />} />
         <Route path="/admin/add-property" element={<AddEditProperty />} />
