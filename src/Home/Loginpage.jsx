@@ -10,9 +10,11 @@ import {
   Stack,
   Divider,
 } from "@mui/material";
+import { useAuth } from "../Context/Authcontex";
 
 const Loginpage = () => {
   const navigate = useNavigate();
+   const { login } = useAuth();
 
   const initialValues = {
     emailid: "",
@@ -20,25 +22,28 @@ const Loginpage = () => {
   };
 
   const handleSubmit = (values) => {
-    // 🔹 Safely get old users
     let storedUsers = localStorage.getItem("Username");
     storedUsers = storedUsers ? JSON.parse(storedUsers) : [];
 
-    if (!Array.isArray(storedUsers)) {
-      storedUsers = [];
-    }
+    if (!Array.isArray(storedUsers)) storedUsers = [];
 
-    // 🔹 Match user
     const matchedUser = storedUsers.find(
       (user) =>
-        user.emailid === values.emailid && user.password === values.password,
+        user.emailid === values.emailid &&
+        user.password === values.password
     );
 
     if (matchedUser) {
-      // Optional: store logged-in user
-      localStorage.setItem("loggedUser", JSON.stringify(matchedUser));
+      console.log("Logged user:", matchedUser);
+      // ✅ set user in context
+      login(matchedUser);
 
-      navigate("/admin");
+      // ✅ role based redirect
+      if (matchedUser.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } else {
       alert("Invalid email or password");
     }

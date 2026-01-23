@@ -32,6 +32,7 @@ const Signup = () => {
     mobilenumber: "",
     password: "",
     confirompassword: "",
+     role: "user",
   };
 
   // 🔹 API GET (unchanged)
@@ -59,14 +60,32 @@ const Signup = () => {
     if (!Array.isArray(oldAccounts)) {
       oldAccounts = [];
     }
+   const SUPER_ADMIN_EMAIL = "admin@gmail.com";
 
-    const updatedAccounts = [...oldAccounts, values];
+if (values.emailid === SUPER_ADMIN_EMAIL) {
+  values.role = "admin";
+} else {
+  values.role = "user";
+}
+    const updatedAccounts = [...oldAccounts, {
+  ...values,
+   status: "Active",
+  role: values.role
+}]
 
-    localStorage.setItem("Username", JSON.stringify(updatedAccounts));
+localStorage.setItem("Username", JSON.stringify(updatedAccounts));
+
 
     // 🔹 API POST (unchanged)
+      const apiPayload = {
+    fullname: values.fullname,
+    emailid: values.emailid,
+    mobilenumber: values.mobilenumber,
+    password: values.password,
+    confirompassword: values.confirompassword,
+  };
     axios
-      .post("https://generateapi.techsnack.online/api/signup", values, {
+      .post("https://generateapi.techsnack.online/api/signup", apiPayload, {
         headers: { Authorization: token },
       })
       .then(() => {

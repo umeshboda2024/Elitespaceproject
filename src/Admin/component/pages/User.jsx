@@ -9,29 +9,38 @@ import {
   TableRow,
   Chip,
   Button,
-  Box,
 } from "@mui/material";
-import { getUsers, toggleUserStatus, deleteUser } from "../Service/Userservice";
+import {
+  getUsers,
+  toggleUserStatus,
+  deleteUser,
+} from "../Service/Userservice";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
 
+  const loadUsers = async () => {
+    const data = await getUsers();
+    setUsers(data);
+  };
+
   useEffect(() => {
-    getUsers().then(setUsers);
+    loadUsers();
   }, []);
 
-  const handleStatus = async (id) => {
-    await toggleUserStatus(id);
-    getUsers().then(setUsers);
+  const handleStatus = async (user) => {
+    const newStatus = user.status === "Active" ? "Blocked" : "Active";
+    await toggleUserStatus(user._id, newStatus);
+    loadUsers();
   };
 
   const handleDelete = async (id) => {
     await deleteUser(id);
-    setUsers(users.filter((u) => u.id !== id));
+    setUsers((prev) => prev.filter((u) => u._id !== id));
   };
 
   return (
-    <Paper sx={{ p: 3, borderRadius: 3,mt:5 }} >
+    <Paper sx={{ p: 3, borderRadius: 3, mt: 5 }}>
       <Typography fontWeight="bold" mb={2}>
         Users
       </Typography>
@@ -42,7 +51,6 @@ export default function Users() {
             <TableCell>Name</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Phone</TableCell>
-            <TableCell>City</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
@@ -50,28 +58,27 @@ export default function Users() {
 
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.city}</TableCell>
+            <TableRow key={user._id}>
+              <TableCell>{user.fullname}</TableCell>
+              <TableCell>{user.emailid}</TableCell>
+              <TableCell>{user.mobilenumber}</TableCell>
 
               <TableCell>
                 <Chip
                   size="small"
-                  label={user.status}
+                  label={user.status || "Active"}
                   color={user.status === "Active" ? "success" : "default"}
                 />
               </TableCell>
 
               <TableCell>
-                <Button size="small" onClick={() => handleStatus(user.id)}>
+                <Button size="small" onClick={() => handleStatus(user)}>
                   {user.status === "Active" ? "Block" : "Unblock"}
                 </Button>
                 <Button
                   size="small"
                   color="error"
-                  onClick={() => handleDelete(user.id)}
+                  onClick={() => handleDelete(user._id)}
                 >
                   Delete
                 </Button>

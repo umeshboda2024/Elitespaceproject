@@ -20,9 +20,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 
 import { getPropertyById } from "../Admin/component/Service/Propertyservice";
+import { useNavigate } from "react-router-dom";
+
 
 const BuyView = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -88,7 +91,7 @@ const BuyView = () => {
 
       <Grid container spacing={4}>
         {/* LEFT */}
-        <Grid item xs={12} md={8}>
+        <Grid item size={{xs:12,md:8}} >
           {/* IMAGE GALLERY */}
           <Box>
             <Box
@@ -127,16 +130,16 @@ const BuyView = () => {
           {/* HIGHLIGHTS */}
           <Card sx={{ mt: 3, p: 2 }}>
             <Grid container textAlign="center">
-              <Grid item xs={3}>
+              <Grid item size={{xs:3}} >
                 🛏 {property.bedroom} Beds
               </Grid>
-              <Grid item xs={3}>
+              <Grid item size={{xs:3}}>
                 🛋 {property.hall} Hall
               </Grid>
-              <Grid item xs={3}>
+              <Grid item size={{xs:3}}>
                 🍳 {property.kitchen} Kitchen
               </Grid>
-              <Grid item xs={3}>
+              <Grid itemsize={{xs:3}}>
                 🏢 Floor {property.floor}
               </Grid>
             </Grid>
@@ -149,7 +152,7 @@ const BuyView = () => {
             </Typography>
 
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item size ={{xs:6}} >
                 <Typography>
                   <ApartmentIcon fontSize="small" /> Type:{" "}
                   {property.propertytype}
@@ -197,7 +200,7 @@ const BuyView = () => {
         </Grid>
 
         {/* RIGHT */}
-        <Grid item xs={12} md={4}>
+        <Grid item size={{xs:12,md:4}} >
           <Card
             sx={{
               p: 3,
@@ -207,7 +210,7 @@ const BuyView = () => {
             }}
           >
             <Typography variant="h5" fontWeight={800} color="error">
-              ₹{property.price}
+              ₹{property.price} Lac
             </Typography>
 
             <Divider sx={{ my: 2 }} />
@@ -227,6 +230,15 @@ const BuyView = () => {
             >
               Get Owner Phone
             </Button>
+            <Button
+  variant="contained"
+  color="success"
+  sx={{ mt: 2, py: 1.2, fontWeight: 700 }}
+  fullWidth
+  onClick={() => navigate(`/checkout/${property._id}`)}
+>
+  Book Now (Pay Token)
+</Button>
           </Card>
         </Grid>
       </Grid>

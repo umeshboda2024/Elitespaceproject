@@ -54,56 +54,73 @@ export default function Properties() {
   };
 
   return (
-    <Paper sx={{ p: 3, mt: 5 }}>
-      <Box display="flex" justifyContent="space-between" mb={2}>
-        <Typography fontWeight="bold">Properties</Typography>
+   <Paper sx={{ p: { xs: 1, sm: 3 }, mt: 5 }}>
+  <Box
+    display="flex"
+    justifyContent="space-between"
+    mb={2}
+    flexDirection={{ xs: "column", sm: "row" }}
+    gap={1}
+  >
+    <Typography fontWeight="bold">Properties</Typography>
 
-        <Button
-          variant="contained"
-          onClick={() => {
-            console.log("Add Property button clicked");
-            navigate("/admin/add-property");
-          }}
-        >
-          Add Property
-        </Button>
-      </Box>
+    <Button
+      variant="contained"
+      onClick={() => navigate("/admin/add-property")}
+      sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}
+    >
+      Add Property
+    </Button>
+  </Box>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>City</TableCell>
-            <TableCell>State</TableCell>
-            <TableCell>Floor</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell align="center">Actions</TableCell>
-          </TableRow>
-        </TableHead>
+  <Box sx={{ overflowX: "auto" }}>
+    <Table sx={{ minWidth: 900 }}>
+      <TableHead>
+        <TableRow>
+          <TableCell>Name</TableCell>
+          <TableCell>City</TableCell>
+          <TableCell>State</TableCell>
+          <TableCell>Floor</TableCell>
+          <TableCell>Status</TableCell>
+          <TableCell>Price</TableCell>
+          <TableCell align="center">Actions</TableCell>
+        </TableRow>
+      </TableHead>
 
-        <TableBody>
-          {data.map((item) => (
-            <TableRow key={item._id}>
-              <TableCell>{item.propertyname}</TableCell>
-              <TableCell>{item.city}</TableCell>
-              <TableCell>{item.state}</TableCell>
-              <TableCell>{item.floor}</TableCell>
+      <TableBody>
+        {data.map((item) => (
+          <TableRow key={item._id}>
+            <TableCell sx={{ whiteSpace: "nowrap" }}>
+              {item.propertyname}
+            </TableCell>
+            <TableCell sx={{ whiteSpace: "nowrap" }}>{item.city}</TableCell>
+            <TableCell sx={{ whiteSpace: "nowrap" }}>{item.state}</TableCell>
+            <TableCell>{item.floor}</TableCell>
 
-              <TableCell>
-                <Chip
-                  label={item.status}
-                  size="small"
-                  color={statusColor(item.status)}
-                />
-              </TableCell>
+            <TableCell>
+              <Chip
+                label={item.status}
+                size="small"
+                color={statusColor(item.status)}
+              />
+            </TableCell>
 
-              <TableCell>{item.price}</TableCell>
+            <TableCell>{item.price}</TableCell>
 
-              <TableCell align="center">
+            <TableCell align="center">
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  gap: 1,
+                  justifyContent: "center",
+                }}
+              >
                 <Button
                   size="small"
-                  onClick={() => navigate(`/admin/edit-property/${item._id}`)}
+                  onClick={() =>
+                    navigate(`/admin/edit-property/${item._id}`)
+                  }
                 >
                   Edit
                 </Button>
@@ -115,19 +132,21 @@ export default function Properties() {
                 >
                   Delete
                 </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+              </Box>
+            </TableCell>
+          </TableRow>
+        ))}
 
-          {data.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={6} align="center">
-                No properties found
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </Paper>
+        {data.length === 0 && (
+          <TableRow>
+            <TableCell colSpan={7} align="center">
+              No properties found
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
+  </Box>
+</Paper>
   );
 }

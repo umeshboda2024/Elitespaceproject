@@ -1,44 +1,25 @@
-let users = [
-  {
-    id: 1,
-    name: "Amit Patel",
-    email: "amit@gmail.com",
-    phone: "9876543210",
-    city: "Ahmedabad",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Neha Singh",
-    email: "neha@gmail.com",
-    phone: "9123456789",
-    city: "Delhi",
-    status: "Blocked",
-  },
-  {
-    id: 3,
-    name: "Rohan Shah",
-    email: "rohan@gmail.com",
-    phone: "9988776655",
-    city: "Mumbai",
-    status: "Active",
-  },
-];
+import axios from "axios";
 
-export const getUsers = () => {
-  return Promise.resolve(users);
+const API_URL = "https://generateapi.techsnack.online/api/signup";
+const TOKEN = "XI9aLT2keHbs64RP";
+
+export const getUsers = async () => {
+  const res = await axios.get(API_URL, {
+    headers: { Authorization: TOKEN },
+  });
+  return res.data.Data; // 🔥 important
 };
 
-export const toggleUserStatus = (id) => {
-  users = users.map((u) =>
-    u.id === id
-      ? { ...u, status: u.status === "Active" ? "Blocked" : "Active" }
-      : u
+export const toggleUserStatus = async (id, status) => {
+  return axios.patch(
+    `${API_URL}/${id}`,
+    { status },
+    { headers: { Authorization: TOKEN } }
   );
-  return Promise.resolve();
 };
 
-export const deleteUser = (id) => {
-  users = users.filter((u) => u.id !== id);
-  return Promise.resolve();
+export const deleteUser = async (id) => {
+  return axios.delete(`${API_URL}/${id}`, {
+    headers: { Authorization: TOKEN },
+  });
 };

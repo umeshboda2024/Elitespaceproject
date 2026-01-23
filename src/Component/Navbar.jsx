@@ -21,6 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { useNavigate } from "react-router-dom";
 import Elitespacelogo from "../Assets/images/Elitespacelogo-removebg-preview.png";
+import { useAuth } from "../Context/Authcontex";
 
 /* ================= MENU DATA ================= */
 
@@ -45,6 +46,7 @@ const megaMenuData = {
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const [activeMenu, setActiveMenu] = React.useState("");
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -170,15 +172,40 @@ export default function Navbar() {
               <IconButton onClick={toggleTheme} color="inherit">
                 {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
               </IconButton>
+{user ? (
+  <>
+    {user.role === "admin" && (
+      <Button
+        sx={{ color: "#fff", textTransform: "none" }}
+        onClick={() => navigate("/admin")}
+      >
+        Admin
+      </Button>
+    )}
 
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ borderRadius: "20px", textTransform: "none" }}
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </Button>
+    <Button
+      variant="contained"
+      color="secondary"
+      sx={{ borderRadius: "20px", textTransform: "none" }}
+      onClick={() => {
+        logout();
+        navigate("/");
+      }}
+    >
+      Logout
+    </Button>
+  </>
+) : (
+  <Button
+    variant="contained"
+    color="secondary"
+    sx={{ borderRadius: "20px", textTransform: "none" }}
+    onClick={() => navigate("/login")}
+  >
+    Login
+  </Button>
+)}
+
             </Box>
 
             {/* ================= MOBILE ICON ================= */}
@@ -222,17 +249,33 @@ export default function Navbar() {
           ))}
 
           <ListItem>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                navigate("/login");
-                handleDrawerToggle();
-              }}
-            >
-              Login
-            </Button>
+           {user ? (
+  <Button
+    fullWidth
+    variant="contained"
+    color="secondary"
+    onClick={() => {
+      logout();
+      navigate("/login");
+      handleDrawerToggle();
+    }}
+  >
+    Logout
+  </Button>
+) : (
+  <Button
+    fullWidth
+    variant="contained"
+    color="secondary"
+    onClick={() => {
+      navigate("/login");
+      handleDrawerToggle();
+    }}
+  >
+    Login
+  </Button>
+)}
+
           </ListItem>
 
           <ListItem>

@@ -41,6 +41,11 @@ import PropertyTypescard from "../Admin/component/pages/Propertytypecard";
 import AllProperties from "../Layout/Allproperty";
 import ReviewCards from "../Admin/component/pages/ReviewCard";
 import Dashboard from "../Admin/component/pages/Dashboard";
+import AdminRoute from "./Adminroute";
+import ProtectedRoute from "./Adminroute";
+import Checkout from "../Home/Checkout";
+import WhyChooseUs from "../Component/Whychoose";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -54,6 +59,7 @@ const AppRoutes = () => {
       <Route path="/Rentproperty" element={<RentPropertycard />} />
       <Route path="/buyview/:id" element={<BuyView />} />
       <Route path="/rentview/:id" element={<RentView />} />
+      <Route path="/checkout/:id" element={<Checkout />} />
 
       <Route path="/sale" element={<Saleproperty />} />
       <Route path="/rent" element={<RentProperties />} />
@@ -62,10 +68,12 @@ const AppRoutes = () => {
       <Route path="/Agent" element={<Agentcard />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Review" element={<AddReviewDialog />} />
+       <Route path="/about" element={< WhyChooseUs/>}/>
 
       {/* <Route path="/property" element={<Propertycard />} /> */}
       <Route path="/properties" element={<AllProperties />} />
       <Route path="/properties/:propertyType" element={<AllProperties />} />
+
 
       {/* 🔓 Auth Routes */}
       <Route element={<PublicLayout />}>
@@ -74,7 +82,16 @@ const AppRoutes = () => {
       </Route>
 
       {/* 🔐 Admin Routes */}
-      <Route path="/admin" element={<AdminLayout />}>
+  
+<Route
+  path="/admin"
+  element={
+    <ProtectedRoute>
+      <AdminLayout />
+    </ProtectedRoute>
+  }
+>
+
         <Route index element={<Dashboard />} />
         <Route path="home" element={<Dashboard />} />
         <Route path="/admin/properties" element={<Properties />} />

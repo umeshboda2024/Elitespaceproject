@@ -18,7 +18,7 @@ import {
   Cell,
 } from "recharts";
 
-import StatCard from "./StateCard";
+// import StatCard from "./StateCard";
 import RecentProperties from "../Componets/Recentpropertis";
 
 /* ================= DATA ================= */
@@ -56,7 +56,7 @@ export default function Dashboard() {
         </Typography>
 
         {/* ================= STAT CARDS ================= */}
-        <Box
+        {/* <Box
           sx={{
             display: "grid",
             gridTemplateColumns: {
@@ -103,7 +103,7 @@ export default function Dashboard() {
             title="Monthly Revenue"
             value="₹7,10,000"
           />
-        </Box>
+        </Box> */}
 
         {/* ================= CHARTS ================= */}
         <Grid container spacing={3}>
