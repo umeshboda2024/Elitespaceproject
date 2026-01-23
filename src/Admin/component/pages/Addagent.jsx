@@ -1,50 +1,101 @@
-import { useState } from "react";
-import { Paper, TextField, Button, Typography, Grid } from "@mui/material";
-import { addAgent } from "../Service/Agentservice";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  Grid,
+  Box,
+} from "@mui/material";
+import {
+  addAgent,
+  getAgentById,
+  updateAgent,
+} from "../Service/Agentservice";
 
-export default function AddAgent() {
+const emptyForm = {
+  name: "",
+  designation: "",
+  badge: "",
+  phone: "",
+  email: "",
+  location: "",
+  properties_sale: 0,
+  properties_rent: 0,
+  rating: 0,
+  reviews_count: 0,
+  experience: 0,
+  photo: [],
+};
+
+export default function AddEditAgent() {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [form, setForm] = useState({
-    name: "",
-    designation: "Real Estate Agent",
-    badge: "MB Preferred",
-    email: "",
-    phone: "",
-    location: "",
-    properties_sale: 0,
-    properties_rent: 0,
-    rating: 4.5,
-    reviews_count: 0,
-    experience: 1,
-    status: "Active",
-  });
+  const [form, setForm] = useState(emptyForm);
+  const [newPhotos, setNewPhotos] = useState([]);
 
-  const [photos, setPhotos] = useState([]);
+  /* =====================
+     LOAD AGENT FOR EDIT
+  ====================== */
+  useEffect(() => {
+    if (!id) return;
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+    getAgentById(id).then((res) => {
+      const data = res?.Data || res;
 
+      setForm({
+        ...emptyForm,
+        ...data,
+        photo: Array.isArray(data.photo) ? data.photo : [],
+      });
+    });
+  }, [id]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  /* =====================
+     SUBMIT
+  ====================== */
   const handleSubmit = async () => {
-    const data = new FormData();
+    const fd = new FormData();
 
-    Object.keys(form).forEach((k) => data.append(k, form[k]));
-    photos.forEach((file) => data.append("photo", file));
+    // exact api keys only
+    Object.entries(form).forEach(([key, value]) => {
+      if (key !== "photo") {
+        fd.append(key, value ?? "");
+      }
+    });
 
-    await addAgent(data);
+    // multiple images
+    newPhotos.forEach((file) => fd.append("photo", file));
+
+    if (id) {
+      await updateAgent(id, fd);
+      alert("Agent updated");
+    } else {
+      await addAgent(fd);
+      alert("Agent added");
+    }
+
     navigate("/admin/agents");
   };
 
   return (
-    <Paper sx={{ p: 4, maxWidth: 800 }}>
-      <Typography fontWeight="bold" mb={3}>
-        Add Agent
+    <Paper sx={{ p: 4, maxWidth: 900 }}>
+      <Typography variant="h5" mb={3}>
+        {id ? "Edit Agent" : "Add Agent"}
       </Typography>
 
       <Grid container spacing={2}>
         {[
           { label: "Name", name: "name" },
+          { label: "Designation", name: "designation" },
+          { label: "Badge", name: "badge" },
           { label: "Email", name: "email" },
           { label: "Phone", name: "phone" },
           { label: "Location", name: "location" },
@@ -52,7 +103,7 @@ export default function AddAgent() {
           { label: "Properties Rent", name: "properties_rent", type: "number" },
           { label: "Rating", name: "rating", type: "number" },
           { label: "Reviews Count", name: "reviews_count", type: "number" },
-          { label: "Experience (years)", name: "experience", type: "number" },
+          { label: "Experience", name: "experience", type: "number" },
         ].map((f) => (
           <Grid item xs={12} md={6} key={f.name}>
             <TextField
@@ -60,16 +111,35 @@ export default function AddAgent() {
               label={f.label}
               name={f.name}
               type={f.type || "text"}
+              value={form[f.name]}
               onChange={handleChange}
             />
           </Grid>
         ))}
 
+        {/* EXISTING IMAGES */}
+        {form.photo.length > 0 && (
+          <Grid item xs={12}>
+            <Typography>Existing Photos</Typography>
+            <Box display="flex" gap={2} mt={1}>
+              {form.photo.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  width={100}
+                  style={{ borderRadius: 8 }}
+                />
+              ))}
+            </Box>
+          </Grid>
+        )}
+
+        {/* NEW IMAGES */}
         <Grid item xs={12}>
           <input
             type="file"
             multiple
-            onChange={(e) => setPhotos([...e.target.files])}
+            onChange={(e) => setNewPhotos([...e.target.files])}
           />
         </Grid>
       </Grid>
@@ -80,7 +150,7 @@ export default function AddAgent() {
         sx={{ mt: 3 }}
         onClick={handleSubmit}
       >
-        Save Agent
+        {id ? "UPDATE AGENT" : "SAVE AGENT"}
       </Button>
     </Paper>
   );

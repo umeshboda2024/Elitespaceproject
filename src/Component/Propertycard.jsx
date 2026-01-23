@@ -37,7 +37,7 @@ const PropertyList = () => {
     <Container maxWidth="xl" sx={{ mt: 10 }}>
       <Grid container spacing={4}>
         {data.slice(0, 9).map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item._id}>
+          <Grid item size={{xs:12,sm:6,md:4}}  key={item._id}>
             <PropertyCard item={item} />
           </Grid>
         ))}
