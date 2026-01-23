@@ -1,36 +1,23 @@
-let reviews = [
-  {
-    id: 1,
-    name: "Amit Patel",
-    role: "Buyer",
-    rating: 5,
-    message: "Amazing service! Found my dream home easily.",
-    property: "3 BHK Apartment, Ahmedabad",
-    status: "Pending", // Pending | Approved | Hidden
-    date: "2026-01-04",
-  },
-  {
-    id: 2,
-    name: "Neha Singh",
-    role: "Tenant",
-    rating: 4,
-    message: "Very professional agents and smooth process.",
-    property: "2 BHK Flat, Delhi",
-    status: "Approved",
-    date: "2026-01-03",
-  },
-];
+import axios from "axios";
 
-export const getReviews = () => {
-  return Promise.resolve(reviews);
+const api = axios.create({
+  baseURL: "https://generateapi.techsnack.online/api/review",
+  headers: {
+    Authorization: "9CU7Xtj6ac2vyvgV",
+  },
+});
+
+export const getReviews = async () => {
+  return api.get("/");
+};
+export const addReview = async (data) => {
+  return api.post("/", data);
 };
 
-export const updateReviewStatus = (id, status) => {
-  reviews = reviews.map((r) => (r.id === id ? { ...r, status } : r));
-  return Promise.resolve();
+export const updateReviewStatus = async (id, status) => {
+  return api.patch(`/${id}`, { status });
 };
 
-export const deleteReview = (id) => {
-  reviews = reviews.filter((r) => r.id !== id);
-  return Promise.resolve();
+export const deleteReview = async (id) => {
+  return api.delete(`/${id}`);
 };

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -8,60 +8,23 @@ import {
   Avatar,
   Rating,
   IconButton,
+  Button,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Button } from "@mui/material";
-import { useState } from "react";
 import AddReviewDialog from "../Home/Addreviewsection";
+import { getReviews } from "../Admin/component/Service/reviewService";
 
-// Single clean image
+// fallback image
 import ReviewImage from "../Assets/images/reviewimage1.jpeg";
-import ReviewImage2 from "../Assets/images/reviewimage2.jpeg";
-import ReviewImage3 from "../Assets/images/reviewimage3.jpeg";
-import ReviewImage4 from "../Assets/images/reviewimage4.jpeg";
-
-const reviews = [
-  {
-    name: "Rahul Mehta",
-    city: "Ahmedabad",
-    image: ReviewImage,
-    rating: 5,
-    review:
-      "Elite Space made my home-buying journey smooth and stress-free. Their property options and agent support were excellent.",
-  },
-  {
-    name: "Priya Sharma",
-    city: "Mumbai",
-    image: ReviewImage2,
-    rating: 5,
-    review:
-      "I found my perfect 2 BHK flat within a week. The team is professional, transparent, and very responsive.",
-  },
-  {
-    name: "Amit Verma",
-    city: "Gurugram",
-    image: ReviewImage3,
-    rating: 4,
-    review:
-      "Great platform for both buying and renting properties. Easy search filters and genuine listings.",
-  },
-  {
-    name: "Neha Patel",
-    city: "Surat",
-    image: ReviewImage4,
-    rating: 5,
-    review:
-      "Highly trusted platform. Genuine listings and excellent customer support throughout the journey.",
-  },
-];
 
 export default function ReviewSection() {
   const scrollRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
   const scroll = (direction) => {
     if (!scrollRef.current) return;
-
     scrollRef.current.scrollBy({
       left:
         direction === "left"
@@ -70,7 +33,35 @@ export default function ReviewSection() {
       behavior: "smooth",
     });
   };
-  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await getReviews();
+
+        // 🔥 safe extract (har type ke response ke liye)
+        const list = res?.data?.Data || res?.data?.data || res?.Data || [];
+
+        console.log("ALL REVIEWS:", list);
+
+        setReviews(list); // ✅ no filter
+      } catch (err) {
+        console.error("Review API error:", err);
+        setReviews([]);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+  const getReviewImage = (item) => {
+    if (!item.image || item.image.length === 0) return ReviewImage;
+
+    const img = item.image[0];
+
+    if (img.startsWith("http")) return img;
+
+    return `https://generateapi.techsnack.online/uploads/${img}`;
+  };
 
   return (
     <Box sx={{ py: { xs: 6, md: 10 } }}>
@@ -113,13 +104,9 @@ export default function ReviewSection() {
               overflowX: "auto",
               scrollBehavior: "smooth",
               pb: 1,
-
-              /* 🔥 Hide scrollbar (ALL browsers) */
-              "&::-webkit-scrollbar": {
-                display: "none",
-              },
-              scrollbarWidth: "none", // Firefox
-              msOverflowStyle: "none", // IE
+              "&::-webkit-scrollbar": { display: "none" },
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
             }}
           >
             {reviews.map((item, index) => (
@@ -132,7 +119,6 @@ export default function ReviewSection() {
                   flexShrink: 0,
                   borderRadius: 4,
                   textAlign: "center",
-                  // boxShadow: "0px 12px 30px rgba(0,0,0,0.12)",
                   transition: "all 0.3s ease",
                   "&:hover": {
                     transform: "translateY(-6px)",
@@ -141,7 +127,7 @@ export default function ReviewSection() {
                 }}
               >
                 <Avatar
-                  src={item.image}
+                  src={getReviewImage(item)}
                   sx={{
                     width: 90,
                     height: 90,
@@ -172,9 +158,18 @@ export default function ReviewSection() {
                   <Typography fontSize={14} color="#777" mb={2}>
                     {item.city}
                   </Typography>
-
-                  <Typography fontSize={15} color="#555" mb={3}>
-                    {item.review}
+                  <Typography
+                    fontSize={15}
+                    color="#555"
+                    mb={3}
+                    sx={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3, // 👈 max 3 lines
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {item.message}
                   </Typography>
 
                   <Rating
@@ -204,6 +199,8 @@ export default function ReviewSection() {
             <ArrowForwardIosIcon />
           </IconButton>
         </Box>
+
+        {/* WRITE REVIEW BUTTON */}
         <Box display="flex" justifyContent="center" mt={4}>
           <Button
             variant="outlined"

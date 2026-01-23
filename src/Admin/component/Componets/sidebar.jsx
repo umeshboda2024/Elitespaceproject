@@ -89,7 +89,7 @@ export default function Sidebar() {
           navigate("/admin/inquiries"),
         )}
         {menuItem("Reviews", <StarIcon />, open, () =>
-          navigate("/admin/reviews"),
+          navigate("/admin/reviewpage"),
         )}
 
         {/* SETTINGS GROUP */}
@@ -118,7 +118,7 @@ export default function Sidebar() {
         <Collapse in={settingsOpen && open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {submenuItem("States", () => navigate("/admin/addstate-property"))}
-            {submenuItem("Cities", () => navigate("/admin/cities"))}
+            {/* {submenuItem("Cities", () => navigate("/admin/cities"))} */}
             {submenuItem("Locations", () => navigate("/admin/locations"))}
             {submenuItem("Property Types", () =>
               navigate("/admin/Propertytype"),

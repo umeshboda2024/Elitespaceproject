@@ -1,46 +1,23 @@
-import { useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
-import ReviewCard from "../Componets/ReviewCard";
-import {
-  getReviews,
-  updateReviewStatus,
-  deleteReview,
-} from "../Service/reviewService";
+import { Card, CardContent, Typography, Avatar, Stack } from "@mui/material";
 
-export default function Reviews() {
-  const [reviews, setReviews] = useState([]);
-
-  useEffect(() => {
-    getReviews().then(setReviews);
-  }, []);
-
-  const handleStatusChange = async (id, status) => {
-    await updateReviewStatus(id, status);
-    getReviews().then(setReviews);
-  };
-
-  const handleDelete = async (id) => {
-    await deleteReview(id);
-    setReviews(reviews.filter((r) => r.id !== id));
-  };
-
+export default function Reviews({ review }) {
   return (
-    <>
-      <Typography variant="h5" fontWeight="bold" mb={3}>
-        Reviews & Testimonials
-      </Typography>
+    <Card elevation={0}>
+      <CardContent>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <Avatar
+            src={Array.isArray(review.image) ? review.image[0] : review.image}
+          />
+          <div>
+            <Typography fontWeight="bold">{review.name}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              {review.city} • {review.designation}
+            </Typography>
+          </div>
+        </Stack>
 
-      <Grid container spacing={3}>
-        {reviews.map((review) => (
-          <Grid item xs={12} md={6} key={review.id}>
-            <ReviewCard
-              review={review}
-              onStatusChange={handleStatusChange}
-              onDelete={handleDelete}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </>
+        <Typography mt={2}>{review.message}</Typography>
+      </CardContent>
+    </Card>
   );
 }

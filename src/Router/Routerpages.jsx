@@ -39,6 +39,8 @@ import Propertytypes from "../Component/Propertytypes";
 import AddEditPropertyType from "../Admin/component/pages/StateCard";
 import PropertyTypescard from "../Admin/component/pages/Propertytypecard";
 import AllProperties from "../Layout/Allproperty";
+
+import ReviewCards from "../Admin/component/pages/ReviewCard";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -93,7 +95,7 @@ const AppRoutes = () => {
         <Route path="add-agent" element={<AddAgent />} />
         <Route path="users" element={<Users />} />
         <Route path="inquiries" element={<Inquiries />} />
-        <Route path="reviews" element={<Reviews />} />
+        <Route path="reviewpage" element={<ReviewCards />} />
         <Route path="locations" element={<Locations />} />
         <Route path="content" element={<Content />} />
       </Route>
