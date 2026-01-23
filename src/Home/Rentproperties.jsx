@@ -26,7 +26,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const RentProperties = (props) => {
-  const { state, propertyType: paramType } = useParams();
+  const { city, propertyType: paramType } = useParams();
   const finalType = props?.propertyType || paramType;
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const RentProperties = (props) => {
 
   useEffect(() => {
     fetchProperties();
-  }, [state, finalType]);
+  }, [city, finalType]);
 
   const fetchProperties = async () => {
     try {
@@ -46,12 +46,11 @@ const RentProperties = (props) => {
       // ✅ ONLY RENT PROPERTIES (ADMIN STATUS)
       properties = properties.filter((i) => i.status?.toLowerCase() === "rent");
 
-      if (state) {
-        properties = properties.filter(
-          (i) => i.state?.toLowerCase() === state.toLowerCase(),
-        );
-      }
-
+    if (city) {
+  properties = properties.filter(
+    (i) => i.city?.toLowerCase().trim() === city.toLowerCase().trim()
+  );
+}
       if (finalType) {
         properties = properties.filter((i) => {
           const apiType =
@@ -100,7 +99,7 @@ const RentProperties = (props) => {
         {/* HEADER */}
         <Box textAlign="center" mb={5}>
           <Typography variant="h4" fontWeight={800}>
-            Rent {finalType || "Properties"} {state && `in ${state}`}
+            Rent {finalType || "Properties"} {city && `in ${city}`}
           </Typography>
           <Typography color="text.secondary" mt={1}>
             Only Available • Verified Rent Properties

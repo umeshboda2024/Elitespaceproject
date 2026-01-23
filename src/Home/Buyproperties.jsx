@@ -26,7 +26,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getProperties } from "../Admin/component/Service/Propertyservice";
 
 const BuyProperties = (props) => {
-  const { state, propertyType: paramType } = useParams();
+  const { city, propertyType: paramType } = useParams();
   const finalType = props?.propertyType || paramType;
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const BuyProperties = (props) => {
 
   useEffect(() => {
     fetchProperties();
-  }, [state, finalType]);
+  }, [city, finalType]);
 
   const fetchProperties = async () => {
     try {
@@ -49,11 +49,10 @@ const BuyProperties = (props) => {
       );
 
       // ✅ Filter by state
-      if (state) {
-        properties = properties.filter(
-          (i) => i.state?.toLowerCase() === state.toLowerCase(),
-        );
-      }
+      if (city) {
+  properties = properties.filter(
+    (i) => i.city?.toLowerCase().trim() === city.toLowerCase().trim()
+  );}
 
       // ✅ Filter by property type
       if (finalType) {
@@ -110,7 +109,7 @@ const BuyProperties = (props) => {
         {/* HEADER */}
         <Box textAlign="center" mb={5}>
           <Typography variant="h4" fontWeight={800}>
-            Buy {finalType || "Properties"} {state && `in ${state}`}
+            Buy {finalType || "Properties"} {city && `in ${city}`}
           </Typography>
           <Typography color="text.secondary" mt={1}>
             Only Available • Verified Properties

@@ -52,8 +52,8 @@ const AppRoutes = () => {
       {/* 🌍 Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/buy" element={<BuyProperties />} />
-      <Route path="/buy/:state" element={<BuyProperties />} />
-      <Route path="/buy/:state/:propertyType" element={<BuyProperties />} />
+      <Route path="/buy/:city" element={<BuyProperties />} />
+      <Route path="/buy/:city/:propertyType" element={<BuyProperties />} />
       <Route path="/buy/:propertyType" element={<BuyProperties />} />
       <Route path="/buyproperty/" element={<Propertycard />} />
       <Route path="/Rentproperty" element={<RentPropertycard />} />
@@ -63,7 +63,7 @@ const AppRoutes = () => {
 
       <Route path="/sale" element={<Saleproperty />} />
       <Route path="/rent" element={<RentProperties />} />
-      <Route path="/rent/:state?" element={<RentProperties />} />
+      <Route path="/rent/:city?" element={<RentProperties />} />
       <Route path="/Rent/type/:propertyType" element={<RentProperties />} />
       <Route path="/Agent" element={<Agentcard />} />
       <Route path="/Contact" element={<Contact />} />

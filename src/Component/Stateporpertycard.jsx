@@ -6,7 +6,7 @@ import { getCityProperties } from "../Admin/component/Service/Statewisepropertys
 
 const Stateporpertycard = () => {
   const navigate = useNavigate();
-  const [states, setStates] = useState([]);
+  const [states, setCity] = useState([]);
 
   useEffect(() => {
     fetchCities();
@@ -15,14 +15,15 @@ const Stateporpertycard = () => {
   const fetchCities = async () => {
     try {
       const res = await getCityProperties();
-      setStates(res?.Data || []);
+      setCity(res?.Data || []);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleBuy = (city) => navigate(`/buy/${city}`);
-  const handleRent = (city) => navigate(`/rent/${city}`);
+    const handleBuy = (city) =>
+  navigate(`/buy/${city.trim().toLowerCase()}`);
+  const handleRent = (city) => navigate(`/rent/${city.trim().toLowerCase()}`);
 
   const getImage = (item) => {
     if (!item.image) return "https://via.placeholder.com/300";
